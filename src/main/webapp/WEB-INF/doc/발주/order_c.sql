@@ -59,7 +59,7 @@ delete  from member where memberno=3;
 /**********************************/
 /* Table Name: 발주 목록 */
 /**********************************/
-CREATE TABLE order_list(
+CREATE TABLE order(
 		orderno                       		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
 		productno                     		NUMBER(10)		 NULL ,
 		rdate                         		DATE		 NOT NULL,
@@ -151,27 +151,27 @@ CREATE SEQUENCE order_seq
   NOCYCLE;                   -- 다시 1부터 생성되는 것을 방지
 
 --등록
-INSERT INTO order_list(orderno, productno, rdate, cnt, cnttot, memberno)
+INSERT INTO order(orderno, productno, rdate, cnt, cnttot, memberno)
 VALUES (order_seq.nextval, 1, sysdate, 1, 1, 1);
 
-INSERT INTO order_list(orderno, productno, rdate, cnt, cnttot, memberno)
+INSERT INTO order(orderno, productno, rdate, cnt, cnttot, memberno)
 VALUES (order_seq.nextval, 2, sysdate, 1, 1, 2);
 
-INSERT INTO order_list(orderno, productno, rdate, cnt, cnttot, memberno)
+INSERT INTO order(orderno, productno, rdate, cnt, cnttot, memberno)
 VALUES (order_seq.nextval, 1, sysdate, 1, 1, 3);
 
 --조회
 SELECT orderno, productno, rdate, cnt, cnttot, memberno
-FROM order_list
+FROM order
 where orderno=1;
 
 --수정
-UPDATE order_list
+UPDATE order
 SET cnt=2, cnttot=2
 where orderno=1;
 
 --삭제
-DELETE FROM order_list where orderno=1;
+DELETE FROM order where orderno=1;
 
 --결재 목록
 CREATE SEQUENCE pay_seq

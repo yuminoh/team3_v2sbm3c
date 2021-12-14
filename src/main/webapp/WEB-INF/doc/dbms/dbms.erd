@@ -329,7 +329,7 @@
                                           </targetConnections>
                                           <error></error>
                                           <linkedPath></linkedPath>
-                                          <tableName>order_pay</tableName>
+                                          <tableName>pay</tableName>
                                           <logicalName>결제</logicalName>
                                           <description></description>
                                           <columns>
@@ -1228,7 +1228,7 @@
       <targetConnections/>
       <error></error>
       <linkedPath></linkedPath>
-      <tableName>order_list</tableName>
+      <tableName>order</tableName>
       <logicalName>발주 목록</logicalName>
       <description></description>
       <columns>
@@ -1342,7 +1342,7 @@
   </children>
   <dommains/>
   <dialectName>hsqldb</dialectName>
-  <logicalMode>true</logicalMode>
+  <logicalMode>false</logicalMode>
   <jarFile></jarFile>
   <jdbcDriver>sun.jdbc.odbc.JdbcOdbc</jdbcDriver>
   <jdbcUrl></jdbcUrl>
