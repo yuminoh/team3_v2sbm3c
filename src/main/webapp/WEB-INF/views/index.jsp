@@ -17,7 +17,7 @@
     
 </head>
 <body>
-
+<jsp:include page="./menu/top.jsp" flush='false' />
   
   <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
     <%-- /static/images/resort02.jpg --%>
@@ -34,7 +34,7 @@
   <DIV style='width: 94.8%; margin: 0px auto;'>
   </DIV>  
  
-
+<jsp:include page="./menu/bottom.jsp" flush='false' />
  
 </body>
 </html>
