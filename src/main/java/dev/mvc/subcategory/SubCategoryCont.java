@@ -1,4 +1,4 @@
-package dev.mvc.category;
+package dev.mvc.subcategory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class CatgoryCont {
+public class SubCategoryCont {
     @Autowired
-    @Qualifier("dev.mvc.category.CatgoryProc")
-    private CatgoryProcInter CatgoryProc;
+    @Qualifier("dev.mvc.subcategory.SubCategoryProc")
+    private SubCategoryProcInter SubCategoryProc;
 
-    public CatgoryCont() {
-        System.out.println("-> CatgoryCont created.");
+    public SubCategoryCont() {
+        System.out.println("-> SubCategoryCont created.");
     }
 }
