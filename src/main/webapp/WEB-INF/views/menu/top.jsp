@@ -9,10 +9,20 @@
       <span style='padding-left: 0.5%;'></span>
       <A class='menu_link'  href='/' >메인 페이지</A><span class='top_menu_sep'> </span>
       
-
+      <c:choose>
+        <c:when test="${sessionScope.id != null}"> <%-- 로그인 한 경우 --%>
+           ${sessionScope.id } <A class='menu_link'  href='/member/logout.do' >Logout</A><span class='top_menu_sep'> </span>
+        </c:when>
+        <c:otherwise>
+          <A class='menu_link'  href='/member/login.do' >Login</A><span class='top_menu_sep'> </span>
+        </c:otherwise>
+      </c:choose>    
       
-      <A class='menu_link'  href='/categrp/list.do'>메뉴1</A><span class='top_menu_sep'> </span>
-      <A class='menu_link'  href='/categrp/list.do'>메뉴2</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/categrp/list.do'>카테고리 그룹</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/cate/list_all.do'>카테고리 전체 목록</A><span class='top_menu_sep'> </span>           
+      <A class='menu_link'  href='/cart/list_by_memberno.do'>장바구니</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/order_pay/list_by_memberno.do'>주문결재</A><span class='top_menu_sep'> </span> 
+      <A class='menu_link'  href='/member/create.do'>회원가입</A><span class='top_menu_sep'> </span>
 
        
     </NAV>
