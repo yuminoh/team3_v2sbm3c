@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.subcategory.SubCategoryDAOInter">
+<insert id = "sub_category_create" parameterType = "dev.mvc.subcategory.SubCategoryDAOInter">
+    INSERT INTO pd_detail_category(sub_categoryno, sub_categoryname, categoryno )
+     VALUES (sub_category_seq.nextval, #{sub_categoryname},#{categoryno})
+</insert>
+
+<select id="sub_category_list"  resultType="dev.mvc.subcategory.SubCategoryDAOInter">
+    SELECT sub_categoryno, sub_categoryname, categoryno 
+    FROM pd_detail_category 
+</select>
+
+<select id="sub_category_read"  parameterType = "int" resultType="dev.mvc.subcategory.SubCategoryDAOInter">
+    SELECT sub_categoryno, sub_categoryname, categoryno
+    FROM pd_detail_category 
+    WHERE sub_categoryno = #{sub_categoryno}
+</select>
+
+<update id="sub_category_update"  parameterType="dev.mvc.subcategory.SubCategoryDAOInter">
+    UPDATE pd_detail_category 
+    SET sub_categoryname=#{sub_categoryname} 
+    WHERE sub_categoryno=#{sub_categoryno}
+</update>
+
+<delete id="sub_category_delete" parameterType = "int">
+    DELETE FROM pd_detail_category WHERE sub_categoryno=#{sub_categoryno}
+</delete>
+
+</mapper>
