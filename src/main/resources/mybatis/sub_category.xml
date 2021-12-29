@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      VALUES (sub_category_seq.nextval, #{sub_categoryname},#{categoryno})
 </insert>
 
-<select id="sub_category_list"  resultType="dev.mvc.subcategory.SubCategoryDAOInter">
+<select id="sub_category_list"  parameterType = "HashMap" resultType="dev.mvc.subcategory.SubCategoryDAOInter">
     SELECT sub_categoryno, sub_categoryname, categoryno 
     FROM pd_detail_category 
 </select>

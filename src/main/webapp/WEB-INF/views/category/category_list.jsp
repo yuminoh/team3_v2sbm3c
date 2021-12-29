@@ -132,7 +132,24 @@ function update_read_ajax(categoryno){
       <button type="button" id='delete_cancel'  class='btn btn-primary btn-xs' style="height: 22px; margin-bottom: 3px;">취소</button>
     </FORM>
   </DIV>
-    
+  
+    <DIV style="text-align: right; clear: both;">  
+    <form name='frm' id='frm' method='GET' action='./list'>
+      <c:choose>
+        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
+          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
+        </c:when>
+        <c:otherwise> <%-- 검색하지 않는 경우 --%>
+          <input type='text' name='word' id='word' value='' style='width: 20%;'>
+        </c:otherwise>
+      </c:choose>
+      <button type='submit'>검색</button>
+      <c:if test="${param.word.length() > 0 }">
+        <button type='button' 
+                     onclick="location.href='./list'">검색 취소</button>  
+      </c:if>    
+    </form>
+  </DIV>
   <TABLE class='table table-striped'>
     <colgroup>
       <col style='width: 20%;'/>
@@ -164,7 +181,8 @@ function update_read_ajax(categoryno){
    
   </TABLE>
 </DIV>
-
+<DIV class='bottom_menu'>${paging }</DIV> <%-- 페이지 리스트 --%>
+  <!-- 페이지 목록 출력 부분 종료 -->
  
 <jsp:include page="../menu/bottom.jsp" />
 </body>
