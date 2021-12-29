@@ -36,26 +36,38 @@ public class SubCategoryProc implements SubCategoryProcInter {
 	   * @param CategoryVO
 	   * @return 성공여부
 	   */
-	public int sub_category_update(SubCategoryVO subcategoryVO);
+	public int sub_category_update(SubCategoryVO subcategoryVO) {
+		int cnt = this.SubCategoryDAO.sub_category_update(subcategoryVO);
+		return cnt;
+	};
 	
 	/**
 	   * 조회
 	   * @param 
 	   * @return 카테고리 목록
 	   */
-	public List<SubCategoryVO> sub_category_list(HashMap<String, Object> map);
+	public List<SubCategoryVO> sub_category_list(HashMap<String, Object> map){
+		List<SubCategoryVO> list = this.SubCategoryDAO.sub_category_list(map);
+		return list;
+	};
 	
 	/**
 	   * 삭제
 	   * @param 카테고리 번호
 	   * @return 삭제 성공여부
 	   */
-	public int sub_category_delete(int subcategoryno);
+	public int sub_category_delete(int subcategoryno) {
+		int cnt = this.SubCategoryDAO.sub_category_delete(subcategoryno);
+		return cnt;
+	};
 	
 	/**
 	   * 검색어를 포함한 데이터 수 조회
 	   * @param 검색어 
 	   * @return 특정 문자열을 가지고 있는 데이터의 수
 	   */
-	public int search_count(HashMap<String, Object> map);
+	public int search_count(HashMap<String, Object> map) {
+		int cnt = this.SubCategoryDAO.search_count(map);
+		return cnt;
+	};
 }
