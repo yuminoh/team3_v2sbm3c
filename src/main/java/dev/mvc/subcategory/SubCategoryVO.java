@@ -12,8 +12,10 @@ import lombok.ToString;
 */
 @Getter @Setter @ToString 
 public class SubCategoryVO {
-    //카테고리번호
+	//카테고리번호
+	private int categoryno;
+    //서브카테고리번호
     private int sub_categoryno;
-    //카테고리 이름
+    //서브카테고리 이름
     private String sub_categoryname;  
 }

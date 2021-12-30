@@ -170,7 +170,7 @@ function update_read_ajax(categoryno){
       <c:set var="categoryname" value="${category_list.categoryname }" />
       <TR>
         <TD class="td_bs">${categoryno }</TD>           
-        <TD class="td_bs"><a href="../subcategory?categoryno=${categoryno }">${categoryname }</a></TD>   
+        <TD class="td_bs"><a href="../subcategory/list_bycategory?categoryno=${categoryno }">${categoryname }</a></TD>   
         <TD class="td_bs">
           <A href="javascript:update_read_ajax(${categoryno })"  title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
           <A href="javascript:delete_read_ajax(${categoryno })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         

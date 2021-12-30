@@ -9,18 +9,65 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      VALUES (sub_category_seq.nextval, #{sub_categoryname},#{categoryno})
 </insert>
 
-<select id="sub_category_list"  parameterType = "HashMap" resultType="dev.mvc.subcategory.SubCategoryDAOInter">
-    SELECT sub_categoryno, sub_categoryname, categoryno 
-    FROM pd_detail_category 
+<select id="sub_category_list_bycategory"  parameterType ="HashMap" resultType="dev.mvc.subcategory.SubCategoryVO">
+    SELECT categoryno,sub_categoryname, sub_categoryno, r
+        FROM (
+              SELECT categoryno,sub_categoryname, sub_categoryno, rownum as r
+              FROM (
+                        SELECT categoryno,sub_categoryname, sub_categoryno
+                        FROM pd_detail_category                                                
+                            WHERE categoryno=#{categoryno} AND sub_categoryname LIKE '%' || #{word} || '%'  <!-- ||: 결합, %첫눈% -->                                                                         
+                        ORDER BY sub_categoryno DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]> 
 </select>
 
-<select id="sub_category_read"  parameterType = "int" resultType="dev.mvc.subcategory.SubCategoryDAOInter">
+<select id="sub_category_list"  parameterType ="HashMap" resultType="dev.mvc.subcategory.SubCategoryVO">
+    SELECT categoryno,sub_categoryname, sub_categoryno, r
+        FROM (
+              SELECT categoryno,sub_categoryname, sub_categoryno, rownum as r
+              FROM (
+                        SELECT categoryno,sub_categoryname, sub_categoryno
+                        FROM pd_detail_category                                                
+                            WHERE sub_categoryname LIKE '%' || #{word} || '%'  <!-- ||: 결합, %첫눈% -->                                                                         
+                        ORDER BY sub_categoryno DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]> 
+</select>
+
+<select id="sub_category_read"  parameterType = "int" resultType="dev.mvc.subcategory.SubCategoryVO">
     SELECT sub_categoryno, sub_categoryname, categoryno
     FROM pd_detail_category 
     WHERE sub_categoryno = #{sub_categoryno}
 </select>
 
-<update id="sub_category_update"  parameterType="dev.mvc.subcategory.SubCategoryDAOInter">
+<select id="search_count"  parameterType = "HashMap" resultType="int">
+   SELECT COUNT(*) as cnt FROM pd_detail_category  
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+         WHERE  sub_categoryname LIKE '%' || '%'
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+         WHERE  sub_categoryname LIKE '%'|| #{word} ||'%'
+      </otherwise>
+    </choose>
+</select>
+
+<select id="search_count_bycategory"  parameterType = "HashMap" resultType="int">
+   SELECT COUNT(*) as cnt FROM pd_detail_category  
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+         WHERE  categoryno = #{categoryno} AND sub_categoryname LIKE '%' || '%'
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+         WHERE  categoryno = #{categoryno} AND sub_categoryname LIKE '%'|| #{word} ||'%'
+      </otherwise>
+    </choose>
+</select>
+
+<update id="sub_category_update"  parameterType="dev.mvc.subcategory.SubCategoryVO">
     UPDATE pd_detail_category 
     SET sub_categoryname=#{sub_categoryname} 
     WHERE sub_categoryno=#{sub_categoryno}

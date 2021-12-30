@@ -21,6 +21,13 @@ public interface CategoryProcInter {
 	public List<CategoryVO> category_list(HashMap<String, Object> map);
 	
 	/**
+	   * 기능구현을 위한 카테고리 리스트 조회
+	   * @param 
+	   * @return 카테고리 목록
+	   */
+	public List<CategoryVO> category_list_data();
+	
+	/**
 	   * 조회
 	   * @param 카테고리 번호
 	   * @return 카테고리 목록
