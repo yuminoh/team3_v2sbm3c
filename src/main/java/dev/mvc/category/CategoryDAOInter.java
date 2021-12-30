@@ -26,11 +26,18 @@ public interface CategoryDAOInter {
 	public int category_update(CategoryVO categoryVO);
 	
 	/**
-	   * 조회
-	   * @param 
+	   * 검색어 기반조회
+	   * @param 검색어, 현재 페이지 번호
 	   * @return 카테고리 목록
 	   */
 	public List<CategoryVO> category_list(HashMap<String, Object> map);
+		
+	/**
+	   * 기능구현을 위한 카테고리 리스트 조회
+	   * @param 
+	   * @return 카테고리 목록
+	   */
+	public List<CategoryVO> category_list_data();
 	
 	/**
 	   * 삭제

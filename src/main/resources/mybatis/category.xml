@@ -23,6 +23,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]> 
 </select>
 
+<select id="category_list_data"  resultType="dev.mvc.category.CategoryVO">
+     SELECT categoryno, categoryname FROM pd_category
+</select>
+
 <select id="category_read"  parameterType = "int" resultType="dev.mvc.category.CategoryVO">
     SELECT categoryno, categoryname FROM pd_category 
     WHERE categoryno = #{categoryno}
