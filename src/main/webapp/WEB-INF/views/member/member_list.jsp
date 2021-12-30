@@ -61,7 +61,7 @@
       <TH class='th_bs'>성명</TH>
       <TH class='th_bs'>전화번호</TH>
       <TH class='th_bs'>주소</TH>
-      <TH class='th_bs'>등록일</TH>
+      <TH class='th_bs'>가입일</TH>
       <TH class='th_bs'>기타</TH>
     </TR>
    

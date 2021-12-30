@@ -204,7 +204,7 @@
       <label for="tel" class="col-md-2 control-label" style='font-size: 0.9em;'>전화번호*</label>    
       <div class="col-md-10">
         <input type='text' class="form-control" name='tel' id='tel' 
-                   value='' required="required" style='width: 30%;' placeholder="전화번호"> 예) 010-0000-0000
+                   value='' required="required" style='width: 30%;' placeholder="010-0000-0000"> 
       </div>
     </div>   
 
