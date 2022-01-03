@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.order.OrderDAOInter">
+<insert id = "cart_create" parameterType = "dev.mvc.cart.CartVO">
+    INSERT INTO cart(cartno, productno, cnt, cnttot, memberno)
+    VALUES (cart_seq.nextval, #{productno}, #{cnt}, #{cnttot}, #{memberno});
+
+</insert>
+
+
+<update id="cart_update"  parameterType="dev.mvc.cart.CartVO">
+    UPDATE cart
+    SET cnt=#{cnt}
+    WHERE cartno=#{cartno} 
+</update>
+
+<delete id="cart_delete" parameterType = "int">
+    DELETE FROM cart WHERE productno=#{productno}
+</delete>
+
+  <select id="list_by_memberno" resultType="dev.mvc.cart.CartVO" parameterType="int">
+    SELECT t.cartno, p.productno, t.memberno, t.cnt, t.cnttot 
+    FROM product p, cart t
+    WHERE (p.productno = t.productno) AND t.memberno = #{memberno}
+  </select>
+
+</mapper>
