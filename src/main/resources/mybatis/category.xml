@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.category.CategoryDAOInter">
+<insert id = "category_create" parameterType = "dev.mvc.category.CategoryVO">
+    INSERT INTO pd_category(categoryno, categoryname ) 
+    VALUES (category_seq.nextval, #{categoryname})
+</insert>
+
+<select id="category_list"  parameterType = "HashMap"  resultType="dev.mvc.category.CategoryVO">
+     SELECT categoryno, categoryname, r
+        FROM (
+              SELECT categoryno, categoryname, rownum as r
+              FROM (
+                        SELECT categoryno, categoryname
+                        FROM pd_category                                                
+                            WHERE categoryname LIKE '%' || #{word} || '%'  <!-- ||: 결합, %첫눈% -->                                                                         
+                        ORDER BY categoryno DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]> 
+</select>
+
+<select id="category_list_data"  resultType="dev.mvc.category.CategoryVO">
+     SELECT categoryno, categoryname FROM pd_category
+</select>
+
+<select id="category_read"  parameterType = "int" resultType="dev.mvc.category.CategoryVO">
+    SELECT categoryno, categoryname FROM pd_category 
+    WHERE categoryno = #{categoryno}
+</select>
+
+<update id="category_update"  parameterType="dev.mvc.category.CategoryVO">
+    UPDATE pd_category 
+    SET categoryname=#{categoryname} 
+    WHERE categoryno=#{categoryno}
+</update>
+
+<delete id="category_delete" parameterType = "int">
+    DELETE FROM pd_category WHERE categoryno=#{categoryno}
+</delete>
+
+<!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt FROM pd_category  
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+         WHERE  categoryname LIKE '%' || '%'
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+         WHERE  categoryname LIKE '%'|| #{word} ||'%'
+      </otherwise>
+    </choose>
+  </select>    
+</mapper>
