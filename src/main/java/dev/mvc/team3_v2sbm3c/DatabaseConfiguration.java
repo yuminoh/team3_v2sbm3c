@@ -18,11 +18,8 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")  // 설정 파일 위치
-<<<<<<< HEAD
-@MapperScan(basePackages= {"dev.mvc.cart"})
-=======
-@MapperScan(basePackages= {"dev.mvc.order","dev.mvc.category","dev.mvc.subcategory","dev.mvc.member"})
->>>>>>> f3d21bbf499d0fb9fe669b3506f9df5223c8c372
+@MapperScan(basePackages= {"dev.mvc.team3_v2sbm3c", "dev.mvc.cart","dev.mvc.category",
+                                        "dev.mvc.subcategory","dev.mvc.member"})
 public class DatabaseConfiguration {
     
     @Autowired

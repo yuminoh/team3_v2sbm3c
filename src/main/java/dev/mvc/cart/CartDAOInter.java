@@ -3,6 +3,7 @@ package dev.mvc.cart;
 import java.util.List;
 
 public interface CartDAOInter {
+    /*
     //등록
     public int cart_create(CartVO cartVO);
     
@@ -13,4 +14,5 @@ public interface CartDAOInter {
    public int delete(int productno);
    //수량수정
     public int cart_update(CartVO cartVO);
+    */
 }

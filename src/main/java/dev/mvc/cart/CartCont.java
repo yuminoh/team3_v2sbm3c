@@ -1,3 +1,4 @@
+
 package dev.mvc.cart;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class CartCont {
     public CartCont() {
         System.out.println("-> CartCont created.");
     }
-    
+    /*
     // http://localhost:9091/cart/create.do
     //등록
     @RequestMapping(value = "/cart/create.do", method = RequestMethod.POST)
@@ -65,7 +66,6 @@ public class CartCont {
      
       return json.toString();
     }
-    
     //회원별 목록
      //http://localhost:9091/cart/list_by_memberno.do
     @RequestMapping(value="/cart/list_by_memberno.do", method=RequestMethod.GET )
@@ -103,7 +103,7 @@ public class CartCont {
       }
       return mav;
     }
-    
+ 
    //상품 삭제   
     @RequestMapping(value="/cart/delete.do", method=RequestMethod.POST )
     public ModelAndView delete(HttpSession session,
@@ -131,8 +131,6 @@ public class CartCont {
       mav.setViewName("redirect:/cart/list_by_memberno.do");
       
       return mav;
-    }
-    
-    
+    }  
+ */   
 }
-
