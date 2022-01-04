@@ -22,6 +22,7 @@ $(function (){
 });
 
 function cancel(){	
+	$('#title').html("카테고리"); 
 	$('#panel_create').css("display","none");
 	$('#panel_update').css("display","none");
 	$('#panel_delete').css("display","none");

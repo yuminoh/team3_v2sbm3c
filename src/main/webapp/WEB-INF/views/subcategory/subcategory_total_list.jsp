@@ -22,6 +22,7 @@ $(function (){
 });
 
 function cancel(){	
+	$('#title').html("서브 카테고리");  
 	$('#panel_create').css("display","none");
 	$('#panel_update').css("display","none");
 	$('#panel_delete').css("display","none");
@@ -129,6 +130,7 @@ function category_read_ajax(){
 				var sub_categoryname = rdata.sub_categoryname;
 			 
 				var frm_delete = $('#frm_delete');
+				$('#categoryno', frm_delete).val(categoryno);
 				$('#sub_categoryno', frm_delete).val(sub_categoryno);
 				$('#sub_categoryno_output', frm_delete).html(sub_categoryno);
 				$('#sub_categoryname_output', frm_delete).html(sub_categoryname);
@@ -153,6 +155,7 @@ function category_read_ajax(){
             <label>서브 카테고리 이름</label>
             <input type='text' id='sub_categoryname' name='sub_categoryname' 'required="required" style='width: 20%;' autofocus="autofocus"> 
             <label>카테고리</label>
+            <input type="hidden" id='url' name="url" value="${url} }">
             <select id = 'category_select' name = 'categoryno'>              
                     <!--ajax요청을 통해 카테고리 목록을 입력  -->                          
             </select>    
@@ -162,10 +165,11 @@ function category_read_ajax(){
   </DIV> 
   <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
         <FORM name='frm_update' id='frm_update' method='POST' action='./update' enctype="multipart/form-data">      
-            <label>서브 카테고리 이름</label>
+            <label>서브 카테고리</label>
             <input type='text' id='sub_categoryname' name='sub_categoryname' 'required="required" style='width: 20%;' autofocus="autofocus">     
             <input type="hidden" id='sub_categoryno' name="sub_categoryno" >
-            <input type="hidden" id='categoryno' name="categoryno" >
+            <input type="hidden" id='url' name="url" value="${url} }">
+            <label>카테고리</label>
             <select id = 'category_update_select' name = 'categoryno'>              
                     <!--ajax요청을 통해 카테고리 목록을 입력  -->                          
             </select>
@@ -178,6 +182,8 @@ function category_read_ajax(){
     <div class="msg_warning">삭제하면 복구 할 수 없습니다.</div>
     <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete'>
       <input type='hidden' name='sub_categoryno' id='sub_categoryno' '>
+      <input type='hidden' name='categoryno' id='categoryno' '>
+      <input type="hidden" id='url' name="url" value="${url} }">
        <label>서브 카테고리 번호</label>:<span id='sub_categoryno_output'></span> 
       <label>서브 카테고리 이름</label>:<span id='sub_categoryname_output'></span> 
       
@@ -225,8 +231,9 @@ function category_read_ajax(){
       <c:set var="sub_categoryno" value="${sub_category_list.sub_categoryno }" />
       <c:set var="sub_categoryname" value="${sub_category_list.sub_categoryname }" />
       <TR>
-        <TD class="td_bs">${categoryno }</TD>           
-        <TD class="td_bs"><a href="../subcategory?sub_categoryno=${sub_categoryno }">${sub_categoryname }</a></TD>   
+        <TD class="td_bs">${categoryno }</TD>  
+        <TD class="td_bs">${sub_categoryno }</TD>         
+        <TD class="td_bs">${sub_categoryname }</TD>   
         <TD class="td_bs">
           <A href="javascript:update_read_ajax(${sub_categoryno })"  title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
           <A href="javascript:delete_read_ajax(${sub_categoryno })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         

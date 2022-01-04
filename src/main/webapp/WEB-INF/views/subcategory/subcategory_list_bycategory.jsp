@@ -22,6 +22,7 @@ $(function (){
 });
 
 function cancel(){	
+	$('#title').html("서브 카테고리"); 
 	$('#panel_create').css("display","none");
 	$('#panel_update').css("display","none");
 	$('#panel_delete').css("display","none");
@@ -75,7 +76,6 @@ function category_read_ajax(){
 			html += categorydata[i].categoryname + "</option>";
 		}
 		html += "</select>";
-		console.log(html);
 		return html;
 	}
 
@@ -129,6 +129,7 @@ function category_read_ajax(){
 				var sub_categoryname = rdata.sub_categoryname;
 			 
 				var frm_delete = $('#frm_delete');
+				$('#categoryno', frm_delete).val(categoryno);
 				$('#sub_categoryno', frm_delete).val(sub_categoryno);
 				$('#sub_categoryno_output', frm_delete).html(sub_categoryno);
 				$('#sub_categoryname_output', frm_delete).html(sub_categoryname);
@@ -145,13 +146,14 @@ function category_read_ajax(){
 <body>
 <jsp:include page="../menu/top.jsp" />
  
-<DIV class='title_line' id = 'title'>서브 카테고리(CRUD아직 미구현)</DIV>
+<DIV class='title_line' id = 'title'>카테고리>${categoryname}</DIV>
 
 <DIV class='content_body'>
 <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
         <FORM name='frm_create' id='frm_create' method='POST' action='./create' enctype="multipart/form-data">      
             <label>서브 카테고리 이름</label>
             <input type='text' id='sub_categoryname' name='sub_categoryname' 'required="required" style='width: 20%;' autofocus="autofocus"> 
+            <input type="hidden" id='url' name="url" value="${url} }">
             <label>카테고리</label>
             <select id = 'category_select' name = 'categoryno'>              
                     <!--ajax요청을 통해 카테고리 목록을 입력  -->                          
@@ -165,7 +167,7 @@ function category_read_ajax(){
             <label>서브 카테고리 이름</label>
             <input type='text' id='sub_categoryname' name='sub_categoryname' 'required="required" style='width: 20%;' autofocus="autofocus">     
             <input type="hidden" id='sub_categoryno' name="sub_categoryno" >
-            <input type="hidden" id='categoryno' name="categoryno" >
+            <input type="hidden" id='url' name="url" value="${url} }">
             <select id = 'category_update_select' name = 'categoryno'>              
                     <!--ajax요청을 통해 카테고리 목록을 입력  -->                          
             </select>
@@ -178,6 +180,8 @@ function category_read_ajax(){
     <div class="msg_warning">삭제하면 복구 할 수 없습니다.</div>
     <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete'>
       <input type='hidden' name='sub_categoryno' id='sub_categoryno' '>
+      <input type='hidden' name='categoryno' id='categoryno' '>
+       <input type="hidden" id='url' name="url" value="${url} }">
        <label>서브 카테고리 번호</label>:<span id='sub_categoryno_output'></span> 
       <label>서브 카테고리 이름</label>:<span id='sub_categoryname_output'></span> 
       
@@ -204,16 +208,14 @@ function category_read_ajax(){
     </form>
   </DIV>
   <TABLE class='table table-striped'>
-    <colgroup>
+    <colgroup>   
       <col style='width: 20%;'/>
-      <col style='width: 40%;'/>
       <col style='width: 30%;'/>
        <col style='width: 10%;'/>
     </colgroup>
    
     <thead>  
-    <TR>
-      <TH class="th_bs">카테고리 번호</TH>
+    <TR>     
       <TH class="th_bs">서브 카테고리 번호</TH>
       <TH class="th_bs">서브 카테고리</TH>
       <TH class="th_bs"> <A href="javascript:create_ajax()" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A></TH>
@@ -224,9 +226,9 @@ function category_read_ajax(){
      <c:set var="categoryno" value="${sub_category_list.categoryno }" />   
       <c:set var="sub_categoryno" value="${sub_category_list.sub_categoryno }" />
       <c:set var="sub_categoryname" value="${sub_category_list.sub_categoryname }" />
-      <TR>
-        <TD class="td_bs">${categoryno }</TD>           
-        <TD class="td_bs"><a href="../subcategory?sub_categoryno=${sub_categoryno }">${sub_categoryname }</a></TD>   
+      <TR>      
+        <TD class="td_bs">${sub_categoryno }</TD>            
+        <TD class="td_bs"><a href="../products/list?sub_categoryno=${sub_categoryno }">${sub_categoryname }</a></TD>   
         <TD class="td_bs">
           <A href="javascript:update_read_ajax(${sub_categoryno })"  title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
           <A href="javascript:delete_read_ajax(${sub_categoryno })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         

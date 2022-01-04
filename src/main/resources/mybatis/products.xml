@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.products.ProductsDAOInter">
+
+<insert id="create"  parameterType = "dev.mvc.products.ProductsVO">
+INSERT INTO products(productno, productname, categoryno, sub_categoryno, product_price, product_Explanation, pddate, pdimagefile1) 
+VALUES (products_seq.nextval, #{productname}, #{categoryno}, #{sub_categoryno}, #{product_price}, #{product_Explanation}, sysdate, #{pdimagefile1})
+</insert>
+
+<select id = "products_list"  parameterType="HashMap"  resultType="dev.mvc.products.ProductsVO">
+SELECT productno, productname, categoryno, sub_categoryno, product_price, product_Explanation, pddate, pdimagefile1, r
+    FROM (
+        SELECT productno, productname, categoryno, sub_categoryno, product_price, product_Explanation, pddate, pdimagefile1, rownum as r
+        FROM (
+            SELECT productno, productname, categoryno, sub_categoryno, product_price, product_Explanation, pddate, pdimagefile1
+            FROM products
+                WHERE sub_categoryno = #{sub_categoryno} AND productname LIKE '%' || #{word} || '%' 
+            ORDER BY sub_categoryno DESC
+        )
+)
+</select>
+
+<select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt FROM products  
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+         WHERE  sub_categoryno = #{sub_categoryno} AND productname LIKE '%' || '%'
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+         WHERE sub_categoryno = #{sub_categoryno} AND productname LIKE '%'|| #{word} ||'%'
+      </otherwise>
+    </choose>
+  </select> 
+
+</mapper>
