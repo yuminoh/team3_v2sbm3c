@@ -16,4 +16,31 @@ public interface ProductsProcInter {
 	public String pagingBox(int search_count, int now_page, String word);
 	
 	public int create(ProductsVO productsVO);
+	/**
+	   * 상품 정보 조회
+	   * @param 상품번호
+	   * @return 상품 정보
+	   */
+	public ProductsVO product_read(int productno);
+	
+	/**
+	   * 상품 정보 수정
+	   * @param 상품정보
+	   * @return 수정 성공여부
+	   */
+	public int product_update(ProductsVO productsVO);
+	
+	/**
+	   * 상품 이미지 수정
+	   * @param 이미지 명
+	   * @return 수정 성공여부
+	   */
+	public int product_update_file(HashMap map);
+	
+	/**
+	   * 상품 정보 삭제
+	   * @param 상품번호
+	   * @return 삭제 성공여부
+	   */
+	public int product_delete(int productno);
 }

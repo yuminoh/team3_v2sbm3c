@@ -17,7 +17,7 @@ public class Products {
       if (File.separator.equals("\\")) {
           path = "C:/kd1/deploy/products/storage/";
           // System.out.println("Windows 10: " + path);
-          
+          //C:/kd1/deploy/products/storage/       파일 저장 경로
       } else {
           // System.out.println("Linux");
           path = "/home/ubuntu/deploy/products/storage/";

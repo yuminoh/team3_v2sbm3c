@@ -35,4 +35,27 @@ SELECT productno, productname, categoryno, sub_categoryno, product_price, produc
     </choose>
   </select> 
 
+<select id="product_read"  parameterType = "int"  resultType = "dev.mvc.products.ProductsVO">
+    SELECT productno, productname, categoryno, sub_categoryno, product_price, product_Explanation, pddate, pdimagefile1 
+    FROM products WHERE productno=#{productno}
+</select>
+
+<update id="product_update"  parameterType = "dev.mvc.products.ProductsVO"  >
+    UPDATE products SET  productname=#{productname}, 
+                                    categoryno=#{categoryno}, 
+                                    sub_categoryno=#{sub_categoryno}, 
+                                    product_price=#{product_price},
+                                    product_Explanation=#{product_Explanation}, 
+                                    pddate= sysdate 
+                                    WHERE productno=#{productno}
+</update>
+
+<update id="product_update_file"  parameterType = "HashMap"  >
+    UPDATE products SET  pdimagefile1 =#{pdimagefile1}
+                WHERE productno=#{productno}
+</update>
+
+<delete id="product_delete"  parameterType = "int"  >
+    DELETE FROM products WHERE productno = #{productno}
+</delete>
 </mapper>

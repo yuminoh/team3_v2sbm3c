@@ -58,10 +58,9 @@ public class Download extends javax.servlet.http.HttpServlet {
     ServletContext ctx = config.getServletContext();
 
     // 저장 폴더를 절대 경로로 변환
-    String dir = request.getParameter("dir");
-
-    // 완성된 경로 F:/ai6/ws_frame/resort_v1sbm3a/src/main/resources/static/contents/storage/main_images
-    dir =  System.getProperty("user.dir") + "/src/main/resources/static" + dir; // 절대 경로
+    String dir ="C:/kd1/deploy/"+ request.getParameter("dir");
+    System.out.println(dir);
+    // 완성된 경로 F:/ai6/ws_frame/resort_v1sbm3a/src/main/resources/static/contents/storage/main_images // 절대 경로
     System.out.println("-> 수정된 dir: " + dir);
 
     // 실제 웹사이트 서버에 저장된 파일명: file1saved

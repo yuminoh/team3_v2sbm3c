@@ -6,7 +6,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Mukjang</title>
+<title>편의점 재고관리</title>
 <%-- /static/css/style.css --%> 
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 
@@ -29,9 +29,24 @@
             <span class="span_success">새로운 상품 [${menu }] 등록에 성공했습니다.</span>
           </LI>                                                                      
         </c:when>
-        <c:when test="${code == 'update_complete'}"> <%-- Java if --%>
+        <c:when test="${code == 'update_success'}"> <%-- Java if --%>
           <LI class='li_none'>
             <span class="span_success">상품 수정에 성공했습니다.</span>
+          </LI>                                                                      
+        </c:when>
+        <c:when test="${code == 'update_failed'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_success">상품 수정에 실패했습니다.</span>
+          </LI>                                                                      
+        </c:when>
+        <c:when test="${code == 'file_update_success'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_success">상품 이미지 수정에 성공했습니다.</span>
+          </LI>                                                                      
+        </c:when>
+        <c:when test="${code == 'file_update_failed'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_success">상품 이미지 수정에 실패했습니다.</span>
           </LI>                                                                      
         </c:when>
         <c:when test="${code == 'nomanager'}"> <%-- Java if --%>
@@ -39,14 +54,14 @@
             <span class="span_success">생성권한이 없습니다.</span>
           </LI>                                                                      
         </c:when>
-        <c:when test="${cnt == 1}"> <%-- Java if --%>
+        <c:when test="${code == 'delete_success'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_success">[${menu }] 메뉴 삭제에 성공했습니다.</span>
+            <span class="span_success">상품 삭제에 성공했습니다.</span>
           </LI>                                                                      
         </c:when>        
-        <c:when test="${cnt == 0}"> <%-- Java if --%>
+        <c:when test="${code == 'delete_failed'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_fail">[${menu }] 메뉴 삭제에 실패했습니다.</span>
+            <span class="span_fail">상품 삭제에 실패했습니다.</span>
           </LI>                                                                      
         </c:when> 
         <c:otherwise>

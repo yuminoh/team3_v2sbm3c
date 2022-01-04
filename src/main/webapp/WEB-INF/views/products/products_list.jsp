@@ -64,15 +64,19 @@ function cancel(){
 <body>
 <jsp:include page="../menu/top.jsp" />
  
-<DIV class='title_line' id = 'title'>카테고리>${categoryname}</DIV>
-
+<DIV class='title_line' id = 'title'>${categoryname}>${sub_categoryname} </DIV>
+<DIV style = "float:right;"></DIV>
 <DIV class='content_body'>
-    
+    <ASIDE class="aside_right">
+   <A class ="float:right; " href="/products/create?sub_categoryno=${sub_categoryno}" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A>
+    <span class='menu_divide' >│</span>
+    <A href="javascript:location.reload();">새로고침</A><br>
+  </ASIDE> 
+
    <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display:none;'>
     <div class="msg_warning">삭제하면 복구 할 수 없습니다.</div>
     <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete'>
       <input type='hidden' name='sub_categoryno' id='sub_categoryno' '>
-      <input type='hidden' name='categoryno' id='categoryno' '>
        <input type="hidden" id='url' name="url" value="${url} }">
        <label>서브 카테고리 번호</label>:<span id='sub_categoryno_output'></span> 
       <label>서브 카테고리 이름</label>:<span id='sub_categoryname_output'></span> 
@@ -86,20 +90,22 @@ function cancel(){
     <form name='frm' id='frm' method='GET' action='./list'>
       <c:choose>
         <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
+          <input type='hidden' name='sub_categoryno' id='sub_categoryno' value='${sub_categoryno }' >
           <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
         </c:when>
         <c:otherwise> <%-- 검색하지 않는 경우 --%>
+           <input type='hidden' name='sub_categoryno' id='sub_categoryno' value='${sub_categoryno }' >
           <input type='text' name='word' id='word' value='' style='width: 20%;'>
         </c:otherwise>
       </c:choose>
       <button type='submit'>검색</button>
       <c:if test="${param.word.length() > 0 }">
         <button type='button' 
-                     onclick="location.href='./list'">검색 취소</button>  
+                     onclick="location.href='./list?sub_categoryno=${sub_categoryno}'">검색 취소</button>  
       </c:if>    
     </form>
   </DIV>
-  <DIV style = "float:right;"><A class ="float:right; " href="/products/create?sub_categoryno=${sub_categoryno}" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A></DIV>
+  
  <DIV>
         
         <HR class='menu_line'>
@@ -107,6 +113,7 @@ function cancel(){
         <c:set var="categoryno" value="${products_list.categoryno }" />   
         <c:set var="sub_categoryno" value="${products_list.sub_categoryno }" />
         <c:set var="productname" value="${products_list.productname }" />
+        <c:set var="productno" value="${products_list.productno }" />
         <c:set var="productimage" value="${products_list.pdimagefile1 }" />
            <!-- 하나의 이미지, 24 * 4 = 96% -->
       <DIV class='prod_style'>
@@ -114,7 +121,7 @@ function cancel(){
           <c:when test="${productimage != null}"> <!-- 파일이 존재하면 -->
             <c:choose> 
               <c:when test="${productimage.endsWith('jpg') || productimage.endsWith('png') || productimage.endsWith('gif')}"> <!-- 이미지 인경우 -->
-                <a href="/menu/menu_list.do?restnum=${restnum }">                          
+                <a href="/products/read?productno=${productno }">                          
                   <IMG src="/products/storage/${productimage}" style='width: 100%; height: 150px;'>
                 </a><br>
                 ${productname} <br>
@@ -133,7 +140,7 @@ function cancel(){
             </c:choose>
           </c:when>
           <c:otherwise> <%-- 파일이 없는 경우 기본 이미지 출력 --%>
-            <a href="./read.do?contentsno=">
+            <a href="/products/read?productno=${productno }">
               <img src='/products/none1.png' style='width: 100%; height: 150px;'>
             </a><br>
             이미지를 등록해주세요.

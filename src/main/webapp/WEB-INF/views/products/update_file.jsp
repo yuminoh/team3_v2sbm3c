@@ -2,14 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="categoryno" value="${productsVO.categoryno }" />
-<c:set var="sub_categoryno" value="${productsVO.sub_categoryno }" />
-<c:set var="productname" value="${productsVO.productname }" />   
-<c:set var="product_price" value="${productsVO.product_price }" />     
-<c:set var="productno" value="${productsVO.productno }" />
-<c:set var="product_Explanation" value="${productsVO.product_Explanation }" />
-<c:set var="pdimagefile1" value="${productsVO.pdimagefile1 }" />
-
+<c:set var="productno" value="${productVO.productno }" />
+<c:set var="sub_categoryno" value="${productVO.sub_categoryno }" />
+<c:set var="productname" value="${productVO.productname }" />
+<c:set var="pdimagefile1" value="${productVO.pdimagefile1 }" />
  
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -30,10 +26,10 @@
   $(function(){
 	  $('#panel_delete').on('click',cancel);
   });
-
+  
   function cancel(){    
-	    $('#panel_delete').css("display","none");
-	}
+      $('#panel_delete').css("display","none");
+  }
   
   function delete_read_ajax(productno){     
       $('#panel_delete').css("display","");
@@ -70,9 +66,9 @@
 <jsp:include page="../menu/top.jsp" flush='false' />
  
 <DIV class='title_line'>
-  <A href="../category/list" class='title_link'>${categoryname } </A> >
-  <A href="../cate/list_by_categrpno.do?categrpno=${categrpVO.categrpno }" class='title_link'>${sub_categoryname }</A> >
-  <A href="./list_by_cateno_search_paging.do?cateno=" class='title_link'>${productname }</A>
+  <A href="../categrp/list.do" class='title_link'>카테고리 그룹</A> > 
+  <A href="../cate/list_by_categrpno.do?categrpno=${categrpVO.categrpno }" class='title_link'>${categrpVO.name }</A> >
+  <A href="./list_by_cateno_search_paging.do?cateno=${cateVO.cateno }" class='title_link'>${cateVO.name }</A>
 </DIV>
 
 <DIV class='content_body'>
@@ -88,17 +84,10 @@
     <A href="javascript:delete_read_ajax(${productno })" title="삭제">삭제</A>  
   </ASIDE> 
   
-  <DIV style="text-align: right; clear: both;">  
+    <DIV style="text-align: right; clear: both;">  
     <form name='frm' id='frm' method='get' action='./list_by_cateno_search.do'>
-      <input type='hidden' name='categoryno' value='${categoryno }'>
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
+      <input type='hidden' name='cateno' value='${cateVO.cateno }'>
+      <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
       <button type='submit'>검색</button>
       <c:if test="${param.word.length() > 0 }">
         <button type='button' 
@@ -107,8 +96,7 @@
     </form>
   </DIV>
   
-  <DIV class='menu_line'></DIV>
-<DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display:none;'>
+  <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display:none;'>
     <div class="msg_warning">삭제하면 복구 할 수 없습니다.</div>
     <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete'>
       <input type='hidden' name='productno' id='productno' '>
@@ -121,46 +109,46 @@
     </FORM>
   </DIV>
   
+  <DIV class='menu_line'></DIV>
+
   <fieldset class="fieldset_basic">
     <ul>
       <li class="li_none">
-        <c:set var="pdimagefile1" value="${pdimagefile1.toLowerCase() }" />
-        <DIV style="width: 50%; float: left; margin-right: 10px;">
-            <c:choose>
-              <c:when test="${pdimagefile1.endsWith('jpg') || pdimagefile1.endsWith('png') || pdimagefile1.endsWith('gif')}">
-                <%-- /static/contents/storage/ --%>
-                <IMG src="/products/storage/${pdimagefile1 }" style="width: 100%;"> 
-              </c:when>
-              <c:otherwise> <!-- 기본 이미지 출력 -->
-                <IMG src="/contents/images/none1.png" style="width: 100%;"> 
-              </c:otherwise>
-            </c:choose>
+        <DIV style='text-align: center; width: 50%; float: left;'>
+          <c:set var="file1saved" value="${contentsVO.file1saved.toLowerCase() }" />
+          <c:set var="thumb1" value="${contentsVO.thumb1 }" />
+          <c:choose>
+            <c:when test="${pdimagefile1.endsWith('jpg') || pdimagefile1.endsWith('png') || pdimagefile1.endsWith('gif')}">
+              <IMG src="/products/storage/${pdimagefile1 }" style='width: 90%;'> 
+            </c:when>
+            <c:otherwise> <!-- 이미지가 없음 -->
+               <IMG src="/products/none1.png" style="width: 90%;"> 
+            </c:otherwise>
+          </c:choose>
+          
         </DIV>
-        <DIV style="width: 47%; height: 260px; float: left; margin-right: 10px; margin-bottom: 30px;">
-          <span style="font-size: 2.0em; font-weight: bold;">${product_Explanation}  </span></br>      
-          <span style="font-size: 1.5em; font-weight: bold;"><fmt:formatNumber value="${product_price}" pattern="#,###" /> 원</span><br>
 
-          <span style="font-size: 1.0em;">수량</span><br>
-          <form>
-          <input type='number' name='ordercnt' value='1' required="required" 
-                     min="1" max="99999" step="1" class="form-control" style='width: 30%;'><br>
-          <button type='button' onclick="" class="btn btn-info">장바 구니</button>           
-          <button type='button' onclick="" class="btn btn-info">바로 구매</button>
-          <span id="span_animation"></span>
-          </form>
-        </DIV> 
-
-        <DIV>${content }</DIV>
+        <DIV style='text-align: left; width: 47%; float: left;'>
+          <span style='font-size: 1.5em;'>${title}</span>
+          <br>
+          <FORM name='frm' method='POST' action='./update_file' 
+              enctype="multipart/form-data">
+            <input type="hidden" name="productno" value="${productno }">  
+            <input type="hidden" name="sub_categoryno" value="${sub_categoryno }"> 
+            <input type="hidden" name="productname" value="${productname }">                        
+            <br><br> 
+            변경 이미지 선택<br>  
+            <input type='file' name='file1M1' id='file1M1' value='' placeholder="파일 선택"><br>            
+            <br>
+            <div style='margin-top: 20px; clear: both;'>  
+              <button type="submit" class="btn btn-primary">파일 변경 처리</button>
+              <button type="button" onclick="history.back();" class="btn btn-primary">취소</button>
+            </div>  
+          </FORM>
+        </DIV>
       </li>
       <li class="li_none">
-        
-      </li>
-      <li class="li_none">
-        <DIV>
-          <c:if test="${pdimagefile1.trim().length() > 0 }">
-            첨부 파일: <A href='/download?dir=/products/storage&filename=${pdimagefile1}&downname=${pdimagefile1}'>${pdimagefile1}</A>  
-          </c:if>
-        </DIV>
+
       </li>   
     </ul>
   </fieldset>
@@ -171,4 +159,5 @@
 </body>
  
 </html>
+
 
