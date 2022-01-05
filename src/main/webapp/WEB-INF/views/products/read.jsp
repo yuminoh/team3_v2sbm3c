@@ -27,6 +27,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     
 <script type="text/javascript">
+  $(function() {
+      $('#btn_login').on('click', login_ajax);
+      $('#btn_loadDefault').on('click', loadDefault);
+  });
+  
   $(function(){
 	  $('#panel_delete').on('click',cancel);
   });
@@ -62,6 +67,111 @@
           }
       );  //ajax END
    }  
+  
+  function loadDefault() {
+	    $('#id').val('user1');
+	    $('#passwd').val('1234');
+  }
+
+  <%-- 로그인 --%>
+  function login_ajax() {
+    var params = "";
+    params = $('#frm_login').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
+    // params += '&${ _csrf.parameterName }=${ _csrf.token }';
+    // console.log(params);
+    // return;
+    
+    $.ajax(
+      {
+        url: '/member/login_ajax.do',
+        type: 'post',  // get, post
+        cache: false, // 응답 결과 임시 저장 취소
+        async: true,  // true: 비동기 통신
+        dataType: 'json', // 응답 형식: json, html, xml...
+        data: params,      // 데이터
+        success: function(rdata) { // 응답이 온경우
+          var str = '';
+          console.log('-> login cnt: ' + rdata.cnt);  // 1: 로그인 성공
+          
+          if (rdata.cnt == 1) {
+            // 쇼핑카트에 insert 처리 Ajax 호출
+            $('#div_login').hide();
+            alert('로그인 성공');
+            $('#login_yn').val('YES');
+            cart_ajax_post();
+            
+          } else {
+            alert('로그인에 실패했습니다.<br>잠시후 다시 시도해주세요.');
+            
+          }
+        },
+        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+        error: function(request, status, error) { // callback 함수
+          console.log(error);
+        }
+      }
+    );  //  $.ajax END
+  }
+
+  <%-- 쇼핑 카트에 상품 추가 --%>
+  function cart_ajax(contentsno) {
+    var f = $('#frm_login');
+    $('#productno', f).val(productno);  // 쇼핑카트 등록시 사용할 상품 번호를 저장.
+    
+    console.log('-> productno: ' + $('#productno', f).val()); 
+    
+    if ('${sessionScope.id}' != '' || $('#login_yn').val() == 'YES') {  // 로그인이 안되어 있다면
+        cart_ajax_post();
+             
+    } else {  // 로그인 안한 경우
+    	$('#div_login').show();   // 쇼핑카트에 insert 처리 Ajax 호출 
+    }
+
+  }
+
+  <%-- 쇼핑카트 상품 등록 --%>
+  function cart_ajax_post() {
+    var f = $('#frm_login');
+    var productno = $('#productno', f).val();  // 쇼핑카트 등록시 사용할 상품 번호.
+    
+    var params = "";
+    // params = $('#frm_login').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
+    params += 'productno=' + productno;
+    params += '&${ _csrf.parameterName }=${ _csrf.token }';
+    console.log('-> cart_ajax_post: ' + params);
+    // return;
+    
+    $.ajax(
+      {
+        url: '/cart/create.do',
+        type: 'post',  // get, post
+        cache: false, // 응답 결과 임시 저장 취소
+        async: true,  // true: 비동기 통신
+        dataType: 'json', // 응답 형식: json, html, xml...
+        data: params,      // 데이터
+        success: function(rdata) { // 응답이 온경우
+          var str = '';
+          console.log('-> cart_ajax_post cnt: ' + rdata.cnt);  // 1: 쇼핑카트 등록 성공
+          
+          if (rdata.cnt == 1) {
+            var sw = confirm('선택한 상품이 장바구니에 담겼습니다.\n장바구니로 이동하시겠습니까?');
+            if (sw == true) {
+              // 쇼핑카트로 이동
+              location.href='/cart/list_by_memberno.do';
+            }           
+          } else {
+            alert('선택한 상품을 장바구니에 담지못했습니다.<br>잠시후 다시 시도해주세요.');
+          }
+        },
+        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+        error: function(request, status, error) { // callback 함수
+          console.log(error);
+        }
+      }
+    );  //  $.ajax END
+
+  }
+   
 </script>
  
 </head> 
@@ -108,6 +218,53 @@
   </DIV>
   
   <DIV class='menu_line'></DIV>
+  
+  <%-- ******************** Ajax 기반 로그인 폼 시작 ******************** --%>
+  <DIV id='div_login' style='width: 80%; margin: 0px auto; display: none;'>
+    <FORM name='frm_login' id='frm_login' method='POST' action='/member/login_ajax.do' class="form-horizontal">
+      <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
+      <input type="hidden" name="productno" id="productno" value="productno">
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" style='font-size: 0.8em;'>아이디</label>    
+        <div class="col-md-8">
+          <input type='text' class="form-control" name='id' id='id' 
+                     value='${ck_id }' required="required" 
+                     style='width: 30%;' placeholder="아이디" autofocus="autofocus">
+          <Label>   
+            <input type='checkbox' name='id_save' value='Y' 
+                      ${ck_id_save == 'Y' ? "checked='checked'" : "" }> 저장
+          </Label>                   
+        </div>
+   
+      </div>   
+   
+      <div class="form-group">
+        <label class="col-md-4 control-label" style='font-size: 0.8em;'>패스워드</label>    
+        <div class="col-md-8">
+          <input type='password' class="form-control" name='passwd' id='passwd' 
+                    value='${ck_passwd }' required="required" style='width: 30%;' placeholder="패스워드">
+          <Label>
+            <input type='checkbox' name='passwd_save' value='Y' 
+                      ${ck_passwd_save == 'Y' ? "checked='checked'" : "" }> 저장
+          </Label>
+        </div>
+      </div>   
+   
+      <div class="form-group">
+        <div class="col-md-offset-4 col-md-8">
+          <button type="button" id='btn_login' class="btn btn-primary btn-md">로그인</button>
+          <button type='button' onclick="location.href='./create.do'" class="btn btn-primary btn-md">회원가입</button>
+          <button type='button' id='btn_loadDefault' class="btn btn-primary btn-md">테스트 계정</button>
+          <button type='button' id='btn_cancel' class="btn btn-primary btn-md"
+                      onclick="$('#div_login').hide();">취소</button>
+        </div>
+      </div>   
+      
+    </FORM>
+  </DIV>
+  <%-- ******************** Ajax 기반 로그인 폼 종료 ******************** --%>
+  
 <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display:none;'>
     <div class="msg_warning">삭제하면 복구 할 수 없습니다.</div>
     <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete'>
@@ -144,7 +301,7 @@
           <form>
           <input type='number' name='ordercnt' value='1' required="required" 
                      min="1" max="99999" step="1" class="form-control" style='width: 30%;'><br>
-          <button type='button' onclick="" class="btn btn-info">장바 구니</button>           
+          <button type='button' onclick="cart_ajax(${productno })" class="btn btn-info">장바 구니</button>           
           <button type='button' onclick="" class="btn btn-info">바로 구매</button>
           <span id="span_animation"></span>
           </form>

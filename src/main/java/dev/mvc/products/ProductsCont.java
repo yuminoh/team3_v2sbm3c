@@ -3,6 +3,7 @@ package dev.mvc.products;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
@@ -124,9 +125,13 @@ public class ProductsCont {
         }
     	return mav; // forward
     };
-    
+    //
     @RequestMapping(value = "/products/read", method = RequestMethod.GET)
+<<<<<<< HEAD
     public ModelAndView products_read(HttpServletRequest request,int productno){
+=======
+    public ModelAndView products_read(int productno, HttpServletRequest request){
+>>>>>>> yoonho
     	ModelAndView mav = new ModelAndView();
     	ProductsVO productsVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	CategoryVO categoryVO =  this.CategoryProc.category_read(productsVO.getCategoryno());
@@ -137,6 +142,41 @@ public class ProductsCont {
     	mav.addObject("categoryname",categoryVO.getCategoryname());
     	mav.addObject("productsVO",productsVO);
     	mav.setViewName("/products/read");
+    	 // -------------------------------------------------------------------------------
+        // 쇼핑 카트 장바구니에 상품 등록전 로그인 폼 출력 관련 쿠기  
+        // -------------------------------------------------------------------------------
+        Cookie[] cookies = request.getCookies();
+        Cookie cookie = null;
+
+        String ck_id = ""; // id 저장
+        String ck_id_save = ""; // id 저장 여부를 체크
+        String ck_passwd = ""; // passwd 저장
+        String ck_passwd_save = ""; // passwd 저장 여부를 체크
+
+        if (cookies != null) {  // Cookie 변수가 있다면
+          for (int i=0; i < cookies.length; i++){
+            cookie = cookies[i]; // 쿠키 객체 추출
+            
+            if (cookie.getName().equals("ck_id")){
+              ck_id = cookie.getValue();                                 // Cookie에 저장된 id
+            }else if(cookie.getName().equals("ck_id_save")){
+              ck_id_save = cookie.getValue();                          // Cookie에 id를 저장 할 것인지의 여부, Y, N
+            }else if (cookie.getName().equals("ck_passwd")){
+              ck_passwd = cookie.getValue();                          // Cookie에 저장된 password
+            }else if(cookie.getName().equals("ck_passwd_save")){
+              ck_passwd_save = cookie.getValue();                  // Cookie에 password를 저장 할 것인지의 여부, Y, N
+            }
+          }
+        }
+        
+        System.out.println("-> ck_id: " + ck_id);
+        
+        mav.addObject("ck_id", ck_id); 
+        mav.addObject("ck_id_save", ck_id_save);
+        mav.addObject("ck_passwd", ck_passwd);
+        mav.addObject("ck_passwd_save", ck_passwd_save);
+        // -------------------------------------------------------------------------------
+        
     	return mav; // forward
     };
     
