@@ -11,10 +11,10 @@
       
       <c:choose>
         <c:when test="${sessionScope.id != null}"> <%-- 로그인 한 경우 --%>
-           ${sessionScope.id } <A class='menu_link'  href='/member/logout.do' >Logout</A><span class='top_menu_sep'> </span>
+           ${sessionScope.id } <A class='menu_link'  href='/member/logout.do' >로그아웃</A><span class='top_menu_sep'> </span>
         </c:when>
         <c:otherwise>
-          <A class='menu_link'  href='/member/login.do' >Login</A><span class='top_menu_sep'> </span>
+          <A class='menu_link'  href='/member/login.do' >로그인</A><span class='top_menu_sep'> </span>
         </c:otherwise>
       </c:choose>    
       

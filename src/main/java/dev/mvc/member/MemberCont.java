@@ -538,7 +538,11 @@ public class MemberCont {
 
       mav.setViewName("/member/list"); // /webapp/WEB-INF/views/member/list.jsp
      
-    } else {
+    } else if(this.memberProc.isMember(session)) { // 일반회원 일때
+      mav.addObject("url", "/member/admin_need");
+      
+      mav.setViewName("redirect:/member/msg.do");     
+    } else { // 비회원 일때
       mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용
       
       mav.setViewName("redirect:/member/msg.do");      
