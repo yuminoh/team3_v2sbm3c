@@ -31,12 +31,10 @@
     <H3>관리 권한이 없습니다.</H3>
     <H5>(관리자 이용 가능)</H5>
     <BR><BR>
+  
     <button type='button' 
-                 onclick="location.href='/member/login.do'" 
-                 class="btn btn-info">로그인</button>       
-    <button type='button' 
-                 onclick="location.href='/member/create.do'" 
-                 class="btn btn-info">회원 가입</button>       
+                 onclick="location.href='/'" 
+                 class="btn btn-info">돌아가기</button>       
 
   </DIV>
  
