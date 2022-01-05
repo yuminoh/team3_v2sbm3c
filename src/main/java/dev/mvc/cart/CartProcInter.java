@@ -3,9 +3,9 @@ package dev.mvc.cart;
 import java.util.List;
 
 public interface CartProcInter {
-    /*
+    
   //등록
-    public int create(CartVO cartVO);
+    public int cart_create(CartVO cartVO);
     
     //memberno 회원 번호별 쇼핑카트 목록 출력
     public List<CartVO> list_by_memberno(int memberno);
@@ -14,5 +14,5 @@ public interface CartProcInter {
    public int delete(int productno);
    //수량수정
     public int cart_update(CartVO cartVO);
-    */
+    
 }

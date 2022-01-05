@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.order_pay.Order_payDAOInter">
+
+  <insert id="create" parameterType="dev.mvc.order_pay.Order_payVO">
+    INSERT INTO order_pay(payno, memberno, paytype, total, rdate, store, zipcode, address1, address2, tel, codeno, cartno)
+    VALUES(pay_seq.nextval, #{memberno}, #{paytype}, #{total}, sysdate, #{store}, #{zipcode}, #{address1}, #{address2}, #{tel}, #{codeno}, #{cartno})
+  </insert> 
+
+</mapper>

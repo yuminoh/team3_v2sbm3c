@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 public class CartProc implements CartProcInter {
     @Autowired 
     private CartDAOInter cartDAO;
-    /*
+    
     @Override
-    public int create(CartVO cartVO) {
+    public int cart_create(CartVO cartVO) {
         int cnt = cartDAO.cart_create(cartVO);
         
         return cnt;
@@ -35,5 +35,5 @@ public class CartProc implements CartProcInter {
       int cnt = this.cartDAO.cart_update(cartVO);
       return cnt;
     }
-*/
+
 }

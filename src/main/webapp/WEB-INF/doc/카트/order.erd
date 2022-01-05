@@ -260,7 +260,7 @@
                   <targetConnections/>
                   <error></error>
                   <linkedPath></linkedPath>
-                  <tableName>pay</tableName>
+                  <tableName>order_pay</tableName>
                   <logicalName>발주_결재</logicalName>
                   <description></description>
                   <columns>
@@ -347,10 +347,15 @@
                       <defaultValue></defaultValue>
                     </net.java.amateras.db.visual.model.ColumnModel>
                     <net.java.amateras.db.visual.model.ColumnModel>
-                      <columnName>address</columnName>
-                      <logicalName>지점 주소</logicalName>
-                      <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../../../../../../net.java.amateras.db.visual.model.ForeignKeyModel/target/columns/net.java.amateras.db.visual.model.ColumnModel[2]/columnType"/>
-                      <size>100</size>
+                      <columnName>address1</columnName>
+                      <logicalName>주소1</logicalName>
+                      <columnType class="net.java.amateras.db.dialect.ColumnType">
+                        <name>VARCHAR2</name>
+                        <logicalName>String</logicalName>
+                        <supportSize>true</supportSize>
+                        <type>12</type>
+                      </columnType>
+                      <size>80</size>
                       <notNull>true</notNull>
                       <primaryKey>false</primaryKey>
                       <description></description>
@@ -389,6 +394,17 @@
                         <type>2</type>
                       </columnType>
                       <size>10</size>
+                      <notNull>false</notNull>
+                      <primaryKey>false</primaryKey>
+                      <description></description>
+                      <autoIncrement>false</autoIncrement>
+                      <defaultValue></defaultValue>
+                    </net.java.amateras.db.visual.model.ColumnModel>
+                    <net.java.amateras.db.visual.model.ColumnModel>
+                      <columnName>address2</columnName>
+                      <logicalName>주소2</logicalName>
+                      <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../net.java.amateras.db.visual.model.ColumnModel[8]/columnType"/>
+                      <size>50</size>
                       <notNull>false</notNull>
                       <primaryKey>false</primaryKey>
                       <description></description>

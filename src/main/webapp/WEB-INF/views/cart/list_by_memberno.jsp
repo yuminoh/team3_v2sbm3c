@@ -62,12 +62,12 @@
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-  <!-- 
+  
     <c:if test="${cateno != null}">
-      <A href="/product/list_by_subcateno?subcateno=${subcateno}">쇼핑 계속하기</A>
+      <A href="/product/list?sub_categoryno=${sub_categoryno}">쇼핑 계속하기</A>
       <span class='menu_divide' >│</span>    
     </c:if>
-     -->
+    
     <A href="javascript:location.reload();">새로고침</A>
   </ASIDE> 
 

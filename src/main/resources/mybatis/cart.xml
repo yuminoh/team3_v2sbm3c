@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dev.mvc.cart.CartDAOInter">
 <insert id = "cart_create" parameterType = "dev.mvc.cart.CartVO">
     INSERT INTO cart(cartno, productno, cnt, cnttot, memberno)
-    VALUES (cart_seq.nextval, #{productno}, #{cnt}, #{cnttot}, #{memberno});
+    VALUES (cart_seq.nextval, #{productno}, #{cnt}, #{cnttot}, #{memberno})
 
 </insert>
 
