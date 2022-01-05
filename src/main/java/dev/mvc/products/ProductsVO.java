@@ -9,7 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /*
-    orderno                             NUMBER(10)       NOT NULL        PRIMARY KEY,
+    cartno                             NUMBER(10)       NOT NULL        PRIMARY KEY,
     productno                           NUMBER(10)       NULL ,
     rdate                               DATE         NOT NULL,
     cnt                                 NUMBER(10)       NOT NULL,
