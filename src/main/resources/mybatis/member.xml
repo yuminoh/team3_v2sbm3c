@@ -21,15 +21,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM member
     ORDER BY memberno ASC
   </select>
-  
-    <!-- memberno로 회원 정보 조회 -->
+
+  <!-- memberno로 회원 정보 조회 -->
   <select id="read" resultType="dev.mvc.member.MemberVO" parameterType="int">
     SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate, grade
     FROM member
     WHERE memberno = #{memberno}
   </select>  
+
+  <!-- id로 회원 정보 조회 -->
+  <select id="readById" resultType="dev.mvc.member.MemberVO" parameterType="String">
+    SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate, grade
+    FROM member
+    WHERE id = #{id}
+  </select>
   
-    <update id="update" parameterType="dev.mvc.member.MemberVO">
+  <update id="update" parameterType="dev.mvc.member.MemberVO">
     UPDATE member 
     SET mname=#{mname}, tel=#{tel}, zipcode=#{zipcode},
           address1=#{address1}, address2=#{address2}
@@ -54,6 +61,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SET passwd=#{passwd}
     WHERE memberno=#{memberno}
   </update>
+
+  <!-- 로그인 -->
+  <select id="login" resultType="int" parameterType="Map">
+    SELECT COUNT(memberno) as cnt
+    FROM member
+    WHERE id=#{id} AND passwd=#{passwd}
+  </select>
       
 </mapper> 
 

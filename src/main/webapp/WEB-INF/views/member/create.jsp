@@ -7,7 +7,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>편의점 재고관리</title>
+<title>Resort world</title>
 
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 
@@ -160,9 +160,9 @@
   <ASIDE class="aside_right">
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span> 
-    <A href='./member_create.do'>회원 가입</A>
+    <A href='./create.do'>회원 가입</A>
     <span class='menu_divide' >│</span> 
-    <A href='./member_list.do'>목록</A>
+    <A href='./list.do'>목록</A>
   </ASIDE> 
 
   <div class='menu_line'></div>
@@ -204,7 +204,7 @@
       <label for="tel" class="col-md-2 control-label" style='font-size: 0.9em;'>전화번호*</label>    
       <div class="col-md-10">
         <input type='text' class="form-control" name='tel' id='tel' 
-                   value='' required="required" style='width: 30%;' placeholder="010-0000-0000"> 
+                   value='' required="required" style='width: 30%;' placeholder="전화번호"> 예) 010-0000-0000
       </div>
     </div>   
 

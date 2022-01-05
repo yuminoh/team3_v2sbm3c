@@ -6,7 +6,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>편의점 재고관리</title>
+<title>Resort world</title>
 <%-- /static/css/style.css --%> 
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 
@@ -51,7 +51,7 @@
           </LI>  
           <LI class='li_none'>
             <button type='button' 
-                         onclick="location.href='./member_login.do?id=${param.id}'"
+                         onclick="location.href='./login.do?id=${param.id}'"
                          class="btn btn-primary">로그인</button>
           </LI> 
         </c:when>
@@ -85,7 +85,7 @@
           </LI>   
           <LI class='li_none'>
             <button type='button' 
-                         onclick="location.href='/member/member_list.do'"
+                         onclick="location.href='/member/list.do'"
                          class="btn btn-primary">회원 목록</button>
           </LI>                                                                     
         </c:when>    

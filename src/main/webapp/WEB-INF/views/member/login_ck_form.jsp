@@ -5,7 +5,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>편의점 재고관리</title>
+<title>Resort world</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -64,7 +64,7 @@
       <div class="form-group">
         <div class="col-md-offset-4 col-md-8">
           <button type="submit" class="btn btn-primary btn-md">로그인</button>
-          <button type='button' onclick="location.href='./member_create.do'" class="btn btn-primary btn-md">회원가입</button>
+          <button type='button' onclick="location.href='./create.do'" class="btn btn-primary btn-md">회원가입</button>
           <button type='button' onclick="loadDefault();" class="btn btn-primary btn-md">테스트 계정</button>
         </div>
       </div>   

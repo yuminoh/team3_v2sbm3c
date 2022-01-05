@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -14,13 +15,19 @@
  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+<script type="text/javascript">
+  $(function(){ 
+  
+  });
+</script>
  
 </head> 
 <body>
 <jsp:include page="../menu/top.jsp" flush='false' />
  
   <DIV class='title_line'>
-    회원 삭제(관리자 전용)
+    회원 삭제
   </DIV>
 
   <DIV class='content_body'>
@@ -34,22 +41,28 @@
    
     <div class='menu_line'></div>
    
-   
     <DIV class='message'>
-      <FORM name='frm' method='POST' action='./delete.do'>
-        '${memberVO.mname }(${memberVO.id })' 회원을 삭제하면 복구 할 수 없습니다.<br><br>
-        정말로 삭제하시겠습니까?<br><br>         
-        <input type='hidden' name='memberno' value='${memberVO.memberno}'>     
-            
-        <button type="submit" class="btn btn-primary">삭제</button>
-        <button type="button" onclick="location.href='./list.do'" class="btn btn-primary">취소(목록)</button>
-     
-      </FORM>
+      <fieldset class='fieldset_basic'>
+        <ul>
+          <c:choose>
+            <c:when test="${param.cnt == 0}">
+              <li class='li_none'>[${param.mname}] 회원 정보 삭제에 실패했습니다.</li>
+            </c:when>
+            <c:otherwise>
+              <li class='li_none'>[${param.mname}] 회원 정보 삭제에 성공했습니다.</li>
+            </c:otherwise>
+          </c:choose>
+       
+          <li class='li_none'>
+            <button type='button' onclick="location.href='./list.do'" class="btn btn-primary">목록</button>    
+          </li>
+          
+        </ul>
+      </fieldset>    
     </DIV>
   </DIV> <%--  <DIV class='content_body'> END --%>
-
+ 
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
  
 </html>
-
