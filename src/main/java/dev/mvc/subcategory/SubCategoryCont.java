@@ -34,7 +34,7 @@ public class SubCategoryCont {
 	}
 
 	@RequestMapping(value = "/subcategory/create", method = RequestMethod.POST)
-	public ModelAndView subcategory_create(String url,
+	public ModelAndView subcategory_create(HttpServletRequest request,String url,
 																	SubCategoryVO subcategoryVO) {
 		ModelAndView mav = new ModelAndView();
 		int cnt = this.SubCategoryProc.sub_category_create(subcategoryVO);
@@ -60,6 +60,8 @@ public class SubCategoryCont {
 		List<SubCategoryVO> list = this.SubCategoryProc.sub_category_list_bycategory(map);
 		int search_count = this.SubCategoryProc.search_count_bycategory(map);
 		String paging = this.SubCategoryProc.pagingBox(search_count, now_page, word); // 페이지 버튼 코드
+		StringBuffer return_url = request.getRequestURL();
+		mav.addObject("return_url",return_url);
 		mav.addObject("categoryno", categoryVO.getCategoryno());
 		mav.addObject("categoryname", categoryVO.getCategoryname());
 		mav.addObject("paging", paging);
@@ -70,7 +72,7 @@ public class SubCategoryCont {
 	}
 
 	@RequestMapping(value = "/subcategory/list", method = RequestMethod.GET) // 서브카테고리 전체 조회
-	public ModelAndView sub_category_list(@RequestParam(value = "word", defaultValue = "") String word,
+	public ModelAndView sub_category_list(HttpServletRequest request,@RequestParam(value = "word", defaultValue = "") String word,
 			@RequestParam(value = "now_page", defaultValue = "1") int now_page) {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -79,6 +81,8 @@ public class SubCategoryCont {
 		List<SubCategoryVO> list = this.SubCategoryProc.sub_category_list(map);
 		int search_count = this.SubCategoryProc.search_count(map);
 		String paging = this.SubCategoryProc.pagingBox(search_count, now_page, word); // 페이지 버튼 코드
+		StringBuffer return_url = request.getRequestURL();
+		mav.addObject("return_url",return_url);
 		mav.addObject("paging", paging);
 		mav.addObject("list", list);
 		mav.setViewName("/subcategory/subcategory_total_list");
@@ -93,7 +97,7 @@ public class SubCategoryCont {
 
 	@RequestMapping(value = "/subcategory/category_read_ajax", method = RequestMethod.GET)
 	@ResponseBody // 카테고리를 select문으로 선택하기 위해 데이터를 가져오는 ajax요청 코드
-	public String category_read() {
+	public String category_read(HttpServletRequest request) {
 		List<CategoryVO> categorylist = this.CategoryProc.category_list_data();
 		JSONObject categoryjson = new JSONObject();
 		categoryjson.put("categorydata", categorylist);
@@ -102,7 +106,7 @@ public class SubCategoryCont {
 
 	@RequestMapping(value = "/subcategory/read_ajax", method = RequestMethod.GET)
 	@ResponseBody // ajax로 서브카테고리 수정하기 위함
-	public String read_ajax(int sub_categoryno) {
+	public String read_ajax(HttpServletRequest request,int sub_categoryno) {
 		SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(sub_categoryno);
 		List<CategoryVO> categorylist = this.CategoryProc.category_list_data();
 		JSONObject categoryjson = new JSONObject();
@@ -115,7 +119,7 @@ public class SubCategoryCont {
 
 	@RequestMapping(value = "/subcategory/delete_read_ajax", method = RequestMethod.GET)
 	@ResponseBody // ajax로 서브카테고리 수정하기 위함
-	public String delete_read_ajax(int sub_categoryno) {
+	public String delete_read_ajax(HttpServletRequest request,int sub_categoryno) {
 		SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(sub_categoryno);
 		JSONObject categoryjson = new JSONObject();
 		categoryjson.put("categoryno", subcategoryVO.getCategoryno());
@@ -125,7 +129,7 @@ public class SubCategoryCont {
 	}
 
 	@RequestMapping(value = "/subcategory/update", method = RequestMethod.POST)
-	public ModelAndView subcategory_update(String url, SubCategoryVO subcategoryVO) {
+	public ModelAndView subcategory_update(HttpServletRequest request,String url, SubCategoryVO subcategoryVO) {
 		ModelAndView mav = new ModelAndView();
 		int cnt = this.SubCategoryProc.sub_category_update(subcategoryVO);			
 		  if(url.equals("http://localhost:9091/subcategory/list_bycategory }")) { //특정카테고리의 서브카테고리에서 작업시 이동할 페이지 설정
@@ -137,7 +141,7 @@ public class SubCategoryCont {
 	}
 
 	@RequestMapping(value = "/subcategory/delete", method = RequestMethod.POST)
-	public ModelAndView subcategory_delete(String url,int sub_categoryno,int categoryno) {
+	public ModelAndView subcategory_delete(HttpServletRequest request,String url,int sub_categoryno,int categoryno) {
 		ModelAndView mav = new ModelAndView();
 		int cnt = this.SubCategoryProc.sub_category_delete(sub_categoryno);
 		if(url.equals("http://localhost:9091/subcategory/list_bycategory }")) {  //특정카테고리의 서브카테고리에서 작업시 이동할 페이지 설정

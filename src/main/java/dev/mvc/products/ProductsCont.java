@@ -44,7 +44,7 @@ public class ProductsCont {
     private String uploadDir = Products.getUploadDir();
     
     @RequestMapping(value = "/products/list", method = RequestMethod.GET)
-    public ModelAndView products_bysubcategory(int sub_categoryno,
+    public ModelAndView products_bysubcategory(HttpServletRequest request,int sub_categoryno,
     																			@RequestParam(value = "word", defaultValue = "") String word,
     																			@RequestParam(value = "now_page", defaultValue = "1") int now_page){
     	ModelAndView mav = new ModelAndView();
@@ -57,6 +57,8 @@ public class ProductsCont {
     	List<ProductsVO> list = this.ProductsProc.products_list(map);
     	int search_count = this.ProductsProc.search_count(map);  
     	String paging = this.ProductsProc.pagingBox(search_count, now_page, word); // 페이지 버튼 코드
+    	StringBuffer return_url = request.getRequestURL();
+		mav.addObject("return_url",return_url);
     	mav.addObject("categoryname",categoryVO.getCategoryname());
     	mav.addObject("sub_categoryno", subcategoryVO.getSub_categoryno());
     	mav.addObject("sub_categoryname", subcategoryVO.getSub_categoryname());
@@ -67,9 +69,11 @@ public class ProductsCont {
     };
     
     @RequestMapping(value = "/products/create", method = RequestMethod.GET)
-    public ModelAndView products_create(int sub_categoryno){
+    public ModelAndView products_create(HttpServletRequest request,int sub_categoryno){
     	ModelAndView mav = new ModelAndView();
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(sub_categoryno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
+    	StringBuffer return_url = request.getRequestURL();
+		mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     	mav.addObject("categoryno",subcategoryVO.getCategoryno());
     	mav.addObject("sub_categoryno",sub_categoryno);
@@ -122,11 +126,13 @@ public class ProductsCont {
     };
     
     @RequestMapping(value = "/products/read", method = RequestMethod.GET)
-    public ModelAndView products_read(int productno){
+    public ModelAndView products_read(HttpServletRequest request,int productno){
     	ModelAndView mav = new ModelAndView();
     	ProductsVO productsVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	CategoryVO categoryVO =  this.CategoryProc.category_read(productsVO.getCategoryno());
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productsVO.getSub_categoryno());
+    	StringBuffer return_url = request.getRequestURL();
+		mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     	mav.addObject("categoryname",categoryVO.getCategoryname());
     	mav.addObject("productsVO",productsVO);
@@ -136,7 +142,7 @@ public class ProductsCont {
     
     @RequestMapping(value = "/products/read_ajax", method = RequestMethod.GET)
     @ResponseBody
-    public String products_read_ajax(int productno){
+    public String products_read_ajax(HttpServletRequest request,int productno){
     	JSONObject productdata = new JSONObject();
     	ProductsVO productsVO = this.ProductsProc.product_read(productno); 
     	productdata.put("productno", productsVO.getProductno());
@@ -146,10 +152,12 @@ public class ProductsCont {
     };
     
     @RequestMapping(value = "/products/update", method = RequestMethod.GET)
-    public ModelAndView products_update(int productno){
+    public ModelAndView products_update(HttpServletRequest request,int productno){
     	ModelAndView mav = new ModelAndView();
     	ProductsVO productVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productVO.getSub_categoryno());
+    	StringBuffer return_url = request.getRequestURL();
+		mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     	mav.addObject("productVO", productVO);
     	mav.setViewName("/products/products_update");
@@ -172,10 +180,12 @@ public class ProductsCont {
     };
     
     @RequestMapping(value = "/products/update_file", method = RequestMethod.GET)
-    public ModelAndView products_update_file(int productno){
+    public ModelAndView products_update_file(HttpServletRequest request,int productno){
     	ModelAndView mav = new ModelAndView();
     	ProductsVO productVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productVO.getSub_categoryno());
+    	StringBuffer return_url = request.getRequestURL();
+		mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     	mav.addObject("productVO", productVO);
     	mav.setViewName("/products/update_file");
@@ -183,7 +193,7 @@ public class ProductsCont {
     };
     
     @RequestMapping(value = "/products/update_file", method = RequestMethod.POST)
-    public ModelAndView products_update_file_post(ProductsVO productsVO){
+    public ModelAndView products_update_file_post(HttpServletRequest request,ProductsVO productsVO){
     	ModelAndView mav = new ModelAndView();
     	String pdimagefile1 = "";
     	String pdimagefile1saved = "";
@@ -216,7 +226,7 @@ public class ProductsCont {
     };
        
     @RequestMapping(value = "/products/delete", method = RequestMethod.POST)
-    public ModelAndView products_delete(ProductsVO productsVO){
+    public ModelAndView products_delete(HttpServletRequest request,ProductsVO productsVO){
     	ModelAndView mav = new ModelAndView();
     	int cnt = this.ProductsProc.product_delete(productsVO.getProductno()); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	if(cnt == 1) {
