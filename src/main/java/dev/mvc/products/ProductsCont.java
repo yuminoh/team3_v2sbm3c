@@ -127,11 +127,7 @@ public class ProductsCont {
     };
     //
     @RequestMapping(value = "/products/read", method = RequestMethod.GET)
-<<<<<<< HEAD
     public ModelAndView products_read(HttpServletRequest request,int productno){
-=======
-    public ModelAndView products_read(int productno, HttpServletRequest request){
->>>>>>> yoonho
     	ModelAndView mav = new ModelAndView();
     	ProductsVO productsVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	CategoryVO categoryVO =  this.CategoryProc.category_read(productsVO.getCategoryno());
