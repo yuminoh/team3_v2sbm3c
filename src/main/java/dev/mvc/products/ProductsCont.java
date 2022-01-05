@@ -59,6 +59,7 @@ public class ProductsCont {
     	int search_count = this.ProductsProc.search_count(map);  
     	String paging = this.ProductsProc.pagingBox(search_count, now_page, word); // 페이지 버튼 코드
     	StringBuffer return_url = request.getRequestURL();
+    	return_url = return_url.append( "?sub_categoryno="+sub_categoryno);
 		mav.addObject("return_url",return_url);
     	mav.addObject("categoryname",categoryVO.getCategoryname());
     	mav.addObject("sub_categoryno", subcategoryVO.getSub_categoryno());
@@ -133,6 +134,7 @@ public class ProductsCont {
     	CategoryVO categoryVO =  this.CategoryProc.category_read(productsVO.getCategoryno());
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productsVO.getSub_categoryno());
     	StringBuffer return_url = request.getRequestURL();
+    	return_url.append("?productno="+productno);
 		mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     	mav.addObject("categoryname",categoryVO.getCategoryname());
@@ -193,6 +195,7 @@ public class ProductsCont {
     	ProductsVO productVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productVO.getSub_categoryno());
     	StringBuffer return_url = request.getRequestURL();
+    	return_url.append("?productno="+productno);
 		mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     	mav.addObject("productVO", productVO);
@@ -221,6 +224,7 @@ public class ProductsCont {
     	ProductsVO productVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productVO.getSub_categoryno());
     	StringBuffer return_url = request.getRequestURL();
+    	return_url.append("?productno="+productno);
 		mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     	mav.addObject("productVO", productVO);

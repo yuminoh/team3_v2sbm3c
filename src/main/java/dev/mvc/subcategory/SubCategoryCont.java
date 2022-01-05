@@ -61,6 +61,7 @@ public class SubCategoryCont {
 		int search_count = this.SubCategoryProc.search_count_bycategory(map);
 		String paging = this.SubCategoryProc.pagingBox(search_count, now_page, word); // 페이지 버튼 코드
 		StringBuffer return_url = request.getRequestURL();
+		return_url = return_url.append( "?categoryno="+categoryno);
 		mav.addObject("return_url",return_url);
 		mav.addObject("categoryno", categoryVO.getCategoryno());
 		mav.addObject("categoryname", categoryVO.getCategoryname());
