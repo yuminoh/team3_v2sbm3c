@@ -448,6 +448,7 @@ public class MemberCont {
       session.setAttribute("mname", memberVO.getMname());
       session.setAttribute("grade", memberVO.getGrade());
       session.setAttribute("tel", memberVO.getTel());// o
+      session.setAttribute("mdate", memberVO.getMdate());
       
       // -------------------------------------------------------------------
       // id 관련 쿠기 저장
