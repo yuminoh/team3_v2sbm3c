@@ -66,9 +66,9 @@
 <jsp:include page="../menu/top.jsp" flush='false' />
  
 <DIV class='title_line'>
-  <A href="../categrp/list.do" class='title_link'>카테고리 그룹</A> > 
-  <A href="../cate/list_by_categrpno.do?categrpno=${categrpVO.categrpno }" class='title_link'>${categrpVO.name }</A> >
-  <A href="./list_by_cateno_search_paging.do?cateno=${cateVO.cateno }" class='title_link'>${cateVO.name }</A>
+  <A href="../subcategory/list_bycategory?categoryno=${categoryno}" class='title_link'>${categoryname } </A> 
+  <A href="../products/list?sub_categoryno=${sub_categoryno }" class='title_link'>${sub_categoryname }</A> >
+  <A href= "/products/read?productno=${productno }" class='title_link'>${productname }</A>
 </DIV>
 
 <DIV class='content_body'>
@@ -85,14 +85,10 @@
   </ASIDE> 
   
     <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./list_by_cateno_search.do'>
-      <input type='hidden' name='cateno' value='${cateVO.cateno }'>
+    <form name='frm' id='frm' method='get' action='/products/list'>
+      <input type='hidden' name='sub_categoryno' value='${sub_categoryno }'>
       <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
-      <button type='submit'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='./list_by_cateno_search.do?cateno=${cateVO.cateno}&word='">검색 취소</button>  
-      </c:if>    
+      <button type='submit'>검색</button>        
     </form>
   </DIV>
   

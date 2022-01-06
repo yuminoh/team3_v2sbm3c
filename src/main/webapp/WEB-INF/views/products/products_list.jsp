@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- 
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
@@ -113,6 +113,7 @@ function cancel(){
         <c:set var="categoryno" value="${products_list.categoryno }" />   
         <c:set var="sub_categoryno" value="${products_list.sub_categoryno }" />
         <c:set var="productname" value="${products_list.productname }" />
+        <c:set var="product_price" value="${products_list.product_price }" />
         <c:set var="productno" value="${products_list.productno }" />
         <c:set var="productimage" value="${products_list.pdimagefile1 }" />
            <!-- 하나의 이미지, 24 * 4 = 96% -->
@@ -124,7 +125,8 @@ function cancel(){
                 <a href="/products/read?productno=${productno }">                          
                   <IMG src="/products/storage/${productimage}" style='width: 100%; height: 150px;'>
                 </a><br>
-                ${productname} <br>
+                ${productname} <br><br>
+                <fmt:formatNumber value="${product_price}" pattern="##,###원" />
                <%--  <del><fmt:formatNumber value="${price}" pattern="#,###" /></del>
                 <span style="color: #FF0000; font-size: 1.0em;">${dc} %</span>
                 <strong><fmt:formatNumber value="${saleprice}" pattern="#,###" /></strong> --%>

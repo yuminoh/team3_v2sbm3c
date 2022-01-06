@@ -180,9 +180,9 @@
 <jsp:include page="../menu/top.jsp" flush='false' />
  
 <DIV class='title_line'>
-  <A href="../category/list" class='title_link'>${categoryname } </A> >
-  <A href="../cate/list_by_categrpno.do?categrpno=${categrpVO.categrpno }" class='title_link'>${sub_categoryname }</A> >
-  <A href="./list_by_cateno_search_paging.do?cateno=" class='title_link'>${productname }</A>
+  <A href="../subcategory/list_bycategory?categoryno=${categoryno}" class='title_link'>${categoryname } </A> >
+  <A href="../products/list?sub_categoryno=${sub_categoryno }" class='title_link'>${sub_categoryname }</A> >
+  <A href= "/products/read?productno=${productno }" class='title_link'>${productname }</A>
 </DIV>
 
 <DIV class='content_body'>

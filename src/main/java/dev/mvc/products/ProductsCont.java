@@ -99,7 +99,6 @@ public class ProductsCont {
         System.out.println("->updir"+uploadDir);
         MultipartFile mf = productsVO.getFile1M1();
         pdimagefile1 = Tool.getFname(mf.getOriginalFilename()); // 원본 순수 파일명 산출
-        System.out.println("pdimagefile1->"+pdimagefile1);
         long size1 = mf.getSize();  // 파일 크기
         if (size1 > 0) { // 파일 크기 체크
             // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
@@ -111,7 +110,6 @@ public class ProductsCont {
           }
         productsVO.setPdimagefile1(pdimagefile1saved);   
         int cnt = this.ProductsProc.create(productsVO); 
-        System.out.println(productsVO);
         if (cnt == 1) { 
             System.out.println("등록 성공");
             mav.addObject("result",result); // 메시지 화면에 출력될 상품이름
@@ -206,7 +204,6 @@ public class ProductsCont {
     @RequestMapping(value = "/products/update", method = RequestMethod.POST)
     public ModelAndView products_update_post(ProductsVO productsVO){
     	ModelAndView mav = new ModelAndView();
-    	System.out.println(productsVO);
     	int cnt = this.ProductsProc.product_update(productsVO);
     	if (cnt==1){
     		mav.addObject("code","update_success");
@@ -243,7 +240,6 @@ public class ProductsCont {
 	    MultipartFile mf = productsVO.getFile1M1();
 	    
         pdimagefile1 = Tool.getFname(mf.getOriginalFilename()); // 원본 순수 파일명 산출
-        System.out.println("pdimagefile1->"+pdimagefile1);
         long size1 = mf.getSize();  // 파일 크기
         if (size1 > 0) { // 파일 크기 체크
             // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...

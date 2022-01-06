@@ -26,7 +26,7 @@
       <c:choose>
         <c:when test="${code == 'create'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_success">새로운 상품 [${menu }] 등록에 성공했습니다.</span>
+            <span class="span_success">새로운 상품 등록에 성공했습니다.</span>
           </LI>                                                                      
         </c:when>
         <c:when test="${code == 'update_success'}"> <%-- Java if --%>
