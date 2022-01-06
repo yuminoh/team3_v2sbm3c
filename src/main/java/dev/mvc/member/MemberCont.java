@@ -525,13 +525,25 @@ public class MemberCont {
     return mav;
   }
   
-  @RequestMapping(value="/member/my_info.do", 
+  @RequestMapping(value="/member/my_info.do",  // 마이페이지
                               method=RequestMethod.GET)
     public ModelAndView my_info(HttpSession session){
     ModelAndView mav = new ModelAndView();
     
-    mav.addObject("url", "/member/my_info"); // /member/session.jsp
-    mav.setViewName("redirect:/member/msg.do"); 
+//  if ((this.memberProc.isAdmin(session)) || (this.memberProc.isMember(session))) { 
+//  mav.addObject("url", "/member/my_info"); // /member/my_info.jsp
+//  
+//  mav.setViewName("redirect:/member/msg.do"); 
+    
+    if (session.getAttribute("memberno") != null) {
+      mav.addObject("url", "/member/my_info"); // /member/my_info.jsp
+      
+      mav.setViewName("redirect:/member/msg.do");      
+      }else { 
+          mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용
+          
+          mav.setViewName("redirect:/member/msg.do");      
+      }
     
     return mav;
     }
