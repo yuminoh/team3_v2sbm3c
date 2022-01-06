@@ -447,6 +447,7 @@ public class MemberCont {
       session.setAttribute("id", id);
       session.setAttribute("mname", memberVO.getMname());
       session.setAttribute("grade", memberVO.getGrade());
+      session.setAttribute("tel", memberVO.getTel());// o
       
       // -------------------------------------------------------------------
       // id 관련 쿠기 저장
@@ -523,6 +524,17 @@ public class MemberCont {
     return mav;
   }
   
+  @RequestMapping(value="/member/my_info.do", 
+                              method=RequestMethod.GET)
+    public ModelAndView my_info(HttpSession session){
+    ModelAndView mav = new ModelAndView();
+    
+    mav.addObject("url", "/member/my_info"); // /member/session.jsp
+    mav.setViewName("redirect:/member/msg.do"); 
+    
+    return mav;
+    }
+  
   /**
   * 목록 출력 가능
   * @param session
@@ -587,6 +599,7 @@ public class MemberCont {
       session.setAttribute("id", id);
       session.setAttribute("mname", memberVO.getMname());
       session.setAttribute("grade", memberVO.getGrade());
+      session.setAttribute("tel", memberVO.getTel());//
       
       // -------------------------------------------------------------------
       // id 관련 쿠기 저장

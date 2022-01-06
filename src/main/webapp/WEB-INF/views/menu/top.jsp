@@ -19,6 +19,7 @@
         </c:otherwise>
       </c:choose>    
       
+      <A class='menu_link'  href='/member/my_info.do'>마이 페이지</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/category/list'>카테고리</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/subcategory/list'>서브 카테고리 전체 목록</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/cate/list_all.do'>카테고리 전체 목록</A><span class='top_menu_sep'> </span>           
