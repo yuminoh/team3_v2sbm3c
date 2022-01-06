@@ -25,6 +25,11 @@ public class Order_payCont {
     @ResponseBody
     public String create(HttpSession session,
                               int cartno) {
+        Order_payVO order_payVO = new Order_payVO();
+        order_payVO.setCartno(cartno);
+        
+        int memberno = (Integer)session.getAttribute("memberno");
+        order_payVO.setMemberno(memberno);
         
         
         JSONObject json = new JSONObject();

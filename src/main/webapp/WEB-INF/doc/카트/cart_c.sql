@@ -113,6 +113,9 @@ VALUES (cart_seq.nextval, 2, 1, 1, 1);
 INSERT INTO cart(cartno, productno, cnt, cnttot, memberno)
 VALUES (cart_seq.nextval, 1, 1, 1, 3);
 
+INSERT INTO cart(cartno, productno, cnt, cnttot, memberno)
+VALUES (cart_seq.nextval, 2, 1, 1, 3);
+
 --조회
 SELECT cartno, productno, cnt, cnttot, memberno
 FROM cart

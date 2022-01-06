@@ -103,37 +103,39 @@
             <c:set var="cnt" value="${cartVO.cnt }" />
             <c:set var="cnttot" value="${cartVO.cnttot }" />
             <c:set var="memberno" value="${cartVO.memberno }" />
-            <!-- 
-            <c:set var="price" value="${productVO.price }" />
-            <c:set var="file1" value="${productVO.file1 }" />
-             -->
+          </c:forEach>
+          <c:forEach var="productsVO" items="${list }">
+            <c:set var="productname" value="${productsVO.productname }" />
+            <c:set var="product_price" value="${productsVO.product_price }" />
+            <c:set var="pdimagefile1" value="${productsVO.pdimagefile1 }" />
             <tr> 
               <td style='vertical-align: middle; text-align: center;'>
-              <!-- 
+            
                 <c:choose>
                   <c:when test="${file1.endsWith('jpg') || file1.endsWith('png') || file1.endsWith('gif')}">
                     <%-- /static/product/storage/ --%>
-                    <a href="/product/read.do?productno=${productno}"><IMG src="/product/storage/${file1 }" style="width: 120px; height: 80px;"></a> 
+                    <a href="/products/read.do?productno=${productno}"><IMG src="/product/storage/${file1 }" style="width: 120px; height: 80px;"></a> 
                   </c:when>
                   <c:otherwise>
-                    ${contentsVO.file1}
+                    ${productsVO.pdimagefile1}
                   </c:otherwise>
                 </c:choose>
               </td>  
               <td style='vertical-align: middle;'>
-                <a href="/contents/read.do?contentsno=${contentsno}"><strong>${title}</strong></a> 
+                <a href="/products/read.do?productno=${productno}"><strong>${productname}</strong></a> 
               </td> 
+              <!-- 
               <td style='vertical-align: middle; text-align: center;'>
-                <del><fmt:formatNumber value="${price}" pattern="#,###" /></del><br>
-             -->
+                <del><fmt:formatNumber value="${product_price}" pattern="#,###" /></del><br>
               </td>
+               -->
               <td style='vertical-align: middle; text-align: center;'>
                 <input type='number' id='${cartno }_cnt' min='1' max='100' step='1' value="${cnt }" 
                   style='width: 52px;'><br>
                 <button type='button' onclick="cart_update(${cartno})" class='btn' style='margin-top: 5px;'>변경</button>
               </td>
               <td style='vertical-align: middle; text-align: center;'>
-                <fmt:formatNumber value="${cnttot}" pattern="#,###" />
+                <fmt:formatNumber value="${product_price }" pattern="#,###" />
               </td>
               <td style='vertical-align: middle; text-align: center;'>
                 <A href="javascript: delete_func(${cartno })"><IMG src="/cart/images/delete3.png"></A>
@@ -160,13 +162,12 @@
         <!-- 
           <div class='cart_label'>상품 금액</div>
           <div class='cart_price'><fmt:formatNumber value="${tot_sum }" pattern="#,###" /> 원</div>
-          
+        -->
         </td>
         <td style='width: 50%;'>
           <div class='cart_label' style='font-size: 2.0em;'>전체 주문 금액</div>
-          <div class='cart_price'  style='font-size: 2.0em; color: #FF0000;'><fmt:formatNumber value="${total_ordering }" pattern="#,###" /> 원</div>
+          <div class='cart_price'  style='font-size: 2.0em; color: #FF0000;'><fmt:formatNumber value="${total }" pattern="#,###" /> 원</div>
           
-       -->
           <form name='frm' id='frm' style='margin-top: 50px;' action="/order_pay/create.do" method='get'>
             <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">  
             <button type='submit' id='btn_order' class='btn btn-info' style='font-size: 1.5em;'>주문하기</button>

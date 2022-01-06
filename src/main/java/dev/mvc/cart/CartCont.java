@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.products.ProductsVO;
+
 @Controller
 public class CartCont {
     @Autowired
@@ -53,26 +55,26 @@ public class CartCont {
     public ModelAndView list_by_memberno(HttpSession session,
         @RequestParam(value="cartno", defaultValue="0") int cartno ) {
       ModelAndView mav = new ModelAndView();
+      ProductsVO productsVO = new ProductsVO();
+      int cnt = 0;
+      int total = 0;
       
       if (session.getAttribute("memberno") != null) { // 회원으로 로그인을 했다면 쇼핑카트로 이동
         int memberno = (int)session.getAttribute("memberno");
         
-        int cnttot=1;
-        int cnt=1;
         // 출력 순서별 출력
         List<CartVO> list = this.cartProc.list_by_memberno(memberno);
         
         for (CartVO cartVO : list) {
-          cnttot = cartVO.getCnt();
-          cartVO.setCnttot(cnttot);
-          
+          cnt = cartVO.getCnt();
+          total = productsVO.getProduct_price() * cnt;
         }
         
         mav.addObject("list", list); // request.setAttribute("list", list);
         mav.addObject("cartno", cartno); // 쇼핑계속하기에서 사용
         
         mav.addObject("cnt", cnt);
-        mav.addObject("cnttot", cnttot);
+        mav.addObject("total", total);
         
         mav.setViewName("/cart/list_by_memberno"); // /WEB-INF/views/categrp/list_by_memberno.jsp
         

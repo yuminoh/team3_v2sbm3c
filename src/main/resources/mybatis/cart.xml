@@ -21,10 +21,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM cart WHERE productno=#{productno}
 </delete>
 
+  <!-- memberno 회원 번호별 쇼핑카트 목록 출력 -->
   <select id="list_by_memberno" resultType="dev.mvc.cart.CartVO" parameterType="int">
-    SELECT t.cartno, p.productno, t.memberno, t.cnt, t.cnttot 
-    FROM product p, cart t
+    SELECT t.cartno, p.productno, p.productname, p.pdimagefile1, p.product_price, t.memberno, t.cnt 
+    FROM products p, cart t
     WHERE (p.productno = t.productno) AND t.memberno = #{memberno}
+    ORDER BY cartno ASC
   </select>
-
+  
 </mapper>
