@@ -9,7 +9,8 @@
 <c:set var="productno" value="${productsVO.productno }" />
 <c:set var="product_Explanation" value="${productsVO.product_Explanation }" />
 <c:set var="pdimagefile1" value="${productsVO.pdimagefile1 }" />
- 
+
+
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
