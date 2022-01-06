@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.products.ProductsVO;
+
 @Controller
 public class CartCont {
     @Autowired
@@ -24,32 +26,12 @@ public class CartCont {
     public CartCont() {
         System.out.println("-> CartCont created.");
     }
-    /*
-    // http://localhost:9091/cart/create.do
-    //등록
-    @RequestMapping(value = "/cart/create.do", method = RequestMethod.POST)
-    public ModelAndView create(CartVO cartVO) { 
-        ModelAndView mav = new ModelAndView();
-
-        int cnt = this.cartProc.create(cartVO); // 등록 처리
-        
-        mav.addObject("cnt", cnt);
-       
-        if (cnt == 1) {
-            mav.setViewName("redirect:/cart/list.do");
-        } else {
-            mav.addObject("code", "create_fail"); // request에 저장, request.setAttribute("code", "create_fail")
-            mav.setViewName("/categrp/msg"); // /WEB-INF/views/categrp/msg.jsp
-        }
-
-        return mav; // forward
-    }
-    
+  
     // http://localhost:9091/cart/create.do
     //Ajax 등록 처리
     @RequestMapping(value="/cart/create.do", method=RequestMethod.POST )
     @ResponseBody
-    public String create(HttpSession session,
+    public String cart_create(HttpSession session,
                               int productno) {
       CartVO cartVO = new CartVO();
       cartVO.setProductno(productno);
@@ -58,11 +40,12 @@ public class CartCont {
       cartVO.setMemberno(memberno);
       
       cartVO.setCnt(1); // 최초 구매 수량 1개로 지정
-      
-      int cnt = this.cartProc.create(cartVO); // 등록 처리
-      
+      cartVO.setCnttot(1);
+      int cnt = this.cartProc.cart_create(cartVO); // 등록 처리
+      int cnttot = this.cartProc.cart_create(cartVO); // 등록 처리
       JSONObject json = new JSONObject();
       json.put("cnt", cnt);
+      json.put("cnttot", cnttot);
      
       return json.toString();
     }
@@ -72,27 +55,26 @@ public class CartCont {
     public ModelAndView list_by_memberno(HttpSession session,
         @RequestParam(value="cartno", defaultValue="0") int cartno ) {
       ModelAndView mav = new ModelAndView();
+      ProductsVO productsVO = new ProductsVO();
+      int cnt = 0;
+      int total = 0;
       
       if (session.getAttribute("memberno") != null) { // 회원으로 로그인을 했다면 쇼핑카트로 이동
         int memberno = (int)session.getAttribute("memberno");
         
-        int cnttot=1;
-        int cnt=1;
         // 출력 순서별 출력
         List<CartVO> list = this.cartProc.list_by_memberno(memberno);
         
         for (CartVO cartVO : list) {
-          cnttot = cartVO.getCnt();
-          cartVO.setCnttot(cnttot);
-          
-          
+          cnt = cartVO.getCnt();
+          total = productsVO.getProduct_price() * cnt;
         }
         
         mav.addObject("list", list); // request.setAttribute("list", list);
         mav.addObject("cartno", cartno); // 쇼핑계속하기에서 사용
         
         mav.addObject("cnt", cnt);
-        mav.addObject("cnttot", cnttot);
+        mav.addObject("total", total);
         
         mav.setViewName("/cart/list_by_memberno"); // /WEB-INF/views/categrp/list_by_memberno.jsp
         
@@ -118,7 +100,7 @@ public class CartCont {
     
     //수량변경
     @RequestMapping(value="/cart/cart_update.do", method=RequestMethod.POST )
-    public ModelAndView update_cnt(HttpSession session,
+    public ModelAndView cart_update(HttpSession session,
         @RequestParam(value="cartno", defaultValue="0") int cartno,
         int cnt) {
       ModelAndView mav = new ModelAndView();
@@ -132,5 +114,5 @@ public class CartCont {
       
       return mav;
     }  
- */   
+ 
 }

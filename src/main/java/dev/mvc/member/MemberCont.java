@@ -447,6 +447,7 @@ public class MemberCont {
       session.setAttribute("id", id);
       session.setAttribute("mname", memberVO.getMname());
       session.setAttribute("grade", memberVO.getGrade());
+      session.setAttribute("tel", memberVO.getTel());// o
       
       // -------------------------------------------------------------------
       // id 관련 쿠기 저장
@@ -523,6 +524,17 @@ public class MemberCont {
     return mav;
   }
   
+  @RequestMapping(value="/member/my_info.do", 
+                              method=RequestMethod.GET)
+    public ModelAndView my_info(HttpSession session){
+    ModelAndView mav = new ModelAndView();
+    
+    mav.addObject("url", "/member/my_info"); // /member/session.jsp
+    mav.setViewName("redirect:/member/msg.do"); 
+    
+    return mav;
+    }
+  
   /**
   * 목록 출력 가능
   * @param session
@@ -538,7 +550,11 @@ public class MemberCont {
 
       mav.setViewName("/member/list"); // /webapp/WEB-INF/views/member/list.jsp
      
-    } else {
+    } else if(this.memberProc.isMember(session)) { // 일반회원 일때
+      mav.addObject("url", "/member/admin_need");
+      
+      mav.setViewName("redirect:/member/msg.do");     
+    } else { // 비회원 일때
       mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용
       
       mav.setViewName("redirect:/member/msg.do");      
@@ -583,6 +599,7 @@ public class MemberCont {
       session.setAttribute("id", id);
       session.setAttribute("mname", memberVO.getMname());
       session.setAttribute("grade", memberVO.getGrade());
+      session.setAttribute("tel", memberVO.getTel());//
       
       // -------------------------------------------------------------------
       // id 관련 쿠기 저장

@@ -10,7 +10,7 @@
 <c:set var="product_Explanation" value="${productsVO.product_Explanation }" />
 <c:set var="pdimagefile1" value="${productsVO.pdimagefile1 }" />
 
- 
+
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
@@ -78,7 +78,7 @@
     var params = "";
     params = $('#frm_login').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
     // params += '&${ _csrf.parameterName }=${ _csrf.token }';
-    // console.log(params);
+    console.log(params);
     // return;
     
     $.ajax(
@@ -114,13 +114,13 @@
   }
 
   <%-- 쇼핑 카트에 상품 추가 --%>
-  function cart_ajax(contentsno) {
+  function cart_ajax(productno) {
     var f = $('#frm_login');
     $('#productno', f).val(productno);  // 쇼핑카트 등록시 사용할 상품 번호를 저장.
-    
+ 
     console.log('-> productno: ' + $('#productno', f).val()); 
     
-    if ('${sessionScope.id}' != '' || $('#login_yn').val() == 'YES') {  // 로그인이 안되어 있다면
+    if ('${sessionScope.id}' != '' || $('#login_yn').val() == 'YES') {  // 로그인이 되어 있다면
         cart_ajax_post();
              
     } else {  // 로그인 안한 경우
@@ -134,10 +134,12 @@
     var f = $('#frm_login');
     var productno = $('#productno', f).val();  // 쇼핑카트 등록시 사용할 상품 번호.
     
-    var params = "";
     // params = $('#frm_login').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
+    var params = "";
+    
     params += 'productno=' + productno;
     params += '&${ _csrf.parameterName }=${ _csrf.token }';
+    
     console.log('-> cart_ajax_post: ' + params);
     // return;
     
@@ -155,6 +157,7 @@
           
           if (rdata.cnt == 1) {
             var sw = confirm('선택한 상품이 장바구니에 담겼습니다.\n장바구니로 이동하시겠습니까?');
+            
             if (sw == true) {
               // 쇼핑카트로 이동
               location.href='/cart/list_by_memberno.do';
@@ -224,7 +227,8 @@
     <FORM name='frm_login' id='frm_login' method='POST' action='/member/login_ajax.do' class="form-horizontal">
       <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
       <input type="hidden" name="productno" id="productno" value="productno">
-
+      <input type="hidden" name="login_yn" id="login_yn" value="NO">
+      
       <div class="form-group">
         <label class="col-md-4 control-label" style='font-size: 0.8em;'>아이디</label>    
         <div class="col-md-8">

@@ -84,6 +84,9 @@ CREATE SEQUENCE code_seq
   CACHE 2                        -- 2번은 메모리에서만 계산
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
 
+DROP TABLE pay;
+DROP SEQUENCE pay_seq;
+
 CREATE SEQUENCE pay_seq
   START WITH 1                -- 시작 번호
   INCREMENT BY 1            -- 증가값
@@ -109,6 +112,9 @@ VALUES (cart_seq.nextval, 2, 1, 1, 1);
 
 INSERT INTO cart(cartno, productno, cnt, cnttot, memberno)
 VALUES (cart_seq.nextval, 1, 1, 1, 3);
+
+INSERT INTO cart(cartno, productno, cnt, cnttot, memberno)
+VALUES (cart_seq.nextval, 2, 1, 1, 3);
 
 --조회
 SELECT cartno, productno, cnt, cnttot, memberno
