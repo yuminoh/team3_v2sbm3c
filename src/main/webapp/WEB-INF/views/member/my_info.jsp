@@ -36,13 +36,15 @@
   회원 이름: ${sessionScope.mname}
   <br>
   회원 등급: 
-      <c:choose>
+     <c:choose>
       <c:when test="${grade >= 1 and grade <= 10}">관리자 영역</c:when>    
       <c:when test="${grade >= 11 and grade <= 20}">회원 영역</c:when>
       <c:when test="${grade >= 30 and grade <= 39}">정지 회원 영역</c:when>
       <c:when test="${grade >= 40 and grade <= 49}">탈퇴 회원 영역</c:when>
       <c:when test="${grade == 99}">비회원 영역 처리</c:when>
     </c:choose>  
+  <br>
+  가입일: ${sessionScope.mdate}
   <br>
   전화번호: ${sessionScope.tel}
   
