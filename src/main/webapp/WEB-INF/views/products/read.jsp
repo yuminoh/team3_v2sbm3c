@@ -133,13 +133,13 @@
   function cart_ajax_post() {
     var f = $('#frm_login');
     var productno = $('#productno', f).val();  // 쇼핑카트 등록시 사용할 상품 번호.
-    
+    var cnt = $('#ordercnt').val();
     // params = $('#frm_login').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
     var params = "";
     
     params += 'productno=' + productno;
+    params +='&ordercnt='+cnt;
     params += '&${ _csrf.parameterName }=${ _csrf.token }';
-    
     console.log('-> cart_ajax_post: ' + params);
     // return;
     
@@ -157,10 +157,10 @@
           
           if (rdata.cnt == 1) {
             var sw = confirm('선택한 상품이 장바구니에 담겼습니다.\n장바구니로 이동하시겠습니까?');
-            
+       
             if (sw == true) {
               // 쇼핑카트로 이동
-              location.href='/cart/list_by_memberno.do';
+              location.href='/cart/list_by_memberno';
             }           
           } else {
             alert('선택한 상품을 장바구니에 담지못했습니다.<br>잠시후 다시 시도해주세요.');
@@ -303,9 +303,9 @@
 
           <span style="font-size: 1.0em;">수량</span><br>
           <form>
-          <input type='number' name='ordercnt' value='1' required="required" 
+          <input type='number' name='ordercnt' id='ordercnt' value='1' required="required" 
                      min="1" max="99999" step="1" class="form-control" style='width: 30%;'><br>
-          <button type='button' onclick="cart_ajax(${productno })" class="btn btn-info">장바 구니</button>           
+          <button type='button' onclick="javascript:cart_ajax(${productno })" class="btn btn-info">장바 구니</button>           
           <button type='button' onclick="" class="btn btn-info">바로 구매</button>
           <span id="span_animation"></span>
           </form>

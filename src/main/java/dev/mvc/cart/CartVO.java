@@ -23,4 +23,10 @@ public class CartVO {
     private int cnttot;
     //회원 번호
     private int memberno;
+    //상품 가격
+    private int product_price;
+    //상품 이름
+    private String productname;
+    //상품 이미지 이름
+    private String pdimagefile1;
 }

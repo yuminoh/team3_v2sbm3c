@@ -97,52 +97,42 @@
     <tbody>
       <c:choose>
         <c:when test="${list.size() > 0 }">
-          <c:forEach var="cartVO" items="${list }">
+           <c:forEach var="cartVO" items="${list }">
             <c:set var="cartno" value="${cartVO.cartno }" />
             <c:set var="productno" value="${cartVO.productno }" />
+            <c:set var="productname" value="${cartVO.productname }" />
+            <c:set var="product_price" value="${cartVO.product_price }" />
+            <c:set var="pdimage" value="${cartVO.pdimagefile1 }" />
             <c:set var="cnt" value="${cartVO.cnt }" />
             <c:set var="cnttot" value="${cartVO.cnttot }" />
-            <c:set var="memberno" value="${cartVO.memberno }" />
-          </c:forEach>
-          <c:forEach var="productsVO" items="${list }">
-            <c:set var="productname" value="${productsVO.productname }" />
-            <c:set var="product_price" value="${productsVO.product_price }" />
-            <c:set var="pdimagefile1" value="${productsVO.pdimagefile1 }" />
+            <c:set var="memberno" value="${cartVO.memberno }" />        
             <tr> 
-              <td style='vertical-align: middle; text-align: center;'>
-            
+              <td style='vertical-align: middle; text-align: center;'>        
                 <c:choose>
-                  <c:when test="${file1.endsWith('jpg') || file1.endsWith('png') || file1.endsWith('gif')}">
-                    <%-- /static/product/storage/ --%>
-                    <a href="/products/read.do?productno=${productno}"><IMG src="/product/storage/${file1 }" style="width: 120px; height: 80px;"></a> 
+                  <c:when test="${pdimage.endsWith('jpg') || pdimage.endsWith('png') || pdimage.endsWith('gif')}">
+                    <a href="/products/read.do?productno=${productno}"><IMG src="/products/storage/${pdimage }" style="width: 120px; height: 80px;"></a> 
                   </c:when>
                   <c:otherwise>
-                    ${productsVO.pdimagefile1}
+                    <a href="/products/read.do?productno=${productno}"><IMG src="/products/none1.jpg" style="width: 120px; height: 80px;"></a> 
                   </c:otherwise>
                 </c:choose>
               </td>  
               <td style='vertical-align: middle;'>
                 <a href="/products/read.do?productno=${productno}"><strong>${productname}</strong></a> 
-              </td> 
-              <!-- 
-              <td style='vertical-align: middle; text-align: center;'>
-                <del><fmt:formatNumber value="${product_price}" pattern="#,###" /></del><br>
-              </td>
-               -->
+              </td>            
               <td style='vertical-align: middle; text-align: center;'>
                 <input type='number' id='${cartno }_cnt' min='1' max='100' step='1' value="${cnt }" 
                   style='width: 52px;'><br>
-                <button type='button' onclick="cart_update(${cartno})" class='btn' style='margin-top: 5px;'>변경</button>
+                <button type='button' onclick="update_cnt(${cartno})" class='btn' style='margin-top: 5px;'>변경</button>
               </td>
               <td style='vertical-align: middle; text-align: center;'>
                 <fmt:formatNumber value="${product_price }" pattern="#,###" />
               </td>
               <td style='vertical-align: middle; text-align: center;'>
-                <A href="javascript: delete_func(${cartno })"><IMG src="/cart/images/delete3.png"></A>
+                <A href="javascript: delete_func(${cartno })"><IMG style="width:30px; height:30px" src="/cart/images/delete3.png"></A>
               </td>
             </tr>
-          </c:forEach>
-        
+          </c:forEach>       
         </c:when>
         <c:otherwise>
           <tr>
@@ -167,9 +157,10 @@
         <td style='width: 50%;'>
           <div class='cart_label' style='font-size: 2.0em;'>전체 주문 금액</div>
           <div class='cart_price'  style='font-size: 2.0em; color: #FF0000;'><fmt:formatNumber value="${total }" pattern="#,###" /> 원</div>
-          
-          <form name='frm' id='frm' style='margin-top: 50px;' action="/order_pay/create.do" method='get'>
+          <form name='frm' id='frm' style='margin-top: 50px;' action="/pay_list/create.do" method='POST'>
             <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">  
+            <input type="hidden" name="list" id="list" value ="${list }" >
+            <input type="hidden" name="total" id="total" value ="${total }" >
             <button type='submit' id='btn_order' class='btn btn-info' style='font-size: 1.5em;'>주문하기</button>
           </form>
         <td>

@@ -32,26 +32,21 @@ public class CartCont {
     @RequestMapping(value="/cart/create.do", method=RequestMethod.POST )
     @ResponseBody
     public String cart_create(HttpSession session,
-                              int productno) {
+                              int productno,int ordercnt) {
       CartVO cartVO = new CartVO();
       cartVO.setProductno(productno);
-      
       int memberno = (Integer)session.getAttribute("memberno"); // FK
-      cartVO.setMemberno(memberno);
-      
-      cartVO.setCnt(1); // 최초 구매 수량 1개로 지정
-      cartVO.setCnttot(1);
+      cartVO.setMemberno(memberno);  
+      cartVO.setCnt(ordercnt);
       int cnt = this.cartProc.cart_create(cartVO); // 등록 처리
-      int cnttot = this.cartProc.cart_create(cartVO); // 등록 처리
       JSONObject json = new JSONObject();
       json.put("cnt", cnt);
-      json.put("cnttot", cnttot);
-     
+      
       return json.toString();
     }
     //회원별 목록
      //http://localhost:9091/cart/list_by_memberno.do
-    @RequestMapping(value="/cart/list_by_memberno.do", method=RequestMethod.GET )
+    @RequestMapping(value="/cart/list_by_memberno", method=RequestMethod.GET )
     public ModelAndView list_by_memberno(HttpSession session,
         @RequestParam(value="cartno", defaultValue="0") int cartno ) {
       ModelAndView mav = new ModelAndView();
@@ -64,10 +59,9 @@ public class CartCont {
         
         // 출력 순서별 출력
         List<CartVO> list = this.cartProc.list_by_memberno(memberno);
-        
         for (CartVO cartVO : list) {
           cnt = cartVO.getCnt();
-          total = productsVO.getProduct_price() * cnt;
+          total += cartVO.getProduct_price() * cnt;
         }
         
         mav.addObject("list", list); // request.setAttribute("list", list);
@@ -92,8 +86,8 @@ public class CartCont {
         @RequestParam(value="cartno", defaultValue="0") int cartno ) {
       ModelAndView mav = new ModelAndView();
       
-      this.cartProc.delete(cartno);      
-      mav.setViewName("redirect:/cart/list_by_memberno.do");
+      this.cartProc.cart_delete(cartno);      
+      mav.setViewName("redirect:/cart/list_by_memberno");
       
       return mav;
     }
@@ -110,7 +104,7 @@ public class CartCont {
       cartVO.setCnt(cnt);
       
       this.cartProc.cart_update(cartVO);      
-      mav.setViewName("redirect:/cart/list_by_memberno.do");
+      mav.setViewName("redirect:/cart/list_by_memberno");
       
       return mav;
     }  

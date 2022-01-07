@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="dev.mvc.cart.CartDAOInter">
 <insert id = "cart_create" parameterType = "dev.mvc.cart.CartVO">
-    INSERT INTO cart(cartno, productno, cnt, cnttot, memberno)
-    VALUES (cart_seq.nextval, #{productno}, #{cnt}, #{cnttot}, #{memberno})
+    INSERT INTO cart(cartno, productno, cnt,  memberno,product_price )
+    VALUES (cart_seq.nextval, #{productno}, #{cnt}, #{memberno},#{product_price})
 
 </insert>
 
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </update>
 
 <delete id="cart_delete" parameterType = "int">
-    DELETE FROM cart WHERE productno=#{productno}
+    DELETE FROM cart WHERE cartno=#{cartno}
 </delete>
 
   <!-- memberno 회원 번호별 쇼핑카트 목록 출력 -->

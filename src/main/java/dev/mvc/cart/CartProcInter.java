@@ -11,7 +11,7 @@ public interface CartProcInter {
     public List<CartVO> list_by_memberno(int memberno);
     
     //상품 삭제
-   public int delete(int productno);
+   public int cart_delete(int cartno);
    //수량수정
     public int cart_update(CartVO cartVO);
     
