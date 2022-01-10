@@ -76,6 +76,16 @@ public class SubCategoryProc implements SubCategoryProcInter {
 	};
 	
 	/**
+	   * 서브카테고리 전체 조회하여 전달
+	   * @param 
+	   * @return 카테고리 목록
+	   */
+	public List<SubCategoryVO> sub_category_data(){
+		List<SubCategoryVO> list =this.SubCategoryDAO.sub_category_data();
+		return list;
+	};
+	
+	/**
 	   * 삭제
 	   * @param 카테고리 번호
 	   * @return 삭제 성공여부

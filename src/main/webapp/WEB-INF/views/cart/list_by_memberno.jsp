@@ -159,7 +159,6 @@
           <div class='cart_price'  style='font-size: 2.0em; color: #FF0000;'><fmt:formatNumber value="${total }" pattern="#,###" /> 원</div>
           <form name='frm' id='frm' style='margin-top: 50px;' action="/pay_list/create.do" method='POST'>
             <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">  
-            <input type="hidden" name="list" id="list" value ="${list }" >
             <input type="hidden" name="total" id="total" value ="${total }" >
             <button type='submit' id='btn_order' class='btn btn-info' style='font-size: 1.5em;'>주문하기</button>
           </form>

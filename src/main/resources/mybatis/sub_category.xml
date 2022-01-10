@@ -43,6 +43,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE sub_categoryno = #{sub_categoryno}
 </select>
 
+<select id="sub_category_data" resultType="dev.mvc.subcategory.SubCategoryVO">
+    SELECT categoryno,sub_categoryname, sub_categoryno FROM pd_detail_category
+</select>
+
 <select id="search_count"  parameterType = "HashMap" resultType="int">
    SELECT COUNT(*) as cnt FROM pd_detail_category  
     <choose>

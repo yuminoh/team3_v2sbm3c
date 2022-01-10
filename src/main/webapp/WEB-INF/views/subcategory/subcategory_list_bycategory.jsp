@@ -46,6 +46,19 @@ function category_read_ajax(){
     });
 }
 
+function create_login_check(sub_categoryno){
+    if("${sessionScope.id }"!= ''){
+        if("${sessionScope.grade}"<=10){
+        	create_ajax();
+              }
+           else{
+                alert("관리자만이 사용 가능한 서비스입니다.")
+               }
+        }else{
+            alert("로그인을 하셔야 가능한 서비스입니다.");
+        }
+}
+
 	function create_ajax() {
 		$('#panel_create').css("display", "");
 		$('#panel_update').css("display", "none");
@@ -78,7 +91,20 @@ function category_read_ajax(){
 		html += "</select>";
 		return html;
 	}
-
+    
+	function update_login_check(sub_categoryno){
+	    if("${sessionScope.id }"!= ''){
+	        if("${sessionScope.grade}"<=10){
+	            update_read_ajax(sub_categoryno);
+	              }
+	           else{
+	                alert("관리자만이 사용 가능한 서비스입니다.")
+	               }
+	        }else{
+	            alert("로그인을 하셔야 가능한 서비스입니다.");
+	        }
+	}
+	
 	function update_read_ajax(sub_categoryno) {
 		$('#panel_create').css("display", "none");
 		$('#panel_update').css("display", "");
@@ -109,6 +135,19 @@ function category_read_ajax(){
 		});
 	}
 
+	function delete_login_check(sub_categoryno){
+        if("${sessionScope.id }"!= ''){
+            if("${sessionScope.grade}"<=10){
+            	delete_read_ajax(sub_categoryno);
+                  }
+               else{
+                    alert("관리자만이 사용 가능한 서비스입니다.")
+                   }
+            }else{
+                alert("로그인을 하셔야 가능한 서비스입니다.");
+            }
+    }
+	
 	function delete_read_ajax(sub_categoryno) {
 		$('#panel_create').css("display", "none");
 		$('#panel_update').css("display", "none");
@@ -218,7 +257,7 @@ function category_read_ajax(){
     <TR>     
       <TH class="th_bs">서브 카테고리 번호</TH>
       <TH class="th_bs">서브 카테고리</TH>
-      <TH class="th_bs"> <A href="javascript:create_ajax()" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A></TH>
+      <TH class="th_bs"> <A href="javascript:create_login_check()" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A></TH>
     </TR>
     </thead>   
     <tbody>
@@ -230,8 +269,8 @@ function category_read_ajax(){
         <TD class="td_bs">${sub_categoryno }</TD>            
         <TD class="td_bs"><a href="../products/list?sub_categoryno=${sub_categoryno }">${sub_categoryname }</a></TD>   
         <TD class="td_bs">
-          <A href="javascript:update_read_ajax(${sub_categoryno })"  title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
-          <A href="javascript:delete_read_ajax(${sub_categoryno })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         
+          <A href="javascript:update_login_check(${sub_categoryno })"  title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
+          <A href="javascript:delete_login_check(${sub_categoryno })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         
         </TD>   
       </TR>   
     </c:forEach> 

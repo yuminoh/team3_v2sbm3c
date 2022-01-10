@@ -18,7 +18,10 @@
           <A class='menu_link'  href='/member/create.do'>회원가입</A><span class='top_menu_sep'> </span>
         </c:otherwise>
       </c:choose>    
-      
+      <c:choose>
+        <c:when test="${sessionScope.grade < 10} ">
+        </c:when>
+      </c:choose>
       <A class='menu_link'  href='/member/my_info.do'>마이 페이지</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/category/list'>카테고리</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/subcategory/list'>서브 카테고리 전체 목록</A><span class='top_menu_sep'> </span>

@@ -35,11 +35,18 @@ public interface SubCategoryDAOInter {
 	public List<SubCategoryVO> sub_category_list_bycategory(HashMap<String, Object> map);
 	
 	/**
-	   * 서브카테고리 전체 조회
+	   * 서브카테고리 전체 조회, 검색어 포함
 	   * @param 
 	   * @return 카테고리 목록
 	   */
 	public List<SubCategoryVO> sub_category_list(HashMap<String, Object> map);
+	
+	/**
+	   * 서브카테고리 전체 조회하여 전달
+	   * @param 
+	   * @return 카테고리 목록
+	   */
+	public List<SubCategoryVO> sub_category_data();
 	
 	/**
 	   * 삭제
