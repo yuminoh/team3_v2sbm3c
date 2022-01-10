@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,15 +73,34 @@ public class ProductsCont {
     };
     
     @RequestMapping(value = "/products/create", method = RequestMethod.GET)
-    public ModelAndView products_create(HttpServletRequest request,int sub_categoryno){
+    public ModelAndView products_create(HttpServletRequest request,
+    															HttpSession session,
+    															int sub_categoryno){
     	ModelAndView mav = new ModelAndView();
-    	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(sub_categoryno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	StringBuffer return_url = request.getRequestURL();
-		mav.addObject("return_url",return_url);
-    	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
-    	mav.addObject("categoryno",subcategoryVO.getCategoryno());
+    	int grade = 0 ;
+    	try {
+    		grade= (int) session.getAttribute("grade");
+    	}
+    	catch(Exception e) {}
+
+    	if(grade<=10 && grade>=1) {
+    		SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(sub_categoryno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
+    		mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
+    		mav.addObject("categoryno",subcategoryVO.getCategoryno());
+    		mav.setViewName("/products/products_create");
+    	} 
+    	else if(grade==0) {
+    		mav.addObject("code","not_login");
+    		mav.setViewName("/products/msg");
+    	}
+    	else {
+    		mav.addObject("code","not_admin_privilege");
+    		mav.setViewName("/products/msg");
+    	}
+		mav.addObject("return_url",return_url);  		
     	mav.addObject("sub_categoryno",sub_categoryno);
-    	mav.setViewName("/products/products_create");
+    	
     	return mav; // forward
     };
     
@@ -188,16 +209,34 @@ public class ProductsCont {
     };
     
     @RequestMapping(value = "/products/update", method = RequestMethod.GET)
-    public ModelAndView products_update(HttpServletRequest request,int productno){
-    	ModelAndView mav = new ModelAndView();
-    	ProductsVO productVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
-    	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productVO.getSub_categoryno());
+    public ModelAndView products_update(HttpServletRequest request,
+    															HttpSession session,
+    															int productno){
+    	ModelAndView mav = new ModelAndView();  	
+    	System.out.println("호출됨");
     	StringBuffer return_url = request.getRequestURL();
+    	int grade = 0 ; //로그인이 안되었을 시 기본 권한 값
+    	try {
+    		grade= (int) session.getAttribute("grade");
+    	}
+    	catch(Exception e) {}
+    	if(grade<=10 && grade>=1) { //관리자 권한 확인
+    		ProductsVO productVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
+        	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productVO.getSub_categoryno());
+        	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
+        	mav.addObject("productVO", productVO);
+        	mav.setViewName("/products/products_update");
+    	} 
+    	else if(grade==0) {
+    		mav.addObject("code","not_login");
+    		mav.setViewName("/products/msg");
+    	}
+    	else {
+    		mav.addObject("code","not_admin_privilege");
+    		mav.setViewName("/products/msg");
+    	}
     	return_url.append("?productno="+productno);
-		mav.addObject("return_url",return_url);
-    	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
-    	mav.addObject("productVO", productVO);
-    	mav.setViewName("/products/products_update");
+		mav.addObject("return_url",return_url);   	    	
     	return mav; // forward
     };
     
@@ -216,16 +255,34 @@ public class ProductsCont {
     };
     
     @RequestMapping(value = "/products/update_file", method = RequestMethod.GET)
-    public ModelAndView products_update_file(HttpServletRequest request,int productno){
+    public ModelAndView products_update_file(HttpServletRequest request,
+    																HttpSession session,
+    																int productno){
     	ModelAndView mav = new ModelAndView();
     	ProductsVO productVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productVO.getSub_categoryno());
     	StringBuffer return_url = request.getRequestURL();
+    	int grade = 0 ; //로그인이 안되었을 시 기본 권한 값
+    	try {
+    		grade= (int) session.getAttribute("grade");
+    	}
+    	catch(Exception e) {}
+    	if(grade<=10 && grade>=1) {
+    		mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
+        	mav.addObject("productVO", productVO);
+        	mav.setViewName("/products/update_file");
+    	}
+    	else if(grade==0) {
+    		mav.addObject("code","not_admin_privilege");
+    		mav.setViewName("/products/msg");
+    	}
+    	else {
+    		mav.addObject("code","not_admin_privilege");
+    		mav.setViewName("/products/msg");
+    	}
     	return_url.append("?productno="+productno);
 		mav.addObject("return_url",return_url);
-    	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
-    	mav.addObject("productVO", productVO);
-    	mav.setViewName("/products/update_file");
+    	
     	return mav; // forward
     };
     

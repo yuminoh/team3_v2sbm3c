@@ -63,7 +63,17 @@
           <LI class='li_none'>
             <span class="span_fail">상품 삭제에 실패했습니다.</span>
           </LI>                                                                      
-        </c:when> 
+        </c:when>
+        <c:when test="${code == 'not_admin_privilege'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_fail">관리자만 접근 가능한 페이지입니다.</span>
+          </LI>                                                                      
+        </c:when>
+        <c:when test="${code == 'not_login'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_fail">로그인하셔야 가능한 페이지입니다.</span>
+          </LI>                                                                      
+        </c:when>    
         <c:otherwise>
           <LI class='li_none_left'>
             <span class="span_fail">알 수 없는 에러로 작업에 실패했습니다.</span>
@@ -81,7 +91,7 @@
             </c:when>
         </c:choose>
         
-        <button type='button' onclick="location.href='/products/list?sub_categoryno=${sub_categoryno}'" class="btn">목록</button>
+        <button type='button' onclick="location.href='${return_url}'" class="btn">목록</button>
       </LI>
     </UL>
   </fieldset>

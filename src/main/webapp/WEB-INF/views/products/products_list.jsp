@@ -68,8 +68,12 @@ function cancel(){
 <DIV style = "float:right;"></DIV>
 <DIV class='content_body'>
     <ASIDE class="aside_right">
-   <A class ="float:right; " href="/products/create?sub_categoryno=${sub_categoryno}" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A>
-    <span class='menu_divide' >│</span>
+    <c:choose>
+        <c:when test="${sessionScope.grade<=10 }">
+            <A class ="float:right; " href="/products/create?sub_categoryno=${sub_categoryno}" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A>
+            <span class='menu_divide' >│</span>
+        </c:when>       
+    </c:choose>
     <A href="javascript:location.reload();">새로고침</A><br>
   </ASIDE> 
 

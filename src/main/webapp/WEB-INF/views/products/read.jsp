@@ -40,6 +40,19 @@
 	    $('#panel_delete').css("display","none");
 	}
   
+  function delete_login_check(productno){
+	    if("${sessionScope.id }"!= ''){
+	        if("${sessionScope.grade}"<=10){
+	            delete_read_ajax(productno);
+	              }
+	           else{
+	                alert("관리자만이 사용 가능한 서비스입니다.")
+	               }
+	        }else{
+	            alert("로그인을 하셔야 가능한 서비스입니다.");
+	        }
+	}
+  
   function delete_read_ajax(productno){     
       $('#panel_delete').css("display","");
       var params = "productno="+productno;
@@ -190,15 +203,19 @@
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-    <A href="./create?sub_categoryno=${sub_categoryno }">등록</A>
-    <span class='menu_divide' >│</span>
-    <A href="javascript:location.reload();">새로고침</A>   
-    <span class='menu_divide' >│</span>
-    <A href="./update?productno=${productno}">수정</A>
-    <span class='menu_divide' >│</span>
-    <A href="./update_file?productno=${productno}">파일 수정</A>  
-    <span class='menu_divide' >│</span>
-    <A href="javascript:delete_read_ajax(${productno })" title="삭제">삭제</A>  
+  <c:choose>
+    <c:when test="${sessionScope.grade<=10 }">
+        <A href="./create?sub_categoryno=${sub_categoryno }">등록</A>
+        <span class='menu_divide' >│</span>
+        <A href="javascript:delete_login_check(${productno })" title="삭제">삭제</A>  
+         <span class='menu_divide' >│</span>
+         <A href="./update?productno=${productno}">수정</A>
+        <span class='menu_divide' >│</span>
+        <A href="./update_file?productno=${productno}">파일 수정</A>  
+        <span class='menu_divide' >│</span>
+    </c:when>       
+  </c:choose>  
+        <A href="javascript:location.reload();">새로고침</A>   
   </ASIDE> 
   
   <DIV style="text-align: right; clear: both;">  
