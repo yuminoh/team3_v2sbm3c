@@ -77,7 +77,7 @@ public class ProductsCont {
     															HttpSession session,
     															int sub_categoryno){
     	ModelAndView mav = new ModelAndView();
-    	StringBuffer return_url = request.getRequestURL();
+    	String return_url = "/products/list?sub_categoryno="+sub_categoryno;
     	int grade = 0 ;
     	try {
     		grade= (int) session.getAttribute("grade");
@@ -116,7 +116,7 @@ public class ProductsCont {
      // cnt = 0; // error test
         String user_dir = System.getProperty("user.dir"); // 시스템 제공
         String uploadDir = this.uploadDir;
-       
+        String return_url="/products/list?sub_categoryno="+productsVO.getSub_categoryno();// 다시 목록으로 돌아가기 위한 url
         System.out.println("->updir"+uploadDir);
         MultipartFile mf = productsVO.getFile1M1();
         pdimagefile1 = Tool.getFname(mf.getOriginalFilename()); // 원본 순수 파일명 산출
@@ -129,6 +129,7 @@ public class ProductsCont {
                  
              }
           }
+        mav.addObject("return_url",return_url);
         productsVO.setPdimagefile1(pdimagefile1saved);   
         int cnt = this.ProductsProc.create(productsVO); 
         if (cnt == 1) { 
@@ -313,6 +314,8 @@ public class ProductsCont {
     	}else {
     		mav.addObject("code","file_update_failed");
     	}
+    	String return_url = "/products/list?sub_categoryno="+productsVO.getSub_categoryno();
+    	mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryno",productsVO.getSub_categoryno());
     	mav.setViewName("/products/msg");
     	return mav; // forward
@@ -327,6 +330,8 @@ public class ProductsCont {
     	}else {
     		mav.addObject("code","delete_failed");
     		}
+    	String return_url = "/products/list?sub_categoryno="+productsVO.getSub_categoryno();
+    	mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryno",productsVO.getSub_categoryno());
     	mav.setViewName("/products/msg");
     	return mav; // forward

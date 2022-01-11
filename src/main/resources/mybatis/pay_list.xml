@@ -9,5 +9,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    INSERT INTO pay_list(payno,rdate,memberno,categoryno,sub_categoryno,cnt,total_price) 
    values (payno_seq.nextval,sysdate,#{memberno},#{categoryno},#{sub_categoryno},#{cnt},#{total_price})
   </insert> 
-
+  
+  <select id="intereste_product_list"  parameterType="int" resultType="dev.mvc.pay_list.Pay_listVO">
+    SELECT sub_categoryno, rownum as rank from
+        (SELECT sub_categoryno, count(*)
+                        FROM pay_list  WHERE memberno=#{memberno}      
+                        GROUP BY sub_categoryno 
+                        ORDER BY count(*) DESC
+                        ) 
+        WHERE rownum <![CDATA[<= 3]]>
+  </select>
 </mapper>

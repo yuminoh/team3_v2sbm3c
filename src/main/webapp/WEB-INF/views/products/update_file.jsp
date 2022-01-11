@@ -111,7 +111,7 @@
     <ul>
       <li class="li_none">
         <DIV style='text-align: center; width: 50%; float: left;'>
-          <c:set var="file1saved" value="${contentsVO.file1saved.toLowerCase() }" />
+          <c:set var="pdimagefile1" value="${productVO.pdimagefile1.toLowerCase() }" />
           <c:set var="thumb1" value="${contentsVO.thumb1 }" />
           <c:choose>
             <c:when test="${pdimagefile1.endsWith('jpg') || pdimagefile1.endsWith('png') || pdimagefile1.endsWith('gif')}">

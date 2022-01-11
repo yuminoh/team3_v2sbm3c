@@ -122,6 +122,7 @@ function cancel(){
         <c:set var="productimage" value="${products_list.pdimagefile1 }" />
            <!-- 하나의 이미지, 24 * 4 = 96% -->
       <DIV class='prod_style'>
+      <c:set var="productimage" value="${productimage.toLowerCase() }" />
         <c:choose>
           <c:when test="${productimage != null}"> <!-- 파일이 존재하면 -->
             <c:choose> 

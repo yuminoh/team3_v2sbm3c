@@ -18,12 +18,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import dev.mvc.category.CategoryProcInter;
+import dev.mvc.pay_list.Pay_listProcInter;
+import dev.mvc.pay_list.Pay_listVO;
  
 @Controller
 public class MemberCont {
   @Autowired
   @Qualifier("dev.mvc.member.MemberProc")
   private MemberProcInter memberProc = null;
+  
+  @Autowired
+  @Qualifier("dev.mvc.pay_list.Pay_listProc")
+  private Pay_listProcInter pay_listProc;
   
   public MemberCont(){
     System.out.println("-> MemberCont created.");
@@ -537,7 +545,6 @@ public class MemberCont {
     
     if (session.getAttribute("memberno") != null) {
       mav.addObject("url", "/member/my_info"); // /member/my_info.jsp
-      
       mav.setViewName("redirect:/member/msg.do");      
       }else { 
           mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용

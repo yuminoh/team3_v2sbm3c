@@ -38,5 +38,15 @@ public class Pay_listCont {
         JSONObject json = new JSONObject();
         return json.toString();
     }
-
+    
+    @RequestMapping(value="/pay_list/intereste_products", method=RequestMethod.GET )
+    @ResponseBody
+    public String interested_products_list(HttpSession session, int memberno) {
+    	List<Pay_listVO> intereste_products=this.Pay_listProc.intereste_product_list(memberno);   
+    	JSONObject json = new JSONObject();
+    	for(Pay_listVO pay_listVO:  intereste_products) {
+    		System.out.println(pay_listVO);
+    	}
+        return json.toString();
+    }
 }

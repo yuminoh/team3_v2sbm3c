@@ -35,4 +35,6 @@ public class Pay_listVO {
     private int categoryno;
     //서브카테고리 번호
     private int sub_categoryno;
+    //관심순위
+    private int rank;
 }
