@@ -1,5 +1,6 @@
 package dev.mvc.pay_list;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,5 +50,31 @@ public class Pay_listCont {
     		System.out.println(pay_listVO);
     	}
         return json.toString();
+    }
+    
+    @RequestMapping(value="/pay_list", method=RequestMethod.GET )
+    public ModelAndView pay_list(HttpSession session,
+    											@RequestParam(value="now_page",defaultValue="1")int now_page
+    										) {
+    	ModelAndView mav = new ModelAndView();
+    	HashMap<String, Object> map=new HashMap<String, Object>();
+        int memberno = 0;
+    	try {memberno = (int) session.getAttribute("memberno");}
+    	catch(Exception e) {}
+    	if(memberno == 0) 
+    		{mav.setViewName("/pay_list/msg");
+    	}
+    	else {   		
+    		map.put("memberno", memberno);
+    		map.put("now_page", now_page);
+        	int search_count = this.Pay_listProc.pay_list_count(memberno);
+        	String paging = this.Pay_listProc.pagingBox(search_count, now_page); //페이지 버튼 코드
+        	
+        	List<Pay_listVO> list=this.Pay_listProc.pay_list(map);
+        	mav.addObject("paging",paging);
+        	mav.addObject("pay_list",list);    	
+        	mav.setViewName("/pay_list/pay_list");
+    	}   	
+        return mav;
     }
 }

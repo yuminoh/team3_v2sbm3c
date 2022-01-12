@@ -545,6 +545,8 @@ public class MemberCont {
     
     if (session.getAttribute("memberno") != null) {
       mav.addObject("url", "/member/my_info"); // /member/my_info.jsp
+      List<Pay_listVO>  intereste_products=this.pay_listProc.intereste_product_list((int)session.getAttribute("memberno")); 
+      mav.addObject("intereste_products",intereste_products);
       mav.setViewName("redirect:/member/msg.do");      
       }else { 
           mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용

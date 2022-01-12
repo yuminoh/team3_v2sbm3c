@@ -31,6 +31,12 @@ public class Pay_listVO {
     private int cnt;
     //결재일
     private Date rdate;
+    //상품명
+    private String productname;
+    //상품번호
+    private int Productno ;
+    //상품가격
+    private int product_price;
     //카테고리 번호
     private int categoryno;
     //서브카테고리 번호
