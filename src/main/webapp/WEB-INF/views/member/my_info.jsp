@@ -68,6 +68,7 @@
   </c:if><br> 
  
        <DIV class='bottom_menu'>
+       <button type='button' onclick="location.href='/pay_list'" class='btn btn-info'>구매내역 조회</button>
        <button type='button' onclick="location.href='./passwd_update.do?memberno=${memberno}'" class='btn btn-info'>비밀번호 변경</button>
        <button type='button' onclick="location.href='./read.do?memberno=${memberno}'" class="btn btn-warning">회원정보 수정</button>
        <button type='button' onclick="location.href='./delete.do?memberno=${memberno}'" class="btn btn-danger">회원탈퇴</button>
