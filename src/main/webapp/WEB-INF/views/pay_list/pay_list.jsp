@@ -71,47 +71,17 @@ function delete_login_check(categoryno){
 <body>
 <jsp:include page="../menu/top.jsp" />
  
-<DIV class='title_line' id = 'title'>카테고리</DIV>
+<DIV class='title_line' id = 'title'>주문내역</DIV>
 
-<DIV class='content_body'>
-  
-   <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display:none;'>
-    <div class="msg_warning">삭제하면 복구 할 수 없습니다.</div>
-    <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete'>
-      <input type='hidden' name='categoryno' id='categoryno' '>
-       <label>카테고리 번호</label>:<span id='categoryno_output'></span> 
-      <label>카테고리 이름</label>:<span id='categoryname_output'></span> 
-      
-      <button type="submit" id='submit' class='btn btn-primary btn-xs' style="height: 22px; margin-bottom: 3px;">삭제</button>
-      <button type="button" id='delete_cancel'  class='btn btn-primary btn-xs' style="height: 22px; margin-bottom: 3px;">취소</button>
-    </FORM>
-  </DIV>
-  
-    <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='GET' action='./list'>
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='./list'">검색 취소</button>  
-      </c:if>    
-    </form>
-  </DIV>
+<DIV class='content_body'>    
+    
   <TABLE class='table table-striped'>
     <colgroup>
       <col style='width: 5%;'/>
-      <col style='width: 30%;'/>
+      <col style='width: 40%;'/>
       <col style='width: 20%;'/>
       <col style='width: 15%;'/>
       <col style='width: 15%;'/>
-      <col style='width: 10%;'/>
     </colgroup>
    
     <thead>  
@@ -136,8 +106,7 @@ function delete_login_check(categoryno){
         <TD class="td_bs">${productname }</TD>           
         <TD class="td_bs">${product_price }</TD>   
         <TD class="td_bs">${cnt }</TD> 
-        <TD class="td_bs">
-          <A href="javascript:delete_login_check(${categoryno })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         
+        <TD class="td_bs">          
         </TD>   
       </TR>   
     </c:forEach> 

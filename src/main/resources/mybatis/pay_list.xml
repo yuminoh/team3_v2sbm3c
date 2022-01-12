@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   
   <select id="pay_list"  parameterType="HashMap" resultType="dev.mvc.pay_list.Pay_listVO">
-           SELECT rdate, productname, product_price, cnt, rank from(
+           SELECT TO_CHAR(rdate,'yyyy-mm-dd  hh:mi:ss') as rdate, productname, product_price, cnt, rank from(
                         SELECT a.rdate, b.productname, b.product_price, a.cnt, rownum as rank 
                         FROM pay_list a Inner Join products b ON a.productno = b.productno
                         WHERE memberno=#{memberno}

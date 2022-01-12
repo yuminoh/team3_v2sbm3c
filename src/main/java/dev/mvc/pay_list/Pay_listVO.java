@@ -30,7 +30,7 @@ public class Pay_listVO {
     //주문수량
     private int cnt;
     //결재일
-    private Date rdate;
+    private String rdate;
     //상품명
     private String productname;
     //상품번호
