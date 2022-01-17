@@ -6,21 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/*
-payno                    
-memberno               
-paytype                  
-total                          
-rdate                  
-store                          
-zipcode                            
-address1                           
-tel                               
-codeno                            
-cartno                              
-address2                           
-*/
-
 @Getter @Setter @ToString
 public class Pay_listVO {
     //결재 번호

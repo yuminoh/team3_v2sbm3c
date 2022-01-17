@@ -130,9 +130,7 @@
   function cart_ajax(productno) {
     var f = $('#frm_login');
     $('#productno', f).val(productno);  // 쇼핑카트 등록시 사용할 상품 번호를 저장.
- 
-    console.log('-> productno: ' + $('#productno', f).val()); 
-    
+  
     if ('${sessionScope.id}' != '' || $('#login_yn').val() == 'YES') {  // 로그인이 되어 있다면
         cart_ajax_post();
              
@@ -185,9 +183,60 @@
         }
       }
     );  //  $.ajax END
+  }
+
+  <%-- 바로구매시 상품 추가 --%>
+  function pay_ajax(productno) {
+    var f = $('#frm_login');
+    $('#productno', f).val(productno);  // 쇼핑카트 등록시 사용할 상품 번호를 저장.
+    console.log("pay_ajax"+"호출됨");
+    if ('${sessionScope.id}' != '' || $('#login_yn').val() == 'YES') {  // 로그인이 되어 있다면
+    	pay_list_post();
+             
+    } else {  // 로그인 안한 경우
+        $('#div_login').show();   // 쇼핑카트에 insert 처리 Ajax 호출 
+    }
 
   }
-   
+  
+  function pay_list_post() {
+	    var f = $('#frm_login');
+	    var productno = $('#productno', f).val();  // 쇼핑카트 등록시 사용할 상품 번호.
+	    // params = $('#frm_login').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
+	    var cnt = $('#ordercnt').val();
+	    console.log("pay_list_post"+"호출됨");
+	    var params = "";	    
+	    params += 'productno=' + productno;
+	    params +='&ordercnt='+cnt;
+	    params += '&${ _csrf.parameterName }=${ _csrf.token }';
+	    console.log('-> pay_list_post: ' + params);
+	    // return;
+	    
+	    $.ajax(
+	      {
+	        url: '/pay/create',
+	        type: 'post',  // get, post
+	        cache: false, // 응답 결과 임시 저장 취소
+	        async: true,  // true: 비동기 통신
+	        dataType: 'json', // 응답 형식: json, html, xml...
+	        data: params,      // 데이터
+	        success: function(rdata) { // 응답이 온경우
+	          var str = '';
+	          console.log('-> cart_ajax_post cnt: ' + rdata.cnt);  // 1: 쇼핑카트 등록 성공
+	          
+	          if (rdata.cnt == 1) {
+	            var sw = alert('선택한 상품이 구매되었습니다 감사합니다.');	       	              
+	          } else {
+	            alert('선택한 상품을 구매하는데 실패했습니다.<br>잠시후 다시 시도해주세요.');
+	          }
+	        },
+	        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+	        error: function(request, status, error) { // callback 함수
+	          console.log(error);
+	        }
+	      }
+	    );  //  $.ajax END
+	  }
 </script>
  
 </head> 
@@ -323,7 +372,7 @@
           <input type='number' name='ordercnt' id='ordercnt' value='1' required="required" 
                      min="1" max="99999" step="1" class="form-control" style='width: 30%;'><br>
           <button type='button' onclick="javascript:cart_ajax(${productno })" class="btn btn-info">장바 구니</button>           
-          <button type='button' onclick="" class="btn btn-info">바로 구매</button>
+          <button type='button' onclick="javascript:pay_ajax(${productno})" class="btn btn-info">바로 구매</button>
           <span id="span_animation"></span>
           </form>
         </DIV> 

@@ -48,4 +48,11 @@ public interface ProductsDAOInter {
 	   * @return 삭제 성공여부
 	   */
 	public int product_delete(int productno);
+	
+	/**
+	   * 메인화면에 회원의 추천 상품 출력
+	   * @param 회원의 추천 서브카테고리
+	   * @return 해당 카테고리의 최신상품 3가지
+	   */
+	public List<ProductsVO> recommend_products(int sub_categoryno);
 }

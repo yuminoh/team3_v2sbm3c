@@ -5,9 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="dev.mvc.pay_list.Pay_listDAOInter">
 
+    <insert id="pay_create" parameterType="dev.mvc.pay_list.Pay_listVO">
+   INSERT INTO pay_list(payno,rdate,memberno,categoryno,sub_categoryno,cnt,productno) 
+   values (payno_seq.nextval,sysdate,#{memberno},#{categoryno},#{sub_categoryno},#{cnt},#{productno})
+  </insert> 
+
   <insert id="pay_list_create" parameterType="dev.mvc.pay_list.Pay_listVO">
-   INSERT INTO pay_list(payno,rdate,memberno,categoryno,sub_categoryno,cnt,total_price) 
-   values (payno_seq.nextval,sysdate,#{memberno},#{categoryno},#{sub_categoryno},#{cnt},#{total_price})
+   INSERT INTO pay_list(payno,rdate,memberno,categoryno,sub_categoryno,cnt) 
+   values (payno_seq.nextval,sysdate,#{memberno},#{categoryno},#{sub_categoryno},#{cnt})
   </insert> 
   
   <select id="intereste_product_list"  parameterType="int" resultType="dev.mvc.pay_list.Pay_listVO">
@@ -29,9 +34,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             where <![CDATA[rank>=#{start_num} AND rank <= #{end_num} ]]>
   </select>
   
+  <select id="pay_list_interested"  parameterType="HashMap" resultType="dev.mvc.pay_list.Pay_listVO">
+    select  sub_categoryno, rownum as rank 
+    from(    
+            select  sub_categoryno 
+            from pay_list 
+            where memberno=#{memberno} AND sub_categoryno in(#{sub_no1},#{sub_no2},#{sub_no3}) 
+            order by rdate DESC)
+    where <![CDATA[rownum<=5 ]]>
+  </select>
+  
   <select id="pay_list_count"  parameterType="int" resultType="int">
           SELECT count(*) 
                 FROM pay_list a Inner Join products b ON a.productno = b.productno
                 WHERE memberno=#{memberno}
   </select>
+  
 </mapper>

@@ -6,11 +6,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import dev.mvc.products.ProductsVO;
+
 
 @Component("dev.mvc.pay_list.Pay_listProc")
 public class Pay_listProc implements Pay_listProcInter {
     @Autowired
     private Pay_listDAOInter pay_listDAO;
+    
+  //바로구매시 등록
+    @Override 
+    public int pay_create(Pay_listVO pay_listVO) {
+    	int cnt = this.pay_listDAO.pay_create(pay_listVO);
+    	return cnt;
+    }
     
     @Override 
     public int pay_list_create(Pay_listVO pay_listVO) {
@@ -140,4 +149,14 @@ public class Pay_listProc implements Pay_listProcInter {
     	 int cnt =this.pay_listDAO.pay_list_count(memberno);
     	 return cnt;
      };
+     
+     /**
+	   * 자주 주문한 3개의 서브카테고리에 대한 주문기록 5건
+	   * @param 서브카테고리 1,2,3
+	   * @return 구매기록
+	   */
+ public List<Pay_listVO> pay_list_interested(HashMap<String, Object> map){
+	 List<Pay_listVO> interested_pay_list = this.pay_listDAO.pay_list_interested(map);
+	 return interested_pay_list;
+ };  
 }

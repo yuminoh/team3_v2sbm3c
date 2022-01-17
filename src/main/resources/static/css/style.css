@@ -33,6 +33,16 @@
               color: black;
   }
   
+   .recommend_style{
+              font-family: Malgun Gothic; 
+              width: 150px; 
+              margin: 2%; padding: 0.5%; 
+              background-color: #FFFFFF; 
+              text-align: center;
+              color: black;
+  }
+  
+  
   .container_main {
     width: 90%; 
     margin: 10px auto;

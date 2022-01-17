@@ -164,4 +164,14 @@ public class ProductsProc implements ProductsProcInter {
 		int cnt = this.productsDAO.product_delete(productno);
 		return cnt;
 	};
+	
+	/**
+	   * 메인화면에 회원의 추천 상품 출력
+	   * @param 회원의 추천 서브카테고리
+	   * @return 해당 카테고리의 최신상품 3가지
+	   */
+	public List<ProductsVO> recommend_products(int sub_categoryno){
+		List<ProductsVO> list = this.productsDAO.recommend_products(sub_categoryno);
+		return list;
+	}
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.recommend_product.Recommend_productDAOInter">
+  <insert id="recommend_create" parameterType="dev.mvc.recommend_product.Recommend_productVO">
+        INSERT INTO recommend_product(memberno,suggestion_subcategoryno)
+        VALUES (#{memberno},#{suggestion_subcategoryno})
+  </insert>
+  
+  <update id="recommend_update"  parameterType="dev.mvc.recommend_product.Recommend_productVO">
+    UPDATE recommend_product 
+    SET suggestion_subcategoryno=#{suggestion_subcategoryno} 
+    WHERE memberno=#{memberno}
+  </update>
+  
+  <select id="count" parameterType="int" resultType="int">
+    SELECT count(*)from recommend_product 
+    WHERE memberno=#{memberno}
+  </select> 
+  
+   <select id="recommend_read" parameterType="int" resultType="int">
+    select SUGGESTION_SUBCATEGORYNO 
+    from RECOMMEND_PRODUCT 
+    where memberno = #{memberno}
+  </select> 
+</mapper>
