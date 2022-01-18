@@ -43,6 +43,7 @@ public class HomeCont {
   // http://localhost:9091, http://localhost:9091/index.do
   @RequestMapping(value = {"/", "/index.do"}, method = RequestMethod.GET)
   public ModelAndView home(HttpSession session) {
+	  System.out.println("로그인 멤버 번호 ->"+session.getAttribute("memberno"));
     ModelAndView mav = new ModelAndView();
     int memberno = 0;
     try {
@@ -55,6 +56,7 @@ public class HomeCont {
     if(count>0) {
     	int sub_categoryno = this.recommend_productProc.recommend_read(memberno);
     	list = this.ProductsProc.recommend_products(sub_categoryno);
+    	System.out.println(list);
     	mav.addObject("list",list);
     }else {   	
     }
