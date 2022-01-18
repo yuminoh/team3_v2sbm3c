@@ -84,6 +84,7 @@ public class Pay_listCont {
 	public String interested_products_list(int memberno) {
 		List<Pay_listVO> interested_products = this.Pay_listProc.intereste_product_list(memberno);	
 		JSONObject json = new JSONObject();
+		System.out.println(interested_products.size());
 		if(interested_products.size()==3) {			
 			int[] interested_sub_categorys = new int[3]; // 회원의 관심 서브카테고리를 저장하는 배열
 			int i = 0;
@@ -101,13 +102,17 @@ public class Pay_listCont {
 			  // 회원의 관심상품 3가지에 관한 구매기록 5건 출력
 			  int[] pay_list =new int[5];
 			  i = 0;
-			  for (Pay_listVO pay_listVO : interested_pay_list) {
-				  pay_list[i]=pay_listVO.getSub_categoryno();
-				  i += 1;
-				} // 5건의 기록에서 서브 카테고리만 뽑아 배열로 저장
-			  json.put("code", "value_Suffice");
-			  json.put("interested_product", interested_sub_categorys);
-			  json.put("product_record", pay_list);
+			  if(interested_pay_list.size()==5) {
+				  for (Pay_listVO pay_listVO : interested_pay_list) {
+					  pay_list[i]=pay_listVO.getSub_categoryno();
+					  i += 1;
+					} // 5건의 기록에서 서브 카테고리만 뽑아 배열로 저장
+				  json.put("code", "value_Suffice");
+				  json.put("interested_product", interested_sub_categorys);
+				  json.put("product_record", pay_list);
+			  }else {
+				  json.put("code", "value_lack");
+			  }		  						 
 			  try {
 			      Thread.sleep(3000);
 			    } catch (InterruptedException e) {
