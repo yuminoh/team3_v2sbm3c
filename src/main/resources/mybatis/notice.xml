@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.notice.NoticeDAOInter"> 
+
+  <!-- 연속 입력 지원 등록: sequence가 SQL 실행전에 생성되어 NoticeVO에 저장 후 사용 -->
+  <insert id="create" parameterType="dev.mvc.notice.NoticeVO">
+    <selectKey keyProperty="noticeno" resultType="int" order="BEFORE">
+      SELECT notice_seq.nextval FROM dual
+    </selectKey>
+    
+    INSERT INTO notice(noticeno, memberno, title, rname ,content, passwd, word,
+                                file1, file1saved, thumb1, size1, rdate)
+    VALUES(#{noticeno}, #{memberno}, #{title}, #{rname}, #{content}, #{passwd}, #{word},
+                #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate)
+  </insert>
+  
+       <!-- 
+  레코드 갯수 만큼 NoticeVO" 객체를 만들어 ArrayList에 저장하여 리턴,
+  List<NoticeVO"> list = new ArrayList<NoticeVO">(); 
+  -->
+ <select id="list_noticeno_asc" resultType="dev.mvc.notice.NoticeVO">
+    SELECT noticeno, title, rname, content, word, rdate
+    FROM notice
+    ORDER BY noticeno DESC
+  </select>
+ </mapper>

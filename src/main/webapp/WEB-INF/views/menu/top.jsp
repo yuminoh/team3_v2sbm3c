@@ -29,7 +29,7 @@
       <A class='menu_link'  href='/order_pay/list_by_memberno.do'>주문결재</A><span class='top_menu_sep'> </span> 
       <A class='menu_link'  href='/member/list.do'>회원목록</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/stock/list.do'>재고</A><span class='top_menu_sep'> </span>
-       
+      <A class='menu_link'  href='/notice/list.do'>공지사항</A><span class='top_menu_sep'> </span>        
     </NAV>
   </DIV>
   
