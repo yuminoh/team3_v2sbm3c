@@ -32,7 +32,7 @@
   
 </DIV>
 
-<%-- <DIV class='content_body'>
+ <DIV class='content_body'>
   <ASIDE class="aside_right">
     <A href="./create.do?genreno=${genreVO.genreno }">등록</A>
     <span class='menu_divide' >│</span>
@@ -60,7 +60,7 @@
                      onclick="location.href='./list_by_genreno_search.do?genreno=${genreVO.genreno}&word='">검색 취소</button>  
       </c:if>    
     </form>
-  </DIV> --%>
+  </DIV> 
   
   <DIV class='menu_line'></DIV>
   

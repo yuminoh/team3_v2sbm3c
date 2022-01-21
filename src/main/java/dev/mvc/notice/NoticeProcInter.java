@@ -16,4 +16,11 @@ public interface NoticeProcInter {
    * @return
    */
   public List<NoticeVO> list_noticeno_asc();
+  
+  /**
+   * 조회
+   * @param contentsno
+   * @return
+   */
+  public NoticeVO read(int contentsno);
 }

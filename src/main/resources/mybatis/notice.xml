@@ -27,4 +27,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM notice
     ORDER BY noticeno DESC
   </select>
+  
+    <!-- 일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.notice.NoticeVO" parameterType="int">
+    SELECT noticeno, memberno, title, rname, content, recom, passwd, word, rdate,
+              file1, file1saved, thumb1, size1
+    FROM notice
+    WHERE noticeno = #{noticeno}
+  </select>
  </mapper>
