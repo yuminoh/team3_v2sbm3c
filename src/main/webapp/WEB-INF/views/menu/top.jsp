@@ -12,7 +12,7 @@
       <c:choose>
         <c:when test="${sessionScope.id != null}"> <%-- 로그인 한 경우 --%>
            ${sessionScope.id } <A class='menu_link'  href='/member/logout.do' >로그아웃</A><span class='top_menu_sep'> </span>
-<<<<<<< HEAD
+
             <A class='menu_link'  href='/member/my_info.do'>마이 페이지</A><span class='top_menu_sep'> </span>             
             <A class='menu_link'  href='/cart/list_by_memberno'>장바구니</A><span class='top_menu_sep'> </span>
             <c:choose>
@@ -27,14 +27,7 @@
             <A class='menu_link'  href='/member/login.do' >로그인</A><span class='top_menu_sep'> </span>
             <A class='menu_link'  href='/member/create.do'>회원가입</A><span class='top_menu_sep'> </span>                    
         </c:otherwise>      
-       </c:choose>
-=======
-        </c:when>
-        <c:otherwise>
-          <A class='menu_link'  href='/member/login.do' >로그인</A><span class='top_menu_sep'> </span>
-          <A class='menu_link'  href='/member/create.do'>회원가입</A><span class='top_menu_sep'> </span>
-        </c:otherwise>
-      </c:choose>    
+       </c:choose>          
       <c:choose>
         <c:when test="${sessionScope.grade < 10} ">
         </c:when>

@@ -21,11 +21,8 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @MapperScan(basePackages= {"dev.mvc.team3_v2sbm3c", "dev.mvc.cart","dev.mvc.category",
 		"dev.mvc.products","dev.mvc.subcategory","dev.mvc.member", "dev.mvc.order_pay","dev.mvc.pay_list","dev.mvc.recommend_product", "dev.mvc.stock"
-<<<<<<< HEAD
-		,"dev.mvc.order_pay","dev.mvc.order_detail"})
-=======
-		, "dev.mvc.notice"})
->>>>>>> 7903fd3267e4054e10c30e9dc010c15a2a123b8c
+		,"dev.mvc.order_pay","dev.mvc.order_detail", "dev.mvc.notice"})
+
 
 public class DatabaseConfiguration {
     
