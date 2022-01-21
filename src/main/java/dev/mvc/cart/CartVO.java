@@ -19,8 +19,6 @@ public class CartVO {
     private int productno;
     //수량
     private int cnt;
-    //합계
-    private int cnttot;
     //회원 번호
     private int memberno;
     //상품 가격

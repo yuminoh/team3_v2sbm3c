@@ -141,9 +141,11 @@ public class Pay_listCont {
 			map.put("memberno", memberno);
 			map.put("now_page", now_page);
 			int search_count = this.Pay_listProc.pay_list_count(memberno);
+			System.out.println("search_count->"+search_count);
 			String paging = this.Pay_listProc.pagingBox(search_count, now_page); // 페이지 버튼 코드
 
 			List<Pay_listVO> list = this.Pay_listProc.pay_list(map);
+			System.out.println("list.size->"+list.size());
 			mav.addObject("paging", paging);
 			mav.addObject("pay_list", list);
 			mav.setViewName("/pay_list/pay_list");

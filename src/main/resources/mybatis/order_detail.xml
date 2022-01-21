@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.order_detail.Order_detailDAOInter">
+
+  <insert id="create" parameterType="dev.mvc.order_detail.Order_detailVO">
+    INSERT INTO order_detail(order_itemno, memberno, payno, productno, cnt, tot, stateno, rdate)
+    VALUES (order_datail_seq.nextval, #{memberno}, #{payno}, #{productno}, #{cnt}, #{tot}, #{stateno}, sysdate)
+  </insert>
+  
+  <!-- 회원별 주문 상세 목록 -->
+  <select id="list_by_memberno" resultType="dev.mvc.order_detail.Order_detailVO" parameterType="HashMap">
+    SELECT i.order_itemno, i.memberno, i.order_payno, i.contentsno, i.cnt, i.tot, i.stateno, i.rdate,
+               c.title, c.saleprice
+    FROM order_item i, contents c 
+    WHERE (i.contentsno = c.contentsno) AND order_payno=#{order_payno} AND memberno = #{memberno}
+    ORDER BY order_itemno DESC
+  </select> 
+
+</mapper>
+

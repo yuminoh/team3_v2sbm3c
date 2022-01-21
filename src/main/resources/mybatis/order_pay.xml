@@ -6,8 +6,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dev.mvc.order_pay.Order_payDAOInter">
 
   <insert id="create" parameterType="dev.mvc.order_pay.Order_payVO">
-    INSERT INTO order_pay(payno, memberno, paytype, total, rdate, store, zipcode, address1, address2, tel, codeno, cartno)
-    VALUES(pay_seq.nextval, #{memberno}, #{paytype}, #{total}, sysdate, #{store}, #{zipcode}, #{address1}, #{address2}, #{tel}, #{codeno}, #{cartno})
+    <selectKey keyProperty="payno" resultType="int" order="BEFORE">
+      SELECT order_pay_seq.nextval FROM dual
+    </selectKey>   
+    
+    INSERT INTO order_pay(payno, memberno, rc_name, rc_tel, rc_zipcode,
+                                     rc_address1, rc_address2, paytype, amount_pay, rdate)
+    VALUES (#{payno}, #{memberno}, #{rc_name}, #{rc_tel}, #{rc_zipcode},
+                                     #{rc_address1}, #{rc_address2}, #{paytype}, #{amount_pay}, sysdate)
   </insert> 
+  
+  <!-- 회원별 주문 결재 목록 -->
+  <select id="list_by_memberno" resultType="dev.mvc.order_pay.Order_payVO" parameterType="int">
+    SELECT payno, memberno, rc_name, rc_tel, rc_zipcode, rc_address1, rc_address2, paytype, amount_pay, rdate
+    FROM order_pay
+    WHERE memberno=#{memberno}
+    ORDER BY payno DESC
+  </select>
 
 </mapper>

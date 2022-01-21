@@ -104,8 +104,6 @@
             <c:set var="product_price" value="${cartVO.product_price }" />
             <c:set var="pdimage" value="${cartVO.pdimagefile1 }" />
             <c:set var="cnt" value="${cartVO.cnt }" />
-            <c:set var="cnttot" value="${cartVO.cnttot }" />
-            <c:set var="memberno" value="${cartVO.memberno }" />        
             <tr> 
               <td style='vertical-align: middle; text-align: center;'>        
                 <c:choose>
@@ -157,9 +155,7 @@
         <td style='width: 50%;'>
           <div class='cart_label' style='font-size: 2.0em;'>전체 주문 금액</div>
           <div class='cart_price'  style='font-size: 2.0em; color: #FF0000;'><fmt:formatNumber value="${total }" pattern="#,###" /> 원</div>
-          <form name='frm' id='frm' style='margin-top: 50px;' action="/pay_list/create.do" method='POST'>
-            <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">  
-            <input type="hidden" name="total" id="total" value ="${total }" >
+          <form name='frm' id='frm' style='margin-top: 50px;' action="/order_pay/create.do" method='get'>            
             <button type='submit' id='btn_order' class='btn btn-info' style='font-size: 1.5em;'>주문하기</button>
           </form>
         <td>
