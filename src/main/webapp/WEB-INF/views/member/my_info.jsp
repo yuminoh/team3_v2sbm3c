@@ -22,14 +22,14 @@
 
   <DIV class='title_line'>
     내정보
-  </DIV>
-  
+  </DIV>  
   <%-- 모든 session 값을 가져옴 --%>
 <%--   <c:forEach var="name" items="${pageContext.session.attributeNames}">
       변수: ${name}
       값: ${sessionScope[name]}
       <br>
   </c:forEach> --%>
+  <DIV>
   <br>  
   로그인된 ID: ${sessionScope.id}
   <br>
@@ -59,20 +59,37 @@
       <c:when test="${grade >= 30 and grade <= 39}">정지 회원 영역</c:when>
       <c:when test="${grade >= 40 and grade <= 49}">탈퇴 회원 영역</c:when>
       <c:when test="${grade == 99}">비회원 영역 처리</c:when>
-    </c:choose>  
-    
+    </c:choose>     
     <c:choose>
       <c:when test="${grade <= 20}"> + 관리자 + 회원 영역</c:when>    
       <c:when test="${grade >= 30}"> + 비회원(정지, 탈퇴) 영역 처리</c:when>
     </c:choose>  
   </c:if><br> 
- 
+ </DIV>
        <DIV class='bottom_menu'>
        <button type='button' onclick="location.href='/pay_list'" class='btn btn-info'>구매내역 조회</button>
        <button type='button' onclick="location.href='./passwd_update.do?memberno=${memberno}'" class='btn btn-info'>비밀번호 변경</button>
        <button type='button' onclick="location.href='./read.do?memberno=${memberno}'" class="btn btn-warning">회원정보 수정</button>
        <button type='button' onclick="location.href='./delete.do?memberno=${memberno}'" class="btn btn-danger">회원탈퇴</button>
       </DIV>
+      <div>
+      회원님의 관심 품목
+      </div>
+      <br>
+     <c:choose>
+        <c:when test="${list_count != null}">
+            <c:forEach var="list" items="${intereted_list}">      
+                <c:set var="sub_categoryno" value="${list.sub_categoryno }" />
+                <c:set var="sub_categoryname" value="${list.sub_categoryname }" />
+                <c:set var="categoryno" value="${list.categoryno }" />
+             
+                <DIV style="width:100px; height:100px; text-align: center; float:left;">
+                     <A href="/products/list?sub_categoryno=${sub_categoryno }">${sub_categoryname }</A>
+                </DIV>
+            </c:forEach>
+        </c:when>    
+      </c:choose>
+
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
  

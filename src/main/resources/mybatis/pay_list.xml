@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="intereste_product_list"  parameterType="int" resultType="dev.mvc.pay_list.Pay_listVO">
     SELECT sub_categoryno, rownum as rank from
         (SELECT sub_categoryno, count(*)
-                        FROM pay_list  WHERE memberno=#{memberno}      
+                        FROM pay_list  WHERE memberno=#{memberno} AND rdate >= sysdate-60      
                         GROUP BY sub_categoryno 
                         ORDER BY count(*) DESC
                         ) 

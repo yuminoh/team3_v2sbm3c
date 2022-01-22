@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.cart.CartVO;
+import dev.mvc.interested_products.Interested_productsProcInter;
 import dev.mvc.products.ProductsProcInter;
 import dev.mvc.products.ProductsVO;
 import dev.mvc.recommend_product.Recommend_productProcInter;
 import dev.mvc.subcategory.SubCategoryProcInter;
 import dev.mvc.subcategory.SubCategoryVO;
 import dev.mvc.recommend_product.Recommend_productVO;
+import dev.mvc.interested_products.Interested_productsVO;
 
 @Controller
 public class Pay_listCont {
@@ -40,6 +42,10 @@ public class Pay_listCont {
 	@Autowired
 	@Qualifier("dev.mvc.recommend_product.Recommend_productProc")
 	private Recommend_productProcInter Recommend_productProc;
+	
+	@Autowired
+	@Qualifier("dev.mvc.interested_products.Interested_productsProc")
+	private Interested_productsProcInter interested_productsProc;
 
 	public Pay_listCont() {
 		System.out.println("-> Pay_listCont created.");
@@ -84,16 +90,20 @@ public class Pay_listCont {
 	public String interested_products_list(int memberno) {
 		List<Pay_listVO> interested_products = this.Pay_listProc.intereste_product_list(memberno);	
 		JSONObject json = new JSONObject();
-		System.out.println(interested_products.size());
-		if(interested_products.size()==3) {			
+		if(interested_products.size()==3) {	 // 구매기록에서 구매한 서브카테고리 종류가 3가지 이상일 경우		
 			int[] interested_sub_categorys = new int[3]; // 회원의 관심 서브카테고리를 저장하는 배열
 			int i = 0;
-			for (Pay_listVO pay_listVO : interested_products) {
+			int cnt = this.interested_productsProc.interested_products_delete(memberno); //새로 등록하기전 이미 있는 회원의 관심상품 제거
+			Interested_productsVO interested_productsVO = new Interested_productsVO();
+			interested_productsVO.setMemberno(memberno); 
+			for (Pay_listVO pay_listVO : interested_products) {				
 				interested_sub_categorys[i] = pay_listVO.getSub_categoryno();
+				interested_productsVO.setSub_categoryno(interested_sub_categorys[i]);//관심상품 테이블에 등록
+				cnt = this.interested_productsProc.interested_products_create(interested_productsVO);
 				i += 1;
 			}
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			
+			 	
 			  map.put("memberno", memberno); 
 			  map.put("sub_no1",interested_sub_categorys[0]); 
 			  map.put("sub_no2",interested_sub_categorys[1]); 

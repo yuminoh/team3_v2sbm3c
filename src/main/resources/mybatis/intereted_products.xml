@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.interested_products.Interested_productsDAOInter">
+
+    <insert id="interested_products_create" parameterType="dev.mvc.interested_products.Interested_productsVO">
+        INSERT INTO INTERESTED_PRODUCTS(memberno, sub_categoryno) VALUES (#{memberno}, #{sub_categoryno})
+    </insert> 
+    
+    <delete id="interested_products_delete"  parameterType="int">
+        DELETE INTERESTED_PRODUCTS WHERE memberno = #{memberno}
+    </delete>
+    
+    <select id = "interested_products_count" parameterType = "int" resultType="int">
+        SELECT count(*) FROM INTERESTED_PRODUCTS WHERE memberno=#{memberno}
+    </select>
+    
+    <select id = "interested_products_read_memberno" parameterType = "int" resultType="dev.mvc.subcategory.SubCategoryVO">
+        SELECT IP.sub_categoryno, pc.sub_categoryname, pc.categoryno FROM INTERESTED_PRODUCTS IP 
+        INNER JOIN PD_DETAIL_CATEGORY pc ON ip.sub_categoryno=pc.sub_categoryno 
+        WHERE memberno=#{memberno}    
+    </select>
+    
+</mapper>

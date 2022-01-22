@@ -1,5 +1,6 @@
 package dev.mvc.member;
  
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.category.CategoryProcInter;
+import dev.mvc.interested_products.Interested_productsProcInter;
+import dev.mvc.interested_products.Interested_productsVO;
 import dev.mvc.pay_list.Pay_listProcInter;
 import dev.mvc.pay_list.Pay_listVO;
+import dev.mvc.subcategory.SubCategoryProcInter;
+import dev.mvc.subcategory.SubCategoryVO;
  
 @Controller
 public class MemberCont {
@@ -32,6 +37,14 @@ public class MemberCont {
   @Autowired
   @Qualifier("dev.mvc.pay_list.Pay_listProc")
   private Pay_listProcInter pay_listProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.subcategory.SubCategoryProc")
+  private SubCategoryProcInter subCategoryProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.interested_products.Interested_productsProc")
+  private Interested_productsProcInter interested_productsProc;
   
   public MemberCont(){
     System.out.println("-> MemberCont created.");
@@ -109,7 +122,7 @@ public class MemberCont {
   @RequestMapping(value="/member/msg.do", method=RequestMethod.GET)
   public ModelAndView msg(String url){
     ModelAndView mav = new ModelAndView();
-
+    
     mav.setViewName(url); // forward
     
     return mav; // forward
@@ -537,20 +550,21 @@ public class MemberCont {
                               method=RequestMethod.GET)
     public ModelAndView my_info(HttpSession session){
     ModelAndView mav = new ModelAndView();
-    
 //  if ((this.memberProc.isAdmin(session)) || (this.memberProc.isMember(session))) { 
 //  mav.addObject("url", "/member/my_info"); // /member/my_info.jsp
 //  
-//  mav.setViewName("redirect:/member/msg.do"); 
-    
-    if (session.getAttribute("memberno") != null) {
-      mav.addObject("url", "/member/my_info"); // /member/my_info.jsp
-      List<Pay_listVO>  intereste_products=this.pay_listProc.intereste_product_list((int)session.getAttribute("memberno")); 
-      mav.addObject("intereste_products",intereste_products);
-      mav.setViewName("redirect:/member/msg.do");      
+//  mav.setViewName("redirect:/member/msg.do");        
+    if (session.getAttribute("memberno") != null) {  
+    	int memberno = (int)session.getAttribute("memberno");
+        int count = this.interested_productsProc.interested_products_count(memberno); //관심상품 3가지가 있는지 검사
+        if(count == 3) {   	 
+        	 List<SubCategoryVO> intereted_list  = this.interested_productsProc.interested_products_read_memberno(memberno); //관심품목 3가지 정보를 전달  
+        	 mav.addObject("list_count",count);
+         	 mav.addObject("intereted_list",intereted_list);
+        }
+      mav.setViewName("/member/my_info");      
       }else { 
-          mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용
-          
+          mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용        
           mav.setViewName("redirect:/member/msg.do");      
       }
     
