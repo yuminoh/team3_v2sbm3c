@@ -167,12 +167,12 @@
 
   <div class='menu_line'></div>
   
-  <FORM name='frm' id='frm' method='POST' action='./create.do' class="form-horizontal">
+  <FORM style="padding: 1.5rem;" name='frm' id='frm' method='POST' action='./create.do' class="form-horizontal">
   
     <div class="form-group">
       <label for="id" class="col-md-2 control-label" style='font-size: 0.9em;'>아이디*</label>    
       <div class="col-md-10">
-        <input type='text' class="form-control" name='id' id='id' value='' required="required" style='width: 30%;' placeholder="아이디" autofocus="autofocus">
+        <input type='text' class="form-control" name='id' id='id' value='' required="required" style='width: 30%;display: inline-block !important;' placeholder="아이디" autofocus="autofocus">
         <button type='button' id="btn_checkID" class="btn btn-info btn-md">중복확인</button>
         <SPAN id='id_span'></SPAN> <!-- ID 중복 관련 메시지 -->        
       </div>
@@ -212,7 +212,7 @@
       <label for="zipcode" class="col-md-2 control-label" style='font-size: 0.9em;'>우편번호</label>    
       <div class="col-md-10">
         <input type='text' class="form-control" name='zipcode' id='zipcode' 
-                   value='' style='width: 30%;' placeholder="우편번호">
+                   value='' style='width: 30%;display: inline-block !important;' placeholder="우편번호">
         <button type="button" id="btn_DaumPostcode" class="btn btn-info btn-md">우편번호 찾기</button>
       </div>
     </div>  
@@ -315,6 +315,7 @@
       </div>
     </div>   
   </FORM>
+  <div class='menu_line'></div>
   </DIV>
 
 <jsp:include page="../menu/bottom.jsp" flush='false' />

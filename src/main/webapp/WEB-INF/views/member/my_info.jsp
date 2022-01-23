@@ -20,51 +20,69 @@
 <body>
 <jsp:include page="../menu/top.jsp" flush='false' />
 
-  <DIV class='title_line'>
+   <DIV class='title_line'>
     내정보
-  </DIV>  
-  <%-- 모든 session 값을 가져옴 --%>
-<%--   <c:forEach var="name" items="${pageContext.session.attributeNames}">
-      변수: ${name}
-      값: ${sessionScope[name]}
-      <br>
-  </c:forEach> --%>
-  <DIV>
-  <br>  
-  로그인된 ID: ${sessionScope.id}
-  <br>
-  회원 이름: ${sessionScope.mname}
-  <br>
-  회원 등급: 
-     <c:choose>
+  </DIV>
+  <DIV class='menu_line'></DIV>
+<div class="my-page-container">
+
+  <ul>
+  <li>아이디 </li>
+  <li>${sessionScope.id}</li>
+  </ul>
+  
+  <ul>
+  <li>회원 이름 </li>
+  <li>${sessionScope.mname}</li>
+  </ul>
+  
+  <ul>
+  <li>회원 등급 </li>
+     <li><c:choose>
+      <c:when test="${grade >= 1 and grade <= 10}">관리자 영역</c:when>    
+      <c:when test="${grade >= 11 and grade <= 20}">회원 영역</c:when>
+      <c:when test="${grade >= 30 and grade <= 39}">정지 회원 영역</c:when>
+      <c:when test="${grade >= 40 and grade <= 49}">탈퇴 회원 영역</c:when>
+      <c:when test="${grade == 99}">비회원 영역 처리</c:when>
+    </c:choose></li>  
+  </ul>
+  
+  <ul>
+  <li>가입일</li> 
+  <li>${sessionScope.mdate}</li>
+  </ul>
+  
+  <ul>
+  <li>전화번호 </li> 
+  <li>${sessionScope.tel}</li>
+  </ul>
+  
+  <%-- 등급(1 ~ 10: 관리자 / 11~20: 회원 / 30~39: 정지 회원 / 40~49: 탈퇴 회원 / 99: 비회원) --%>
+  <ul>  
+  <c:set var="grade" value="${sessionScope.grade}" />
+  <li>로그인 등급</li>
+  <li>${grade }</li>
+  </ul>
+  
+  
+  <ul class='slim'>
+  <c:if test="${sessionScope.id ne null }">
+    <li>로그인된 사용자 메뉴 출력 영역(특정 권한별 구분)</li>
+  
+    <li><c:choose>
       <c:when test="${grade >= 1 and grade <= 10}">관리자 영역</c:when>    
       <c:when test="${grade >= 11 and grade <= 20}">회원 영역</c:when>
       <c:when test="${grade >= 30 and grade <= 39}">정지 회원 영역</c:when>
       <c:when test="${grade >= 40 and grade <= 49}">탈퇴 회원 영역</c:when>
       <c:when test="${grade == 99}">비회원 영역 처리</c:when>
     </c:choose>  
-  <br>
-  가입일: ${sessionScope.mdate}
-  <br>
-  전화번호: ${sessionScope.tel}
-  
-  <%-- 등급(1 ~ 10: 관리자 / 11~20: 회원 / 30~39: 정지 회원 / 40~49: 탈퇴 회원 / 99: 비회원) --%>
-  <c:set var="grade" value="${sessionScope.grade}" /><br>
-  로그인 등급: ${grade }<br>
-  <c:if test="${sessionScope.id ne null }">
-    로그인된 사용자 메뉴 출력 영역(특정 권한별 구분)<br>
-    <c:choose>
-      <c:when test="${grade >= 1 and grade <= 10}">관리자 영역</c:when>    
-      <c:when test="${grade >= 11 and grade <= 20}">회원 영역</c:when>
-      <c:when test="${grade >= 30 and grade <= 39}">정지 회원 영역</c:when>
-      <c:when test="${grade >= 40 and grade <= 49}">탈퇴 회원 영역</c:when>
-      <c:when test="${grade == 99}">비회원 영역 처리</c:when>
-    </c:choose>     
+    
     <c:choose>
       <c:when test="${grade <= 20}"> + 관리자 + 회원 영역</c:when>    
       <c:when test="${grade >= 30}"> + 비회원(정지, 탈퇴) 영역 처리</c:when>
-    </c:choose>  
-  </c:if><br> 
+    </c:choose></li>  
+  </c:if>
+ </ul>
  </DIV>
        <DIV class='bottom_menu'>
        <button type='button' onclick="location.href='/pay_list'" class='btn btn-info'>구매내역 조회</button>
@@ -89,7 +107,7 @@
             </c:forEach>
         </c:when>    
       </c:choose>
-
+<DIV class='menu_line'></DIV>
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
  
