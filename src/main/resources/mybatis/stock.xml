@@ -4,25 +4,25 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="dev.mvc.stock.stockDAOInter">
-<insert id = "stock_create" parameterType = "dev.mvc.stock.stockVO">
+<mapper namespace="dev.mvc.stock.StockDAOInter">
+<insert id = "stock_create" parameterType = "dev.mvc.stock.StockVO">
     INSERT INTO stock(stocknum, stockno, productclass, productwa, productst, productno )
      VALUES (stocknum_seq.nextval, #{stockno},#{productclass},#{productwa},#{productst},#{productno})
 </insert>
 
-<select id="stock_list"  resultType="dev.mvc.stock.stockVO">
+<select id="stock_list"  resultType="dev.mvc.stock.StockVO">
     SELECT stocknum, stockno, productclass, productwa, productst, productno
     FROM stock 
     ORDER BY stocknum ASC
 </select>
 
-<select id="stock_read"  parameterType = "int" resultType="dev.mvc.stock.stockVO">
+<select id="stock_read"  parameterType = "int" resultType="dev.mvc.stock.StockVO">
     SELECT stocknum, stockno, productclass, productwa, productst, productno
     FROM stock 
     WHERE stocknum = #{stocknum}
 </select>
 
-<update id="stock_update"  parameterType="dev.mvc.stock.stockVO">
+<update id="stock_update"  parameterType="dev.mvc.stock.StockVO">
     UPDATE stock
     SET stockno=#{stockno}, productclass=#{productclass}, productwa=#{productwa}, productst=#{productst}, productno=#{productno}
     WHERE stocknum=#{stocknum}

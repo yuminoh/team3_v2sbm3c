@@ -39,7 +39,7 @@
       <span style='padding-left: 0.5%;'></span>
       <li><A class='menu_link'  href='/category/list'>카테고리</A><span class='top_menu_sep'> </span></li>   
       <li><a class="menu_link" href="/notice/list.do">공지사항</a><span class="top_menu_sep"></span></li>     
-      <li><a class="menu_link" href="/">메뉴1</a><span class="top_menu_sep"></span></li>      
+      <li><a class="menu_link" href="/post/list.do">상품 문의 게시판</a><span class="top_menu_sep"></span></li>      
       <li><a class="menu_link" href="/">메뉴2</a><span class="top_menu_sep"></span></li>      
       <li><a class="menu_link" href="/">메뉴3</a><span class="top_menu_sep"></span></li>        
       <li><A class='menu_link'  href='/cart/list_by_memberno'>장바구니</A><span class='top_menu_sep'></span></li>

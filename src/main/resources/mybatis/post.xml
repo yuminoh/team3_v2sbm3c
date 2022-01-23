@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.post.PostDAOInter">
+<insert id = "post_create" parameterType = "dev.mvc.post.PostVO">
+    INSERT INTO post(postno, memberno, title, contents, pdate )
+     VALUES (post_seq.nextval, #{memberno},#{title},#{contents}, sysdate)
+</insert>
+
+<select id="post_list"  resultType="dev.mvc.post.PostVO">
+    SELECT postno, memberno, title, contents, pdate
+    FROM post 
+    ORDER BY postno ASC
+</select>
+
+<select id="post_read"  parameterType = "int" resultType="dev.mvc.post.PostVO">
+    SELECT postno, memberno, title, contents, pdate
+    FROM post 
+    WHERE postno = #{postno}
+</select>
+
+<update id="post_update"  parameterType="dev.mvc.post.PostVO">
+    UPDATE post
+    SET title=#{title}, contents=#{contents}, memberno=#{memberno}
+    WHERE postno=#{postno}
+</update>
+
+<delete id="post_delete" parameterType = "int">
+    DELETE FROM post 
+    WHERE postno=#{postno}
+</delete>
+
+</mapper>

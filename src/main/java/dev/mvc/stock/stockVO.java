@@ -13,7 +13,7 @@ import lombok.ToString;
   productno INTEGER NOT NULL, -- 상품 번호(FK)
 */
 @Getter @Setter @ToString 
-public class stockVO {
+public class StockVO {
     //재고 번호
     private int stocknum;
     //재고 수량
