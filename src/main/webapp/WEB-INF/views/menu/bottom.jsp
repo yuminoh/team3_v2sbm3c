@@ -3,7 +3,7 @@
   </div>
     <div>
       <ul class="company-infomation">
-        <li><a href="">힐링영화관</a></li>
+        <li><a href="">편의점</a></li>
         <li><a href="">회사소개</a></li>
         <li><a href="">이용약관</a></li>
         <li><a href="">이메일무단수집거부</a></li>

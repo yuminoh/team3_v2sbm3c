@@ -117,6 +117,8 @@ function update_read_ajax(postno){
 
 <DIV class='content_body'>
 
+<c:choose>
+    <c:when test="${sessionScope.id != null}"><!--  로그인한 사람이 관리자일 경우 -->
 <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
         <FORM name='frm_create' id='frm_create' method='POST' action='./create' enctype="multipart/form-data">      
         <input type='hidden' name='memberno' id='memberno' value="${memberno }">
@@ -131,7 +133,7 @@ function update_read_ajax(postno){
         </FORM>
   </DIV> 
   
-  <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
+    <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
         <FORM name='frm_update' id='frm_update' method='POST' action='./update' enctype="multipart/form-data">      
         <input type='hidden' name='postno' id='postno' >
             <label>제목</label>
@@ -157,6 +159,12 @@ function update_read_ajax(postno){
       <button type="button" id='delete_cancel'  class='btn btn-primary btn-xs' style="height: 22px; margin-bottom: 3px;">취소</button>
     </FORM>
   </DIV>
+    </c:when> 
+</c:choose>
+            
+
+  
+
     
   <TABLE class='table table-striped'>
     <colgroup>
@@ -175,7 +183,12 @@ function update_read_ajax(postno){
       <TH class="th_bs">제목</TH>
       <TH class="th_bs">내용</TH>
       <TH class="th_bs">작성일</TH>
+      <c:choose>
+      <c:when test="${sessionScope.id != null}"><!--  로그인한 사람이 관리자일 경우 -->
       <TH class="th_bs"> <A href="javascript:create_ajax()" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A></TH>
+      </c:when> 
+      </c:choose>
+
     </TR>
     </thead>   
     <tbody>
@@ -192,8 +205,13 @@ function update_read_ajax(postno){
         <TD class="td_bs">${contents }</TD>
         <TD class="td_bs">${pdate }</TD>
         <TD class="td_bs"> 
+        <c:choose>
+        <c:when test="${sessionScope.id != null}"><!--  로그인한 사람이 관리자일 경우 -->
           <A href="javascript:update_read_ajax(${postno })"  title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
           <A href="javascript:delete_read_ajax(${postno })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         
+         </c:when> 
+         </c:choose>
+
         </TD>   
       </TR>   
     </c:forEach> 
