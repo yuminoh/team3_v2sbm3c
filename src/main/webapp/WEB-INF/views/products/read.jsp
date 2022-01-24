@@ -16,7 +16,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>편의점 재고관리</title>
+<title>편의점 온라인 쇼핑몰</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -366,15 +366,23 @@
         <DIV style="width: 47%; height: 260px; float: left; margin-right: 10px; margin-bottom: 30px;">
           <span style="font-size: 2.0em; font-weight: bold;">${product_Explanation}  </span></br>      
           <span style="font-size: 1.5em; font-weight: bold;"><fmt:formatNumber value="${product_price}" pattern="#,###" /> 원</span><br>
-
-          <span style="font-size: 1.0em;">수량</span><br>
-          <form>
-          <input type='number' name='ordercnt' id='ordercnt' value='1' required="required" 
-                     min="1" max="99999" step="1" class="form-control" style='width: 30%;'><br>
-          <button type='button' onclick="javascript:cart_ajax(${productno })" class="btn btn-info">장바 구니</button>           
-          <button type='button' onclick="javascript:pay_ajax(${productno})" class="btn btn-info">바로 구매</button>
-          <span id="span_animation"></span>
-          </form>
+          <c:choose>  
+                <c:when test="${stockVO.stockno > 0 }">
+                    <span style="font-size: 1.0em;">수량</span><br>
+                     현재 남은 수량: ${stockVO.stockno }
+                    <form>
+                        <input type='number' name='ordercnt' id='ordercnt' value='1' required="required" 
+                                 min="1" max="${stockVO.stockno }" step="1" class="form-control" style='width: 30%;'><br>
+                        <button type='button' onclick="javascript:cart_ajax(${productno })" class="btn btn-info">장바 구니</button>           
+                        <button type='button' onclick="javascript:pay_ajax(${productno})" class="btn btn-info">바로 구매</button>
+                        <span id="span_animation"></span>
+                </form>
+                </c:when>
+                <c:otherwise>
+                        <br>
+                       <span style="color:red; font-size: 1.0em;">품절된 상품입니다.</span><br>  
+                </c:otherwise>
+          </c:choose>
         </DIV> 
 
         <DIV>${content }</DIV>

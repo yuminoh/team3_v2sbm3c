@@ -8,7 +8,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=5.0, width=device-width" /> 
-<title>Resort world</title>
+<title>편의점 온라인 쇼핑몰</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -95,7 +95,7 @@
       <TD class='td_basic'><fmt:formatNumber value="${amount_pay }" pattern="#,###" /></TD>
       <TD class='td_basic'>${rdate.substring(1,16) }</TD>
       <TD class='td_basic'>
-        <A href="/order_item/list_by_memberno.do?order_payno=${order_payno}"><img src="/images/bu6.png" title="주문 내역 상세 조회"></A>
+        <A href="/order_detail/list_by_memberno.do?payno=${payno}"><img src="/images/bu6.png" title="주문 내역 상세 조회"></A>
       </TD>
       
     </TR>

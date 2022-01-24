@@ -13,10 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <!-- 회원별 주문 상세 목록 -->
   <select id="list_by_memberno" resultType="dev.mvc.order_detail.Order_detailVO" parameterType="HashMap">
-    SELECT i.order_itemno, i.memberno, i.order_payno, i.contentsno, i.cnt, i.tot, i.stateno, i.rdate,
-               c.title, c.saleprice
-    FROM order_item i, contents c 
-    WHERE (i.contentsno = c.contentsno) AND order_payno=#{order_payno} AND memberno = #{memberno}
+    SELECT i.order_itemno, i.memberno, i.payno, i.productno, i.cnt, i.tot, i.stateno, i.rdate,
+               p.product_Explanation, p.product_price
+    FROM order_detail i, products p 
+    WHERE (i.productno = p.productno) AND payno=#{payno} AND memberno = #{memberno}
     ORDER BY order_itemno DESC
   </select> 
 

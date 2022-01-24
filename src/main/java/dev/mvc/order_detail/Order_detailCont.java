@@ -27,9 +27,9 @@ public class Order_detailCont {
    * http://localhost:9091/order_item/list_by_memberno.do 
    * @return
    */
-  @RequestMapping(value="/order_item/list_by_memberno.do", method=RequestMethod.GET )
+  @RequestMapping(value="/order_detail/list_by_memberno.do", method=RequestMethod.GET )
   public ModelAndView list_by_memberno(HttpSession session,
-                                                        int order_payno) {
+                                                        int payno) {
     ModelAndView mav = new ModelAndView();
     
     int baesong_tot = 0;   // 배송비 합계
@@ -40,13 +40,13 @@ public class Order_detailCont {
       int memberno = (int)session.getAttribute("memberno");
       
       HashMap<String, Object> map = new HashMap<String, Object>();
-      map.put("order_payno", order_payno);
+      map.put("payno", payno);
       map.put("memberno", memberno);
       
       List<Order_detailVO> list = this.order_detailProc.list_by_memberno(map);
       
-      for (Order_detailVO order_itemVO: list) {
-        tot_sum += order_itemVO.getTot();
+      for (Order_detailVO order_detailVO: list) {
+        tot_sum += order_detailVO.getTot();
       }
       
       if (tot_sum < 30000) { // 상품 주문 금액이 30,000 원 이하이면 배송비 3,000 원 부여
@@ -59,7 +59,7 @@ public class Order_detailCont {
       mav.addObject("total_order", total_order);     // 할인 금액 총 합계(금액)
       mav.addObject("list", list); // request.setAttribute("list", list);
 
-      mav.setViewName("/order_item/list_by_memberno"); // /views/order_item/list_by_memberno.jsp
+      mav.setViewName("/order_detail/list_by_memberno"); // /views/order_item/list_by_memberno.jsp
     } else { // 회원으로 로그인하지 않았다면
       mav.addObject("return_url", "/order_item/list_by_memberno.do"); // 로그인 후 이동할 주소 ★
       

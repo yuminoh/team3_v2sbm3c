@@ -42,6 +42,9 @@ public class ProductsCont {
 	@Qualifier("dev.mvc.subcategory.SubCategoryProc")
 	private SubCategoryProcInter SubCategoryProc;
       
+    @Autowired
+	@Qualifier("dev.mvc.stock.stockProc")
+	private stockProcInter stockProc;
     
     public ProductsCont() {
         System.out.println("-> ProductsCont created.");
@@ -55,13 +58,13 @@ public class ProductsCont {
     																			@RequestParam(value = "now_page", defaultValue = "1") int now_page){
     	ModelAndView mav = new ModelAndView();
     	HashMap<String, Object> map = new HashMap<String, Object>();
-    	map.put("sub_categoryno", sub_categoryno);
+    	map.put("sub_categoryno", sub_categoryno); 
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(sub_categoryno); // 목록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     	CategoryVO categoryVO =this.CategoryProc.category_read(subcategoryVO.getCategoryno());  //목록화면에 나오는 카테고리 명을 출력하기 위함
     	map.put("word", word); // 검색어를 haspmap으로 저장
     	map.put("now_page", now_page);
-    	List<ProductsVO> list = this.ProductsProc.products_list(map);
-    	int search_count = this.ProductsProc.search_count(map);  
+    	List<ProductsVO> list = this.ProductsProc.products_list(map); // 상품 목록 저장
+    	int search_count = this.ProductsProc.search_count(map);  //페이징하기 위한 상품 수 저장
     	String paging = this.ProductsProc.pagingBox(search_count, now_page, word); // 페이지 버튼 코드
     	StringBuffer return_url = request.getRequestURL();
     	return_url = return_url.append( "?sub_categoryno="+sub_categoryno);
@@ -80,24 +83,24 @@ public class ProductsCont {
     															HttpSession session,
     															int sub_categoryno){
     	ModelAndView mav = new ModelAndView();
-    	String return_url = "/products/list?sub_categoryno="+sub_categoryno;
+    	String return_url = "/products/list?sub_categoryno="+sub_categoryno; //상품 등록 후 목록으로 돌아가기 위해 전달할 url
     	int grade = 0 ;
     	try {
     		grade= (int) session.getAttribute("grade");
     	}
     	catch(Exception e) {}
 
-    	if(grade<=10 && grade>=1) {
+    	if(grade<=10 && grade>=1) {// 로그인한 사용자가 관리자면 등록 가능
     		SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(sub_categoryno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
     		mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     		mav.addObject("categoryno",subcategoryVO.getCategoryno());
     		mav.setViewName("/products/products_create");
     	} 
-    	else if(grade==0) {
+    	else if(grade==0) { // 로그인하지 않았음으로 로그인 유도
     		mav.addObject("code","not_login");
     		mav.setViewName("/products/msg");
     	}
-    	else {
+    	else {// 로그인한 사용자가 관리자가 아닌경우 
     		mav.addObject("code","not_admin_privilege");
     		mav.setViewName("/products/msg");
     	}
@@ -112,15 +115,11 @@ public class ProductsCont {
     	ModelAndView mav = new ModelAndView();
     	String result = productsVO.getProductname();
         String pdimagefile1 = "";
-        String pdimagefile2 = "";
-        String pdimagefile3 = "";
         String pdimagefile1saved ="";
-        String thumb="";
      // cnt = 0; // error test
         String user_dir = System.getProperty("user.dir"); // 시스템 제공
         String uploadDir = this.uploadDir;
         String return_url="/products/list?sub_categoryno="+productsVO.getSub_categoryno();// 다시 목록으로 돌아가기 위한 url
-        System.out.println("->updir"+uploadDir);
         MultipartFile mf = productsVO.getFile1M1();
         pdimagefile1 = Tool.getFname(mf.getOriginalFilename()); // 원본 순수 파일명 산출
         long size1 = mf.getSize();  // 파일 크기
@@ -128,15 +127,13 @@ public class ProductsCont {
             // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
         	pdimagefile1saved = Upload.saveFileSpring(mf, uploadDir); 
         	 if (Tool.isImage(pdimagefile1saved)) { // 이미지인지 검사
-                 // thumb 이미지 생성후 파일명 리턴됨, width: 200, height: 150
-                 
+                 // thumb 이미지 생성후 파일명 리턴됨, width: 200, height: 150             
              }
           }
         mav.addObject("return_url",return_url);
         productsVO.setPdimagefile1(pdimagefile1saved);   
         int cnt = this.ProductsProc.create(productsVO); 
         if (cnt == 1) { 
-            System.out.println("등록 성공");
             mav.addObject("result",result); // 메시지 화면에 출력될 상품이름
             mav.addObject("code", "create");		
             mav.addObject("sub_categoryno",productsVO.getSub_categoryno());  //등록 후 리스트 목록으로 돌아가기 위한 서브 카테고리 번호
@@ -154,11 +151,18 @@ public class ProductsCont {
     public ModelAndView products_read(HttpServletRequest request,int productno){
     	ModelAndView mav = new ModelAndView();
     	ProductsVO productsVO = this.ProductsProc.product_read(productno); // 등록화면에 나오는 상품의 서브 카테고리가 무엇인지 표기하기 위함
-    	CategoryVO categoryVO =  this.CategoryProc.category_read(productsVO.getCategoryno());
+    	CategoryVO categoryVO =  this.CategoryProc.category_read(productsVO.getCategoryno()); 
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productsVO.getSub_categoryno());
     	StringBuffer return_url = request.getRequestURL();
-
+    	int count = this.stockProc.product_stock_count(productno);
+    	stockVO stockVO = new stockVO();
+    	if(count == 1) {
+    		stockVO = this.stockProc.product_stock_read(productno);
+    	}else {
+    		stockVO.setStockno(0);
+    	}   	
     	return_url.append("?productno="+productno);
+    	mav.addObject("stockVO",stockVO);
 		mav.addObject("return_url",return_url);
     	mav.addObject("sub_categoryname",subcategoryVO.getSub_categoryname());
     	mav.addObject("categoryname",categoryVO.getCategoryname());
@@ -189,9 +193,7 @@ public class ProductsCont {
               ck_passwd_save = cookie.getValue();                  // Cookie에 password를 저장 할 것인지의 여부, Y, N
             }
           }
-        }
-        
-        System.out.println("-> ck_id: " + ck_id);
+        }       
         
         mav.addObject("ck_id", ck_id); 
         mav.addObject("ck_id_save", ck_id_save);

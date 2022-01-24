@@ -27,6 +27,8 @@ import dev.mvc.pay_list.Pay_listProcInter;
 import dev.mvc.pay_list.Pay_listVO;
 import dev.mvc.products.ProductsProcInter;
 import dev.mvc.products.ProductsVO;
+import dev.mvc.stock.stockProcInter;
+import dev.mvc.stock.stockVO;
 
  
 @Controller
@@ -54,6 +56,10 @@ public class Order_payCont {
 	 @Autowired	  
 		@Qualifier("dev.mvc.order_detail.Order_detailProc") 
 		private Order_detailProcInter order_detailProc;
+	 
+	 @Autowired
+		@Qualifier("dev.mvc.stock.stockProc")
+		private stockProcInter stockProc;
   
   public Order_payCont() {
     System.out.println("-> Order_payCont created.");
@@ -111,7 +117,7 @@ public class Order_payCont {
     
     int memberno = (int)session.getAttribute("memberno");
     order_payVO.setMemberno(memberno); // 회원 번호 저장
-
+    
     
     int cnt = this.order_payProc.create(order_payVO);
      
@@ -126,34 +132,45 @@ public class Order_payCont {
       for (CartVO cartVO : list) {
         int productno = cartVO.getProductno();
         int cartno = cartVO.getCartno();
-        
-
-        
-        // 2. order_item INSERT
-        order_detailVO.setMemberno(memberno);
-        order_detailVO.setPayno(payno);
-        order_detailVO.setProductno(productno);
-        order_detailVO.setCnt(cartVO.getCnt());
-       
-       ProductsVO productsVO = this.productsProc.product_read(productno); // 할인 금액 읽기 및 카테고리와 서브카테고리 읽기용 VO
-       pay_listVO.setCategoryno((int)productsVO.getCategoryno());
-       pay_listVO.setSub_categoryno(productsVO.getSub_categoryno());
-       pay_listVO.setCnt(cartVO.getCnt());
-       pay_listVO.setProductno(productno);
-       pay_listVO.setMemberno(memberno);
-       int pl_cnt = this.pay_listProc.pay_create(pay_listVO);
-       int tot = productsVO.getProduct_price() * cartVO.getCnt();  // 할인 금액 합계 = 할인 금액 * 수량
-       
-       order_detailVO.setTot(tot); // 상품 1건당 총 결재 금액
-       
-       // 주문 상태(stateno):  1: 결재 완료, 2: 상품 준비중, 3: 배송 시작, 4: 배달중, 5: 오늘 도착, 6: 배달 완료  
-       order_detailVO.setStateno(1); // 신규 주문 등록임으로 1 
-       
-       this.order_detailProc.create(order_detailVO); // 주문 상세 등록
-
-       // 3. 주문된 상품 cart에서 DELETE
-       int delete_cnt = this.cartProc.cart_delete(cartno);
-       System.out.println("-> delete_cnt: " + delete_cnt + " 건 주문후 cart에서 삭제됨.");
+        int stockcount = this.stockProc.product_stock_count(productno); //재고가 있는지 검사
+        if(stockcount == 1) {
+        	stockVO stockVO = this.stockProc.product_stock_read(productno);
+            int tot_stockno=stockVO.getStockno()-cartVO.getCnt();
+            if(tot_stockno<0) {
+            	// 2. order_item INSERT
+                order_detailVO.setMemberno(memberno);
+                order_detailVO.setPayno(payno);
+                order_detailVO.setProductno(productno);
+                order_detailVO.setCnt(cartVO.getCnt());
+               
+               ProductsVO productsVO = this.productsProc.product_read(productno); // 할인 금액 읽기 및 카테고리와 서브카테고리 읽기용 VO
+               pay_listVO.setCategoryno((int)productsVO.getCategoryno());
+               pay_listVO.setSub_categoryno(productsVO.getSub_categoryno());
+               pay_listVO.setCnt(cartVO.getCnt());
+               pay_listVO.setProductno(productno);
+               pay_listVO.setMemberno(memberno);
+               int pl_cnt = this.pay_listProc.pay_create(pay_listVO); //재고 수량 수정
+               int tot = productsVO.getProduct_price() * cartVO.getCnt();  // 할인 금액 합계 = 할인 금액 * 수량
+               
+               order_detailVO.setTot(tot); // 상품 1건당 총 결재 금액
+               
+               // 주문 상태(stateno):  1: 결재 완료, 2: 상품 준비중, 3: 배송 시작, 4: 배달중, 5: 오늘 도착, 6: 배달 완료  
+               order_detailVO.setStateno(1); // 신규 주문 등록임으로 1 
+               
+               this.order_detailProc.create(order_detailVO); // 주문 상세 등록
+               int stockcnt = this.stockProc.stock_update(stockVO);
+               // 3. 주문된 상품 cart에서 DELETE
+               int delete_cnt = this.cartProc.cart_delete(cartno);
+               System.out.println("-> delete_cnt: " + delete_cnt + " 건 주문후 cart에서 삭제됨.");
+               mav.setViewName("redirect:/order_pay/list_by_memberno.do");  // 참일 경우만 발생한다고 결정, 에러 페이지 이동 생략 
+            }else {
+            	mav.addObject("code","stock_lack");
+            	mav.setViewName("/order_pay/msg");
+            }       
+        }else {
+        	mav.addObject("code","stock_lack");
+        	mav.setViewName("/order_pay/msg");
+        }
       }
       
     } else {
@@ -162,10 +179,7 @@ public class Order_payCont {
     
     // Order_item: 주문 상세 테이블 관련 종료    
     
-    mav.addObject("memberno", memberno);
-    
-    mav.setViewName("redirect:/order_pay/list_by_memberno.do");  // 참일 경우만 발생한다고 결정, 에러 페이지 이동 생략 
-
+    mav.addObject("memberno", memberno);     
     return mav; // forward
   }
 

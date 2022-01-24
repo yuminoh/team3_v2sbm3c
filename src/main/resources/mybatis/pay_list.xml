@@ -4,17 +4,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="dev.mvc.pay_list.Pay_listDAOInter">
-
+<!-- 바로구매시 구매기록 등록 -->
     <insert id="pay_create" parameterType="dev.mvc.pay_list.Pay_listVO">
    INSERT INTO pay_list(payno,rdate,memberno,categoryno,sub_categoryno,cnt,productno) 
    values (payno_seq.nextval,sysdate,#{memberno},#{categoryno},#{sub_categoryno},#{cnt},#{productno})
   </insert> 
-
+<!-- 테스트용 -->
   <insert id="pay_list_create" parameterType="dev.mvc.pay_list.Pay_listVO">
    INSERT INTO pay_list(payno,rdate,memberno,categoryno,sub_categoryno,cnt) 
    values (payno_seq.nextval,sysdate,#{memberno},#{categoryno},#{sub_categoryno},#{cnt})
   </insert> 
-  
+  <!-- 최근 60일동안 구매기록에서 가장 많이 구매한 서브 카테고리 3종류 조회 -->
   <select id="intereste_product_list"  parameterType="int" resultType="dev.mvc.pay_list.Pay_listVO">
     SELECT sub_categoryno, rownum as rank from
         (SELECT sub_categoryno, count(*)
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                         ) 
         WHERE rownum <![CDATA[<= 3]]>
   </select>
-  
+    <!-- 구매기록 날짜 오름차순으로 출력 -->
   <select id="pay_list"  parameterType="HashMap" resultType="dev.mvc.pay_list.Pay_listVO">
           SELECT TO_CHAR(rdate,'yyyy-mm-dd  hh:mi:ss') as rdate, productname, product_price, cnt, rank from(
                     select rdate, productname, product_price, cnt, rownum as rank from(
@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <select id="pay_list_count"  parameterType="int" resultType="int">
           SELECT count(*) 
-                FROM pay_list a Inner Join products b ON a.productno = b.productno
+                FROM pay_list 
                 WHERE memberno=#{memberno}
   </select>
   

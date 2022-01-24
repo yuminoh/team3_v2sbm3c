@@ -1,4 +1,4 @@
-drop table order_datail;
+DROP table order_datail;
 CREATE TABLE order_detail(
         order_itemno                     NUMBER(10)         NOT NULL         PRIMARY KEY,
         memberno                        NUMBER(10)         NULL ,

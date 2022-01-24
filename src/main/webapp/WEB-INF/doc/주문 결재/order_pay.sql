@@ -1,4 +1,4 @@
-drop table order_pay;
+DROP table order_pay;
 CREATE TABLE order_pay(
     payno                     NUMBER(10)     NOT NULL    PRIMARY KEY,
     memberno                       NUMBER(10)     NULL ,

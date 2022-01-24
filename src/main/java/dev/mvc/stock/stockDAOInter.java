@@ -39,4 +39,17 @@ public interface stockDAOInter {
        * @return 삭제 성공여부
        */
     public int stock_delete(int stocknum);
+    
+    /**
+	   * 상품 재고 조회
+	   * @param 상품 번호
+	   * @return 재고 기록
+	   */
+	public stockVO product_stock_read(int productno);
+	/**
+	   * 상품 재고 조회
+	   * @param 상품 번호
+	   * @return 재고 기록 존재 여부
+	   */
+	public int product_stock_count(int productno);
 }

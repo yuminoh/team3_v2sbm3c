@@ -26,10 +26,7 @@ public class ProductsVO {
     private String product_Explanation;
     private Date pddate;
     private String pdimagefile1;
-    private String pdimagefile1saved;
-    private String pdimagefile2;
-    private String pdimagefile3;
+    private String pdimagefile1saved;   
     private MultipartFile file1M1;
-    private MultipartFile file1M2;
-    private MultipartFile file1M3;
+    
 }

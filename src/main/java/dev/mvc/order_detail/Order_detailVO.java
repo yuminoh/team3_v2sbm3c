@@ -37,6 +37,10 @@ public class Order_detailVO {
   
   /** 주문날짜 */
   private String rdate = ""; // 초기값: null
+  //상품 설명
+  private String product_Explanation;
+  //상품 가격
+  private int product_price;
  
 }
 

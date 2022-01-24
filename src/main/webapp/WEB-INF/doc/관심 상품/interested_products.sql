@@ -10,4 +10,6 @@ SELECT sub_categoryno, rownum as rank from
 DELETE INTERESTED_PRODUCTS where memberno = #{memberno};
 SELECT count(*) FROM INTERESTED_PRODUCTS WHERE memberno=18;
 
-SELECT IP.sub_categoryno FROM INTERESTED_PRODUCTS IP INNER JOIN PD_DETAIL_CATEGORY sc ON ip.sub_categoryno=sc.sub_categoryno WHERE memberno=18
+SELECT IP.sub_categoryno, pc.sub_categoryname, pc.categoryno FROM INTERESTED_PRODUCTS IP 
+INNER JOIN PD_DETAIL_CATEGORY pc ON ip.sub_categoryno=pc.sub_categoryno 
+WHERE memberno=18

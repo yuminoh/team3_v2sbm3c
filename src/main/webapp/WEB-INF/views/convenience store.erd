@@ -80,8 +80,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>1198</x>
-                    <y>349</y>
+                    <x>1095</x>
+                    <y>334</y>
                   </constraint>
                   <sourceConnections/>
                   <targetConnections>
@@ -138,8 +138,8 @@
                               <constraint>
                                 <height>-1</height>
                                 <width>-1</width>
-                                <x>662</x>
-                                <y>-18</y>
+                                <x>646</x>
+                                <y>5</y>
                               </constraint>
                               <sourceConnections>
                                 <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -842,10 +842,15 @@
                                 <net.java.amateras.db.visual.model.ColumnModel>
                                   <columnName>memberno</columnName>
                                   <logicalName>회원번호</logicalName>
-                                  <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../../../net.java.amateras.db.visual.model.ForeignKeyModel/source/targetConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/source/columns/net.java.amateras.db.visual.model.ColumnModel/columnType"/>
+                                  <columnType class="net.java.amateras.db.dialect.ColumnType">
+                                    <name>NUMERIC</name>
+                                    <logicalName>Numeric</logicalName>
+                                    <supportSize>true</supportSize>
+                                    <type>2</type>
+                                  </columnType>
                                   <size>10</size>
                                   <notNull>true</notNull>
-                                  <primaryKey>true</primaryKey>
+                                  <primaryKey>false</primaryKey>
                                   <description></description>
                                   <autoIncrement>false</autoIncrement>
                                   <defaultValue></defaultValue>

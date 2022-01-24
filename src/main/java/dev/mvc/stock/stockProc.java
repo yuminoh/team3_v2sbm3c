@@ -57,4 +57,24 @@ public class stockProc implements stockProcInter {
 		int cnt = this.stockDAO.stock_delete(stocknum);
 		return cnt;	
     };
+    
+    /**
+	   * 상품 재고 조회
+     * @param 상품 번호
+     * @return 재고 기록
+	   */
+	public stockVO product_stock_read(int productno) {
+	    stockVO stockVO = this.stockDAO.product_stock_read(productno); 
+		return stockVO;
+	};
+	
+	/**
+	   * 상품 재고 조회
+	   * @param 상품 번호
+	   * @return 재고 기록 존재 여부
+	   */
+	public int product_stock_count(int productno) {
+		int count =this.stockDAO.product_stock_count(productno);
+		return count;
+	}
 }

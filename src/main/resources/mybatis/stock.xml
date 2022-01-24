@@ -33,4 +33,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE stocknum=#{stocknum}
 </delete>
 
+<select id="product_stock_read"  parameterType = "int" resultType="dev.mvc.stock.stockVO">
+    SELECT stocknum, stockno, productclass, productwa, productst, productno
+    FROM stock 
+    WHERE productno = #{productno}
+</select>
+
+<select id="product_stock_count"  parameterType = "int" resultType="int">
+    SELECT count(*)
+    FROM stock 
+    WHERE productno = #{productno}
+</select>
+
 </mapper>
