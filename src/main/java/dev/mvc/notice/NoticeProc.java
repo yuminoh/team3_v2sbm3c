@@ -22,6 +22,14 @@ import dev.mvc.uploadtool.Tool;
     @Override
     public List<NoticeVO> list_noticeno_asc() {
       List<NoticeVO> list = this.noticeDAO.list_noticeno_asc();
+      for (NoticeVO noticeVO : list) { // 내용이 160자 이상이면 160자만 선택
+          String content = noticeVO.getContent();
+          if (content.length() > 160) {
+              content = content.substring(0, 160) + "...";
+              noticeVO.setContent(content);
+          }
+      }
+
       return list;
     }
     

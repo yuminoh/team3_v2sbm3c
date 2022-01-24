@@ -56,8 +56,8 @@
             </c:choose>
         </c:when>                             
             <c:otherwise>
-                <A class='menu_link'  href='/member/login.do' >로그인</A><span class='top_menu_sep'> </span>
-                <A class='menu_link'  href='/member/create.do'>회원가입</A><span class='top_menu_sep'> </span>                    
+                <li><A class='menu_link'  href='/member/login.do' >로그인</A><span class='top_menu_sep'></span></li>
+                <li><A class='menu_link'  href='/member/create.do'>회원가입</A><span class='top_menu_sep'></span></li>                    
             </c:otherwise>      
        </c:choose>          
       <c:choose>

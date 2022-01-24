@@ -86,11 +86,11 @@
             </c:choose>
           </td>  
           <td style='vertical-align: middle;'>
-            <a href="./read.do?noticeno=${noticeno}"><span style="color: #00ff00; font-size: 1.2em;">${noticeVO.title} </span> <br>
+            <a href="./read.do?noticeno=${noticeno}"><span style="color: #000000; font-size: 1.2em;">${noticeVO.title} </span> <br>
             ${noticeVO.content}</a> 
           </td> 
           <td style='vertical-align: middle; text-align: center;'>
-            <span style="color: #505050; font-size: 1em;">공지 등록일 : ${rdate} </span><br>
+            <span style="color: #000000; font-size: 1em;">공지 등록일 : ${rdate} </span><br>
             <span style="color: #000000; font-size: 1em;">작성자 : ${noticeVO.rname} </span><br>
             <span style="color: #FF0000; font-size: 1.2em;">${noticeVO.word} </span>
           </td>
