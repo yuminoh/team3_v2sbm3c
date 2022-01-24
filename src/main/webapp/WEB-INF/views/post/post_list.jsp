@@ -20,13 +20,11 @@ $(function (){
      $('#update_cancel').on('click',cancel);
      $('#panel_delete').on('click',cancel);
 });
-
 function cancel(){  
     $('#panel_create').css("display","none");
     $('#panel_update').css("display","none");
     $('#panel_delete').css("display","none");
 }
-
 function create_ajax(){
     $('#panel_create').css("display","");
     $('#panel_update').css("display","none");
@@ -34,7 +32,6 @@ function create_ajax(){
     $('#title').html("게시글 > 등록"); 
       }   
  
-
 function update_read_ajax(postno){
     $('#panel_create').css("display","none");
     $('#panel_update').css("display","");
@@ -122,6 +119,7 @@ function update_read_ajax(postno){
 
 <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
         <FORM name='frm_create' id='frm_create' method='POST' action='./create' enctype="multipart/form-data">      
+        <input type='hidden' name='memberno' id='memberno' value="${memberno }">
             <label>제목</label>
             <input type='text' id='title' name='title' required="required" style='width: 10%;'>     
             
@@ -135,6 +133,7 @@ function update_read_ajax(postno){
   
   <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
         <FORM name='frm_update' id='frm_update' method='POST' action='./update' enctype="multipart/form-data">      
+        <input type='hidden' name='postno' id='postno' >
             <label>제목</label>
             <input type='text' id='title' name='title' required="required" style='width: 10%;'>     
             
@@ -188,7 +187,7 @@ function update_read_ajax(postno){
       <c:set var="pdate" value="${postVO.pdate }" /> 
       <TR>
         <TD class="td_bs">${postno }</TD>           
-        <!--  <TD class="td_bs"><a href="../post?postno=${postno }">${postno }</a></TD> -->  
+        <%-- <TD class="td_bs"><a href="../post?postno=${postno }">${postno }</a></TD> --%>
         <TD class="td_bs">${title }</TD>
         <TD class="td_bs">${contents }</TD>
         <TD class="td_bs">${pdate }</TD>

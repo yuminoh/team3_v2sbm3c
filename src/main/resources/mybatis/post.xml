@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <update id="post_update"  parameterType="dev.mvc.post.PostVO">
     UPDATE post
-    SET title=#{title}, contents=#{contents}, memberno=#{memberno}
+    SET title=#{title}, contents=#{contents}
     WHERE postno=#{postno}
 </update>
 
