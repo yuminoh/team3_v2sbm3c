@@ -374,7 +374,6 @@
                         <input type='number' name='ordercnt' id='ordercnt' value='1' required="required" 
                                  min="1" max="${stockVO.stockno }" step="1" class="form-control" style='width: 30%;'><br>
                         <button type='button' onclick="javascript:cart_ajax(${productno })" class="btn btn-info">장바 구니</button>           
-                        <button type='button' onclick="javascript:pay_ajax(${productno})" class="btn btn-info">바로 구매</button>
                         <span id="span_animation"></span>
                 </form>
                 </c:when>
@@ -384,19 +383,12 @@
                 </c:otherwise>
           </c:choose>
         </DIV> 
-
-        <DIV>${content }</DIV>
-      </li>
-      <li class="li_none">
-        
-      </li>
-      <li class="li_none">
-        <DIV>
+      </li>     
+        <DIV style="float:left;">
           <c:if test="${pdimagefile1.trim().length() > 0 }">
             첨부 파일: <A href='/download?dir=/products/storage&filename=${pdimagefile1}&downname=${pdimagefile1}'>${pdimagefile1}</A>  
           </c:if>
-        </DIV>
-      </li>   
+        </DIV> 
     </ul>
   </fieldset>
 

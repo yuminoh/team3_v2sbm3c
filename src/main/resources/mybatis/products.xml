@@ -60,8 +60,8 @@ SELECT productno, productname, categoryno, sub_categoryno, product_price, produc
 </delete>
 
 <select id="recommend_products" parameterType="int" resultType="dev.mvc.products.ProductsVO" >  
-    select sub_categoryno, productname, product_price, pddate, PDIMAGEFILE1, rownum as rank from (
-        select sub_categoryno, productname, product_price, pddate, PDIMAGEFILE1 
+    select sub_categoryno, productname, productno, product_price, pddate, PDIMAGEFILE1, rownum as rank from (
+        select sub_categoryno, productname, productno, product_price, pddate, PDIMAGEFILE1 
          from products where sub_categoryno=#{sub_categoryno} order by pddate DESC
     ) where <![CDATA[rownum <=3]]>
 </select>

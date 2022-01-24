@@ -138,7 +138,8 @@ public class Order_payCont {
         if(stockcount == 1) {
         	StockVO stockVO = this.stockProc.product_stock_read(productno);
             int tot_stockno=stockVO.getStockno()-cartVO.getCnt();
-            if(tot_stockno<0) {
+            stockVO.setStockno(tot_stockno);
+            if(tot_stockno>=0) {
             	// 2. order_item INSERT
                 order_detailVO.setMemberno(memberno);
                 order_detailVO.setPayno(payno);
@@ -152,8 +153,7 @@ public class Order_payCont {
                pay_listVO.setProductno(productno);
                pay_listVO.setMemberno(memberno);
                int pl_cnt = this.pay_listProc.pay_create(pay_listVO); //재고 수량 수정
-               int tot = productsVO.getProduct_price() * cartVO.getCnt();  // 할인 금액 합계 = 할인 금액 * 수량
-               
+               int tot = productsVO.getProduct_price() * cartVO.getCnt();  // 할인 금액 합계 = 할인 금액 * 수량             
                order_detailVO.setTot(tot); // 상품 1건당 총 결재 금액
                
                // 주문 상태(stateno):  1: 결재 완료, 2: 상품 준비중, 3: 배송 시작, 4: 배달중, 5: 오늘 도착, 6: 배달 완료  

@@ -115,7 +115,7 @@
   <ASIDE class="aside_left">
     주문 상품
   </ASIDE> 
-
+<br>
   <div class='menu_line'></div>
   
   <table class="table table-striped" style='width: 100%;'>
@@ -177,7 +177,7 @@
     <button type="button" id="btn_my_address" class="btn" style="margin-bottom: 2px;">나의 주소 가져오기</button> 
     <button type="reset" id="btn_reset" class="btn" style="margin-bottom: 2px;">주소 지우기</button>
   </ASIDE> 
-
+<br>
   <div class='menu_line'></div>
 
     <div class="form-group">

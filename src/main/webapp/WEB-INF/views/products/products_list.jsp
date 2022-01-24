@@ -110,8 +110,7 @@ function cancel(){
     </form>
   </DIV>
   
- <DIV>
-        
+ <DIV>       
         <HR class='menu_line'>
         <c:forEach var="products_list" items="${list}">   
         <c:set var="categoryno" value="${products_list.categoryno }" />   
@@ -131,10 +130,7 @@ function cancel(){
                   <IMG src="/products/storage/${productimage}" style='width: 100%; height: 150px;'>
                 </a><br>
                 ${productname} <br><br>
-                <fmt:formatNumber value="${product_price}" pattern="##,###원" />
-               <%--  <del><fmt:formatNumber value="${price}" pattern="#,###" /></del>
-                <span style="color: #FF0000; font-size: 1.0em;">${dc} %</span>
-                <strong><fmt:formatNumber value="${saleprice}" pattern="#,###" /></strong> --%>
+                <fmt:formatNumber value="${product_price}" pattern="##,###원" />             
               </c:when>
               <c:otherwise> <!-- 이미지가 아닌 일반 파일 -->
                 <DIV style='width: 100%; height: 150px; display: table; border: solid 1px #CCCCCC;'>

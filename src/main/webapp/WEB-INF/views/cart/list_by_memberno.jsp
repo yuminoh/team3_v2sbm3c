@@ -57,7 +57,7 @@
 </form>
  
 <DIV class='title_line'>
-  쇼핑 카트
+  장바구니
 </DIV>
 
 <DIV class='content_body'>
@@ -134,7 +134,7 @@
         </c:when>
         <c:otherwise>
           <tr>
-            <td colspan="6" style="text-align: center; font-size: 1.3em;">쇼핑 카트에 상품이 없습니다.</td>
+            <td colspan="6" style="text-align: center; font-size: 1.3em;">장바구니에 상품이 없습니다.</td>
           </tr>
         </c:otherwise>
       </c:choose>
