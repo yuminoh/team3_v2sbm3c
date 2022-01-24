@@ -54,7 +54,7 @@
                          onclick="location.href='./product_update.do?cateno=${param.cateno}&categrpno=${param.categrpno }&contentsno=${param.contentsno }'"
                          class="btn btn-default">관련 상품 정보 등록</button>
             <button type='button' 
-                         onclick="location.href='./create.do?cateno=${param.cateno}&categrpno=${param.categrpno }'"
+                         onclick="location.href='./create.do?noticeno=${param.noticeno}'"
                          class="btn btn-default">새로운 컨텐츠 등록</button>
           </LI> 
         </c:when>
@@ -97,7 +97,7 @@
         
         <%-- <a href="./list_by_cateno.do?cateno=${param.cateno}" class="btn btn-primary">목록</a> --%>
         <%-- <button type='button' onclick="location.href='./list_by_cateno_search.do?cateno=${param.cateno}'" class="btn btn-primary">목록</button> --%>
-        <button type='button' onclick="location.href='./list_by_cateno_search_paging.do?cateno=${param.cateno}'" class="btn btn-primary">목록</button>
+        <button type='button' onclick="location.href='./list.do'" class="btn btn-primary">목록</button>
 
       </LI>
     </UL>

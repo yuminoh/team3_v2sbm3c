@@ -46,4 +46,35 @@ import dev.mvc.uploadtool.Tool;
 
         return noticeVO;
     }
+    
+    
+    @Override
+    public int product_update(NoticeVO noticeVO) {
+        int cnt = this.noticeDAO.product_update(noticeVO);
+        return cnt;
+    }
+    
+    @Override
+    public int update_text(NoticeVO noticeVO) {
+        int cnt = this.noticeDAO.update_text(noticeVO);
+        return cnt;
+    }
+    
+    @Override
+    public NoticeVO read_update_text(int noticeno) {
+        NoticeVO noticeVO = this.noticeDAO.read(noticeno);
+        return noticeVO;
+    }
+    
+    @Override
+    public int passwd_check(HashMap<String, Object> map) {
+        int cnt = this.noticeDAO.passwd_check(map);
+        return cnt;
+    }
+    
+    @Override
+    public int delete(int noticeno) {
+      int cnt = this.noticeDAO.delete(noticeno);
+      return cnt;
+    }
 }

@@ -10,7 +10,7 @@ public class Notice {
     public static int PAGE_PER_BLOCK = 10;
 
     /** 목록 파일명 */
-    public static String LIST_FILE = "list_by_cateno_search_paging.do";
+    public static String LIST_FILE = "list.do";
 
     // Windows, VMWare, AWS cloud 절대 경로 설정
     public static synchronized String getUploadDir() {
