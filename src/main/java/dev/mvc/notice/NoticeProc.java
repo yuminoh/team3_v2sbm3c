@@ -85,4 +85,10 @@ import dev.mvc.uploadtool.Tool;
       int cnt = this.noticeDAO.delete(noticeno);
       return cnt;
     }
+    
+    @Override
+    public int update_recom(int noticeno) {
+      int cnt = this.noticeDAO.update_recom(noticeno);
+      return cnt;
+    }
 }

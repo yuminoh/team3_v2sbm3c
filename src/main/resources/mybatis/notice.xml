@@ -54,4 +54,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM notice
     WHERE noticeno=#{noticeno}
   </delete>
+  
+    <!-- 추천 -->
+  <update id="update_recom" parameterType="int">
+    UPDATE notice
+    SET recom = recom + 1
+    WHERE noticeno = #{noticeno}
+  </update> 
  </mapper>

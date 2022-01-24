@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -363,12 +364,6 @@ public class NoticeCont {
         cnt = this.noticeProc.delete(noticeno); // DBMS 삭제
         
         // -------------------------------------------------------------------------------------
-
-        
-
-
-
-
         mav.addObject("cnt", cnt);
         mav.addObject("code", "passwd_fail");
         mav.setViewName("redirect:/notice/msg.do");
@@ -376,4 +371,30 @@ public class NoticeCont {
     
     return mav; // forward
   }   
+  
+  /**
+   * 추천수 Ajax 수정 처리
+   * http://localhost:9091/notice/update_recom_ajax.do?noticeno=30
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/update_recom_ajax.do", 
+                           method = RequestMethod.POST)
+  @ResponseBody
+  public String update_recom_ajax(int noticeno) {
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    int cnt = this.noticeProc.update_recom(noticeno); // 추천수 증가
+    int recom = this.noticeProc.read(noticeno).getRecom(); // 새로운 추천수 읽음
+        
+    JSONObject json = new JSONObject();
+    json.put("cnt", cnt);
+    json.put("recom", recom);
+    
+    return json.toString();
+  }
 }

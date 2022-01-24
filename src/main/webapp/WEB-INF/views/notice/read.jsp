@@ -27,8 +27,50 @@
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
 <script type="text/javascript">
+$(function(){
+    $('#btn_recom').on("click", function() { update_recom_ajax(${noticeno}); });
+
+});
+
+function update_recom_ajax(noticeno) {
+   // console.log('-> noticeno:' + noticeno);
+  var params = "";
+  // params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
+  params = 'noticeno=' + noticeno; // 공백이 값으로 있으면 안됨.
+  $.ajax(
+    {
+      url: '/notice/update_recom_ajax.do',
+      type: 'post',  // get, post
+      cache: false, // 응답 결과 임시 저장 취소
+      async: true,  // true: 비동기 통신
+      dataType: 'json', // 응답 형식: json, html, xml...
+      data: params,      // 데이터
+      success: function(rdata) { // 응답이 온경우
+        // console.log('-> rdata: '+ rdata);
+        var str = '';
+        if (rdata.cnt == 1) {
+          // console.log('-> btn_recom: ' + $('#btn_recom').val());  // X
+          // console.log('-> btn_recom: ' + $('#btn_recom').html());
+          $('#btn_recom').html('좋아요('+rdata.recom+')');
+          $('#span_animation').hide();
+        } else {
+          $('#span_animation').html("지금은 추천을 할 수 없습니다.");
+        }
+      },
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        console.log(error);
+      }
+    }
+  );  //  $.ajax END
+
+  // $('#span_animation').css('text-align', 'center');
+  $('#span_animation').html("<img src='/notice/images/ani03.gif' style='width: 20%;'>");
+  $('#span_animation').show(); // 숨겨진 태그의 출력
+}
 
 </script>
  
@@ -77,10 +119,13 @@
               </c:otherwise>
             </c:choose>
         </DIV>
-        <DIV style="width: 50%; height: 20px; float: left; margin-right: 10px; margin-bottom: 30px;">
+        <DIV style="width: 50%; height: 70px; float: left; margin-right: 10px; margin-bottom: 30px;">
           <span style="font-size: 1.5em; font-weight: bold;">${title }</span><br>
           <span style="font-size: 1em; font-weight: bold;">작성자: ${rname }</span><br>
-
+           <form>
+          <button type='button' id="btn_recom" class="btn btn-info">좋아요(${recom })</button>
+          <span id="span_animation"></span>
+          </form>
         </DIV> 
 
         <DIV>${content }</DIV>

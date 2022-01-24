@@ -55,4 +55,11 @@ public interface NoticeDAOInter {
   * @return
   */
  public int delete(int noticeno);
+ 
+ /**
+  * 추천수 증가
+  * @param noticeno
+  * @return
+  */
+ public int update_recom(int noticeno);
 }
