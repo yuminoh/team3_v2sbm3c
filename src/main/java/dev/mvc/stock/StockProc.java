@@ -6,17 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component("dev.mvc.stock.stockProc")
-public class stockProc implements stockProcInter {
+@Component("dev.mvc.stock.StockProc")
+public class StockProc implements StockProcInter {
     @Autowired 
-    private stockDAOInter stockDAO;
+    private StockDAOInter StockDAO;
     /**
 	   * 생성
        * @param 재고 정보
        * @return 성공여부
 	   */
-    public int stock_create(stockVO stockVO) {
-		int cnt = this.stockDAO.stock_create(stockVO);
+    public int stock_create(StockVO stockVO) {
+		int cnt = this.StockDAO.stock_create(stockVO);
 		return cnt;
 	};
     /**
@@ -24,8 +24,8 @@ public class stockProc implements stockProcInter {
 	   * @param 
 	   * @return 재고 목록
 	   */
-	public List<stockVO> stock_list(){
-		List<stockVO> list = this.stockDAO.stock_list();
+	public List<StockVO> stock_list(){
+		List<StockVO> list = this.StockDAO.stock_list();
 		return list;
 	};
 	/**
@@ -33,8 +33,8 @@ public class stockProc implements stockProcInter {
        * @param 재고 번호
        * @return 재고 목록
 	   */
-	public stockVO stock_read(int stocknum) {
-	    stockVO stockVO = this.stockDAO.stock_read(stocknum); 
+	public StockVO stock_read(int stocknum) {
+	    StockVO stockVO = this.StockDAO.stock_read(stocknum); 
 		return stockVO;
 	};
 	
@@ -43,8 +43,8 @@ public class stockProc implements stockProcInter {
        * @param stockVO
        * @return 성공여부
 	   */
-	public int stock_update(stockVO stockVO) {
-		int cnt = this.stockDAO.stock_update(stockVO);
+	public int stock_update(StockVO stockVO) {
+		int cnt = this.StockDAO.stock_update(stockVO);
 		return cnt;
 	};
 	
@@ -54,7 +54,7 @@ public class stockProc implements stockProcInter {
         * @return 삭제 성공여부
 	   */
 	public int stock_delete(int stocknum) {
-		int cnt = this.stockDAO.stock_delete(stocknum);
+		int cnt = this.StockDAO.stock_delete(stocknum);
 		return cnt;	
     };
     
@@ -63,8 +63,8 @@ public class stockProc implements stockProcInter {
      * @param 상품 번호
      * @return 재고 기록
 	   */
-	public stockVO product_stock_read(int productno) {
-	    stockVO stockVO = this.stockDAO.product_stock_read(productno); 
+	public StockVO product_stock_read(int productno) {
+	    StockVO stockVO = this.StockDAO.product_stock_read(productno); 
 		return stockVO;
 	};
 	
@@ -74,7 +74,7 @@ public class stockProc implements stockProcInter {
 	   * @return 재고 기록 존재 여부
 	   */
 	public int product_stock_count(int productno) {
-		int count =this.stockDAO.product_stock_count(productno);
+		int count =this.StockDAO.product_stock_count(productno);
 		return count;
 	}
 }

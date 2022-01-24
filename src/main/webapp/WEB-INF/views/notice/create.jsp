@@ -34,20 +34,16 @@
 
  <DIV class='content_body'>
   <ASIDE class="aside_right">
-    <A href="./create.do?genreno=${genreVO.genreno }">등록</A>
+    <A href="./create.do?noticeno=${noticeVO.noticeno }">등록</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_genreno_search_paging.do?genreno=${genreVO.genreno }">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_genreno_grid.do?genreno=${genreVO.genreno }">갤러리형</A>
   </ASIDE> 
   
     <DIV style="text-align: right; clear: both;">  
     <form name='frm' id='frm' method='get' action='./list_by_genreno_search.do'>
       <input type='hidden' name='genreno' value='${genreVO.genreno }'>
       <c:choose>
-        <c:when test="${param.word != '' }"> 검색하는 경우
+        <c:when test="${param.word != '' }"> 
           <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
         </c:when>
         <c:otherwise> 검색하지 않는 경우
@@ -64,7 +60,7 @@
   
   <DIV class='menu_line'></DIV>
   
-  <FORM name='frm' method='POST' action='./create.do' class="form-horizontal"
+  <FORM style="padding: 1.5rem;" name='frm' method='POST' action='./create.do' class="form-horizontal"
              enctype="multipart/form-data">
     
     <input type="hidden" name="memberno" value="1"> <%-- 관리자 개발후 변경 필요 --%>

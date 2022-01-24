@@ -23,8 +23,10 @@ import dev.mvc.recommend_product.Recommend_productProcInter;
 import dev.mvc.subcategory.SubCategoryProcInter;
 import dev.mvc.subcategory.SubCategoryVO;
 import dev.mvc.recommend_product.Recommend_productVO;
-import dev.mvc.stock.stockProcInter;
-import dev.mvc.stock.stockVO;
+import dev.mvc.stock.StockProcInter;
+import dev.mvc.stock.StockVO;
+import dev.mvc.stock.StockProcInter;
+import dev.mvc.stock.StockVO;
 import dev.mvc.interested_products.Interested_productsVO;
 
 @Controller
@@ -50,8 +52,8 @@ public class Pay_listCont {
 	private Interested_productsProcInter interested_productsProc;
 
 	@Autowired
-	@Qualifier("dev.mvc.stock.stockProc")
-	private stockProcInter stockProc;
+	@Qualifier("dev.mvc.stock.StockProc")
+	private StockProcInter stockProc;
 
 	public Pay_listCont() {
 		System.out.println("-> Pay_listCont created.");
@@ -62,7 +64,7 @@ public class Pay_listCont {
 	public String pay_create(HttpSession session, int productno, int ordercnt) {
 		int memberno = (Integer) session.getAttribute("memberno");
 		ProductsVO productdata = this.productsProc.product_read(productno); // 상품 데이터
-		stockVO stockVO = this.stockProc.product_stock_read(productno); // 상품의 재고 데이터
+		StockVO stockVO = this.stockProc.product_stock_read(productno); // 상품의 재고 데이터
 		stockVO.setStockno(stockVO.getStockno() - ordercnt); // 구매한 수 만큼 재고에서 차감
 		Pay_listVO pay_listVO = new Pay_listVO();
 		pay_listVO.setMemberno(memberno);

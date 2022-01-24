@@ -27,8 +27,10 @@ import dev.mvc.pay_list.Pay_listProcInter;
 import dev.mvc.pay_list.Pay_listVO;
 import dev.mvc.products.ProductsProcInter;
 import dev.mvc.products.ProductsVO;
-import dev.mvc.stock.stockProcInter;
-import dev.mvc.stock.stockVO;
+import dev.mvc.stock.StockProcInter;
+import dev.mvc.stock.StockVO;
+import dev.mvc.stock.StockProcInter;
+import dev.mvc.stock.StockVO;
 
  
 @Controller
@@ -58,8 +60,8 @@ public class Order_payCont {
 		private Order_detailProcInter order_detailProc;
 	 
 	 @Autowired
-		@Qualifier("dev.mvc.stock.stockProc")
-		private stockProcInter stockProc;
+		@Qualifier("dev.mvc.stock.StockProc")
+		private StockProcInter stockProc;
   
   public Order_payCont() {
     System.out.println("-> Order_payCont created.");
@@ -134,7 +136,7 @@ public class Order_payCont {
         int cartno = cartVO.getCartno();
         int stockcount = this.stockProc.product_stock_count(productno); //재고가 있는지 검사
         if(stockcount == 1) {
-        	stockVO stockVO = this.stockProc.product_stock_read(productno);
+        	StockVO stockVO = this.stockProc.product_stock_read(productno);
             int tot_stockno=stockVO.getStockno()-cartVO.getCnt();
             if(tot_stockno<0) {
             	// 2. order_item INSERT

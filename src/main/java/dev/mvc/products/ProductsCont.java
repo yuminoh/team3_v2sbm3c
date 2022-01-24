@@ -21,8 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.category.CategoryProcInter;
 import dev.mvc.category.CategoryVO;
-import dev.mvc.stock.stockProcInter;
-import dev.mvc.stock.stockVO;
+import dev.mvc.stock.StockProcInter;
+import dev.mvc.stock.StockVO;
 import dev.mvc.subcategory.SubCategoryProcInter;
 import dev.mvc.subcategory.SubCategoryVO;
 import dev.mvc.uploadtool.Tool;
@@ -43,8 +43,8 @@ public class ProductsCont {
 	private SubCategoryProcInter SubCategoryProc;
       
     @Autowired
-	@Qualifier("dev.mvc.stock.stockProc")
-	private stockProcInter stockProc;
+	@Qualifier("dev.mvc.stock.StockProc")
+	private StockProcInter stockProc;
     
     public ProductsCont() {
         System.out.println("-> ProductsCont created.");
@@ -155,7 +155,7 @@ public class ProductsCont {
     	SubCategoryVO subcategoryVO = this.SubCategoryProc.sub_category_read(productsVO.getSub_categoryno());
     	StringBuffer return_url = request.getRequestURL();
     	int count = this.stockProc.product_stock_count(productno);
-    	stockVO stockVO = new stockVO();
+    	StockVO stockVO = new StockVO();
     	if(count == 1) {
     		stockVO = this.stockProc.product_stock_read(productno);
     	}else {
