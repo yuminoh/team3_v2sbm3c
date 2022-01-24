@@ -32,7 +32,7 @@
 </head>
 <body>
 <jsp:include page="./menu/top.jsp" flush='false' />
-  <DIV id='recommend_products'  style='display:none;'>
+  <DIV id='recommend_products'  style='display:none; position:absolute; right:0px; top:170px;'>
     <h3>오늘의 신규상품</h3>
     <c:choose>
         <c:when test="${count >0}"> <!-- 추천 상품이 존재하면 -->

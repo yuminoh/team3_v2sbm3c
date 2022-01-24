@@ -63,8 +63,22 @@
   <li>로그인 등급</li>
   <li>${grade }</li>
   </ul>
+  <ul>
   
-  
+
+ <c:choose>
+            <c:when test="${list_count != null}">
+              <li>관심 품목</li>
+                 <li><c:forEach var="list" items="${intereted_list}">      
+                <c:set var="sub_categoryno" value="${list.sub_categoryno }" />
+                <c:set var="sub_categoryname" value="${list.sub_categoryname }" />
+                <c:set var="categoryno" value="${list.categoryno }" />             
+                     <A href="/products/list?sub_categoryno=${sub_categoryno }">${sub_categoryname }</A>
+                </c:forEach></li>
+            </c:when>    
+        </c:choose>
+        
+  </ul>
   <ul class='slim'>
   <c:if test="${sessionScope.id ne null }">
     <li>로그인된 사용자 메뉴 출력 영역(특정 권한별 구분)</li>
@@ -83,6 +97,12 @@
     </c:choose></li>  
   </c:if>
  </ul>
+ <div>
+
+      </div>
+ <div style="text-align:center;">
+        
+      </div>
  </DIV>
        <DIV class='bottom_menu'>
        <button type='button' onclick="location.href='/pay_list'" class='btn btn-info'>구매내역 조회</button>
@@ -90,23 +110,9 @@
        <button type='button' onclick="location.href='./read.do?memberno=${memberno}'" class="btn btn-warning">회원정보 수정</button>
        <button type='button' onclick="location.href='./delete.do?memberno=${memberno}'" class="btn btn-danger">회원탈퇴</button>
       </DIV>
-      <div>
-      회원님의 관심 품목
-      </div>
+      
       <br>
-     <c:choose>
-        <c:when test="${list_count != null}">
-            <c:forEach var="list" items="${intereted_list}">      
-                <c:set var="sub_categoryno" value="${list.sub_categoryno }" />
-                <c:set var="sub_categoryname" value="${list.sub_categoryname }" />
-                <c:set var="categoryno" value="${list.categoryno }" />
-             
-                <DIV style="width:100px; height:100px; text-align: center; float:left;">
-                     <A href="/products/list?sub_categoryno=${sub_categoryno }">${sub_categoryname }</A>
-                </DIV>
-            </c:forEach>
-        </c:when>    
-      </c:choose>
+      
 <DIV class='menu_line'></DIV>
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
