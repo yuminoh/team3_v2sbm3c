@@ -22,6 +22,14 @@ import dev.mvc.uploadtool.Tool;
     @Override
     public List<NoticeVO> list_noticeno_asc() {
       List<NoticeVO> list = this.noticeDAO.list_noticeno_asc();
+      for (NoticeVO noticeVO : list) { // 내용이 160자 이상이면 160자만 선택
+          String content = noticeVO.getContent();
+          if (content.length() > 160) {
+              content = content.substring(0, 160) + "...";
+              noticeVO.setContent(content);
+          }
+      }
+
       return list;
     }
     
@@ -45,5 +53,42 @@ import dev.mvc.uploadtool.Tool;
         noticeVO.setSize1_label(Tool.unit(size1));
 
         return noticeVO;
+    }
+    
+    
+    @Override
+    public int product_update(NoticeVO noticeVO) {
+        int cnt = this.noticeDAO.product_update(noticeVO);
+        return cnt;
+    }
+    
+    @Override
+    public int update_text(NoticeVO noticeVO) {
+        int cnt = this.noticeDAO.update_text(noticeVO);
+        return cnt;
+    }
+    
+    @Override
+    public NoticeVO read_update_text(int noticeno) {
+        NoticeVO noticeVO = this.noticeDAO.read(noticeno);
+        return noticeVO;
+    }
+    
+    @Override
+    public int passwd_check(HashMap<String, Object> map) {
+        int cnt = this.noticeDAO.passwd_check(map);
+        return cnt;
+    }
+    
+    @Override
+    public int delete(int noticeno) {
+      int cnt = this.noticeDAO.delete(noticeno);
+      return cnt;
+    }
+    
+    @Override
+    public int update_recom(int noticeno) {
+      int cnt = this.noticeDAO.update_recom(noticeno);
+      return cnt;
     }
 }

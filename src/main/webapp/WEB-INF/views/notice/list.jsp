@@ -31,6 +31,11 @@
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
+  <c:choose>
+  <c:when test="${sessionScope.grade <10}">
+    <A href="./create.do?noticeno=${noticeVO.noticeno }">등록│</A>
+   </c:when> 
+   </c:choose>
 
     <span class='menu_divide' ></span>
     <A href="javascript:location.reload();">새로고침</A>
@@ -64,7 +69,7 @@
         <c:set var="content" value="${noticeVO.content }" />
         <c:set var="rname" value="${noticeVO.rname }" />
         <c:set var="rdate" value="${noticeVO.rdate.substring(0, 10) }" />
-        <c:set var="word" value="${noticeVO.word }" />
+        
         
         
         
@@ -76,25 +81,33 @@
                 <a href="./read.do?noticeno=${noticeno}&now_page=${param.now_page }"><IMG src="/notice/storage/${thumb1 }" style="width: 120px; height: 80px;"></a> 
               </c:when>
               <c:otherwise> <!-- 기본 이미지 출력 -->
-                <IMG src="/notice/images/none1.png" style="width: 120px; height: 80px;">
+                <IMG src="/notice/images/none2.png" style="width: 120px; height: 80px;">
               </c:otherwise>
             </c:choose>
           </td>  
           <td style='vertical-align: middle;'>
-            <a href="./read.do?noticeno=${noticeno}"><span style="color: #00ff00; font-size: 1.2em;">${noticeVO.title} </span> <br>
+            <a href="./read.do?noticeno=${noticeno}"><span style="color: #000000; font-size: 1.2em;">${noticeVO.title} </span> <br>
             ${noticeVO.content}</a> 
           </td> 
           <td style='vertical-align: middle; text-align: center;'>
-            <span style="color: #505050; font-size: 1em;">공지 등록일 : ${rdate} </span><br>
+            <span style="color: #000000; font-size: 1em;">공지 등록일 : ${rdate} </span><br>
             <span style="color: #000000; font-size: 1em;">작성자 : ${noticeVO.rname} </span><br>
             <span style="color: #FF0000; font-size: 1.2em;">${noticeVO.word} </span>
           </td>
-          <td style='vertical-align: middle; text-align: center;'>수정/삭제<br>공지 정보</td>
+          <td style='vertical-align: middle; text-align: center;'>
+            <c:choose>
+                <c:when test="${sessionScope.grade <10}"><!--  로그인한 사람이 관리자일 경우 -->
+            <A href="./update_text.do?noticeno=${noticeno}"><span class="glyphicon glyphicon-pencil"></span></A>
+            <A href="./delete.do?noticeno=${noticeno}"><span class="glyphicon glyphicon-trash"></span></A>
+                </c:when> 
+            </c:choose>
+        </td>
         </tr>
       </c:forEach>
       
     </tbody>
   </table>
+  <DIV class='menu_line'></DIV>
 </DIV>
 
  

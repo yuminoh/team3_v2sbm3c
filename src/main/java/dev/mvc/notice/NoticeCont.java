@@ -1,5 +1,6 @@
 package dev.mvc.notice;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -39,6 +41,21 @@ public class NoticeCont {
   
   public NoticeCont() {
     System.out.println("-> NoticeCont created.");
+  }
+  
+  
+  /**
+   * 새로고침 방지
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/msg.do", method = RequestMethod.GET)
+  public ModelAndView msg(String url) {
+      ModelAndView mav = new ModelAndView();
+
+      mav.setViewName(url); // forward
+
+      return mav; // forward
   }
   
   /**
@@ -157,15 +174,9 @@ public class NoticeCont {
     List<NoticeVO> list = this.noticeProc.list_noticeno_asc();
     
     mav.addObject("list", list); // request.setAttribute("list", list);
-    
-    if (this.memberProc.isAdmin(session)) { // 관리자인지 확인, 관리자 이면 admin_list 
-
-        mav.setViewName("/notice/admin_list"); // /webapp/WEB-INF/views/notice/list.jsp
-       
-      } else { // 관리자가 아니라면 일반 목록
         
         mav.setViewName("/notice/list");      
-      }
+
       
       return mav;
     }  
@@ -176,8 +187,6 @@ public class NoticeCont {
    */
   @RequestMapping(value="/notice/read.do", method=RequestMethod.GET )
   public ModelAndView read_ajax(HttpServletRequest request, int noticeno) {
-    // public ModelAndView read(int noticeno, int now_page) {
-    // System.out.println("-> now_page: " + now_page);
     
     ModelAndView mav = new ModelAndView();
 
@@ -185,53 +194,207 @@ public class NoticeCont {
     mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
     
     // 단순 read
-    // mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
+    mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
     
-    // 쇼핑 기능 추가
-    // mav.setViewName("/notice/read_cookie"); // /WEB-INF/views/notice/read_cookie.jsp
-    
-    // 댓글 기능 추가 
-    mav.setViewName("/notice/read_cookie_reply"); // /WEB-INF/views/notice/read_cookie_reply.jsp
 
-    // 댓글 + 더보기 버튼 기능 추가 
-    mav.setViewName("/notice/read_cookie_reply_add"); // /WEB-INF/views/notice/read_cookie_reply_add.jsp
+    return mav;
+  }
+  
+  /**
+   * 상품 정보 수정 폼 사전 준비된 레코드: 관리자 1번, cateno 1번, categrpno 1번을 사용하는 경우 테스트 URL
+   * http://localhost:9091/notice/create.do?cateno=1
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/product_update.do", method = RequestMethod.GET)
+  public ModelAndView product_update(int cateno, int noticeno) {
+      ModelAndView mav = new ModelAndView();
 
-    
-    // -------------------------------------------------------------------------------
-    // 쇼핑 카트 장바구니에 상품 등록전 로그인 폼 출력 관련 쿠기  
-    // -------------------------------------------------------------------------------
-    Cookie[] cookies = request.getCookies();
-    Cookie cookie = null;
+      NoticeVO noticeVO = this.noticeProc.read(noticeno);
 
-    String ck_id = ""; // id 저장
-    String ck_id_save = ""; // id 저장 여부를 체크
-    String ck_passwd = ""; // passwd 저장
-    String ck_passwd_save = ""; // passwd 저장 여부를 체크
+      mav.addObject("noticeVO", noticeVO);
 
-    if (cookies != null) {  // Cookie 변수가 있다면
-      for (int i=0; i < cookies.length; i++){
-        cookie = cookies[i]; // 쿠키 객체 추출
-        
-        if (cookie.getName().equals("ck_id")){
-          ck_id = cookie.getValue();                                 // Cookie에 저장된 id
-        }else if(cookie.getName().equals("ck_id_save")){
-          ck_id_save = cookie.getValue();                          // Cookie에 id를 저장 할 것인지의 여부, Y, N
-        }else if (cookie.getName().equals("ck_passwd")){
-          ck_passwd = cookie.getValue();                          // Cookie에 저장된 password
-        }else if(cookie.getName().equals("ck_passwd_save")){
-          ck_passwd_save = cookie.getValue();                  // Cookie에 password를 저장 할 것인지의 여부, Y, N
-        }
+      mav.setViewName("/notice/product_update"); // /views/notice/product_update.jsp
+      // String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
+      // mav.addObject("content", content);
+
+      return mav; // forward
+  }
+
+  /**
+   * 상품 정보 수정 처리 http://localhost:9091/notice/product_update.do
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/product_update.do", method = RequestMethod.POST)
+  public ModelAndView product_update(NoticeVO noticeVO) {
+      ModelAndView mav = new ModelAndView();
+
+      // Call By Reference: 메모리 공유, Hashcode 전달
+      int cnt = this.noticeProc.product_update(noticeVO);
+
+      mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
+
+      // 연속 입력 지원용 변수, Call By Reference에 기반하여 noticeno를 전달 받음
+      mav.addObject("noticeno", noticeVO.getNoticeno());
+
+      mav.addObject("url", "/notice/msg"); // msg.jsp
+
+      if (cnt == 1) {
+          mav.addObject("code", "product_success");
+      } else {
+          mav.addObject("code", "product_fail");
       }
+
+      mav.setViewName("redirect:/notice/msg.do");
+
+      return mav; // forward
+  }
+  
+  /**
+   * 수정 폼
+   * http://localhost:9091/notice/update_text.do?noticeno=1
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/update_text.do", method = RequestMethod.GET)
+  public ModelAndView update_text(int noticeno) {
+    ModelAndView mav = new ModelAndView();
+    
+    NoticeVO noticeVO = this.noticeProc.read_update_text(noticeno);
+    
+    mav.addObject("noticeVO", noticeVO);
+    
+    mav.setViewName("/notice/update_text"); // /WEB-INF/views/notice/update_text.jsp
+    // String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
+    // mav.addObject("content", content);
+
+    return mav; // forward
+  }
+
+  /**
+   * 수정 처리
+   * http://localhost:9091/notice/update_text.do?noticeno=1
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/update_text.do", method = RequestMethod.POST)
+  public ModelAndView update_text(NoticeVO noticeVO)
+                                                   {
+    ModelAndView mav = new ModelAndView();
+    
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("noticeno", noticeVO.getNoticeno());
+    map.put("passwd", noticeVO.getPasswd());
+    
+    int cnt = 0;
+    int passwd_cnt = this.noticeProc.passwd_check(map);
+    if (passwd_cnt == 1) {
+        cnt = this.noticeProc.update_text(noticeVO); // 수정 처리
+        
+        mav.addObject("noticeno", noticeVO.getNoticeno());
+        mav.setViewName("redirect:/notice/read.do");             
+    } else {
+        mav.addObject("cnt", cnt);
+        mav.addObject("code", "passwd_fail");
+        mav.setViewName("redirect:/notice/msg.do");
+    }
+
+    return mav; // forward
+  }
+  
+  /**
+   * 삭제 폼
+   * @param noticeno
+   * @return
+   */
+  @RequestMapping(value="/notice/delete.do", method=RequestMethod.GET )
+  public ModelAndView delete(int noticeno) { 
+    ModelAndView mav = new  ModelAndView();
+    
+    // 삭제할 정보를 조회하여 확인
+    NoticeVO noticeVO = this.noticeProc.read(noticeno);
+   
+    mav.addObject("noticeVO", noticeVO);
+ 
+    mav.setViewName("/notice/delete");  // notice/delete.jsp
+    
+    return mav; 
+  }
+  
+  /**
+   * 삭제 처리 http://localhost:9091/notice/delete.do
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/delete.do", method = RequestMethod.POST)
+  public ModelAndView delete(HttpServletRequest request, NoticeVO noticeVO) {
+    ModelAndView mav = new ModelAndView();
+    String uploadDir = this.uploadDir; // 파일 업로드 경로
+    
+    int noticeno = noticeVO.getNoticeno();
+    
+    HashMap<String, Object> passwd_map = new HashMap<String, Object>();
+    passwd_map.put("noticeno", noticeVO.getNoticeno());
+    passwd_map.put("passwd", noticeVO.getPasswd());
+    
+    int cnt = 0;
+    int passwd_cnt = this.noticeProc.passwd_check(passwd_map);
+    if (passwd_cnt == 1) { // 패스워드 일치 -> 등록된 파일 삭제 -> 신규 파일 등록
+        // -------------------------------------------------------------------
+        // 파일 삭제 코드 시작
+        // -------------------------------------------------------------------
+        // 삭제할 파일 정보를 읽어옴.
+        NoticeVO vo = noticeProc.read(noticeno);
+//        System.out.println("noticeno: " + vo.getNoticeno());
+//        System.out.println("file1: " + vo.getFile1());
+        
+        String file1saved = vo.getFile1saved();
+        String thumb1 = vo.getThumb1();
+        long size1 = 0;
+        boolean sw = false;
+        
+        sw = Tool.deleteFile(uploadDir, file1saved);  // Folder에서 1건의 파일 삭제
+        sw = Tool.deleteFile(uploadDir, thumb1);     // Folder에서 1건의 파일 삭제
+        // System.out.println("sw: " + sw);
+        // -------------------------------------------------------------------
+        // 파일 삭제 종료 시작
+        // -------------------------------------------------------------------
+        
+        cnt = this.noticeProc.delete(noticeno); // DBMS 삭제
+        
+        // -------------------------------------------------------------------------------------
+        mav.addObject("cnt", cnt);
+        mav.addObject("code", "passwd_fail");
+        mav.setViewName("redirect:/notice/msg.do");
     }
     
-    System.out.println("-> ck_id: " + ck_id);
+    return mav; // forward
+  }   
+  
+  /**
+   * 추천수 Ajax 수정 처리
+   * http://localhost:9091/notice/update_recom_ajax.do?noticeno=30
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/update_recom_ajax.do", 
+                           method = RequestMethod.POST)
+  @ResponseBody
+  public String update_recom_ajax(int noticeno) {
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    int cnt = this.noticeProc.update_recom(noticeno); // 추천수 증가
+    int recom = this.noticeProc.read(noticeno).getRecom(); // 새로운 추천수 읽음
+        
+    JSONObject json = new JSONObject();
+    json.put("cnt", cnt);
+    json.put("recom", recom);
     
-    mav.addObject("ck_id", ck_id); 
-    mav.addObject("ck_id_save", ck_id_save);
-    mav.addObject("ck_passwd", ck_passwd);
-    mav.addObject("ck_passwd_save", ck_passwd_save);
-    // -------------------------------------------------------------------------------
-    
-    return mav;
+    return json.toString();
   }
 }

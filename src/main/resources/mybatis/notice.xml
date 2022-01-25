@@ -35,4 +35,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM notice
     WHERE noticeno = #{noticeno}
   </select>
+  
+    <!-- 텍스트 수정 -->
+  <update id="update_text" parameterType="dev.mvc.notice.NoticeVO">
+    UPDATE notice
+    SET title=#{title}, content=#{content},  rname=#{rname}
+    WHERE noticeno = #{noticeno}
+  </update>
+  
+    <!-- 패스워드 검사 -->
+  <select id="passwd_check" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt 
+    FROM notice
+    WHERE noticeno=#{noticeno} AND passwd=#{passwd}
+  </select>
+  
+    <delete id="delete" parameterType="int">
+    DELETE FROM notice
+    WHERE noticeno=#{noticeno}
+  </delete>
+  
+    <!-- 추천 -->
+  <update id="update_recom" parameterType="int">
+    UPDATE notice
+    SET recom = recom + 1
+    WHERE noticeno = #{noticeno}
+  </update> 
  </mapper>
