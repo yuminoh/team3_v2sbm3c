@@ -100,14 +100,14 @@ function update_read_ajax(productno){
     );
  }
  
- function delete_read_ajax(stocknum){
+ function delete_read_ajax(productno){
      $('#panel_create').css("display","none");
     $('#panel_update').css("display","none");
     $('#panel_delete').css("display","");
     $('#title').html("재고 > 삭제");
     
-    var params = "stocknum =";
-    params = 'stocknum='+stocknum;
+    var params = "productno =";
+    params = 'productno='+productno;
      
     $.ajax(
         {

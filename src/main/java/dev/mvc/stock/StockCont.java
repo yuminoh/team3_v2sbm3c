@@ -69,7 +69,7 @@ public class StockCont {
     public ModelAndView stock_delete(int stocknum) {
         ModelAndView mav = new ModelAndView();
         int cnt = this.StockProc.stock_delete(stocknum);
-        mav.setViewName("redirect:/stock/list");
+        mav.setViewName("redirect:/stock/list.do");
         return mav; // forward
     }
 
