@@ -34,7 +34,7 @@ public class StockCont {
     public ModelAndView stock_create(StockVO stockVO) {
         ModelAndView mav = new ModelAndView();
         int cnt = this.StockProc.stock_create(stockVO);
-        mav.setViewName("redirect:/stock/list");
+        mav.setViewName("redirect:/stock/list.do");
         return mav; // forward
     }
 

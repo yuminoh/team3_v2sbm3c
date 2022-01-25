@@ -158,10 +158,10 @@ function update_read_ajax(productno){
             <label>재고 수량</label>
             <input type='number' id='stockno' name='stockno' required="required" value='1' required="required" min='0' max='1000' step='1' style='width: 10%;'>                                             
             <label>폐기 예정 수량</label>
-            <input type='number' id='productwa' name='productwa' required="required" min='0' max='1000' step='1' style='width: 10%;'>     
+            <input type='number' id='productwa' name='productwa' required="required" value='0' min='0' max='1000' step='1' style='width: 10%;'>     
             
             <label>입고 예정 수량</label>
-            <input type='number' id='productst' name='productst' required="required" min='0' max='1000' step='1' style='width: 10%;'>     
+            <input type='number' id='productst' name='productst' required="required" value='0' min='0' max='1000' step='1' style='width: 10%;'>     
             
             <button type="submit" id='submit' class='btn btn-primary btn-xs' style="height: 22px; margin-bottom: 3px;">등록</button>
             <button type="button" id='create_cancel' class='btn btn-primary btn-xs' style="height: 22px; margin-bottom: 3px;">취소</button>
