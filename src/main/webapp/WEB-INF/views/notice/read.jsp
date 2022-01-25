@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="noticeno" value="${noticeVO.noticeno }" />
+<c:set var="memberno" value="${noticeVO.memberno }" />
 <c:set var="title" value="${noticeVO.title }" />        
 <c:set var="rname" value="${noticeVO.rname }" />
 <c:set var="file1" value="${noticeVO.file1 }" />
@@ -81,7 +82,7 @@ function update_recom_ajax(noticeno) {
  
 <DIV class='title_line'>
   <A href="../notice/list.do" class='title_link'>공지사항</A> > 
-  <A href="../notice/list.do?noticeno=${noticeVO.noticeno }" class='title_link'>${noticeVO.title }</A> 
+  <A href="../notice/read.do?noticeno=${noticeVO.noticeno }" class='title_link'>${noticeVO.title }</A> 
 </DIV>
 
 <DIV class='content_body'>
@@ -90,8 +91,6 @@ function update_recom_ajax(noticeno) {
     <c:when test="${sessionScope.grade <10}"><!--  로그인한 사람이 관리자일 경우 -->
     <A href="./create.do?noticeno=${noticeVO.noticeno }">등록</A>
     <A href="./update_text.do?noticeno=${noticeno}">수정</A>
-    <span class='menu_divide' >│</span>
-    <A href="./update_file.do?noticeno=${noticeno}">파일 수정</A>  
     <span class='menu_divide' >│</span>
     <A href="./delete.do?noticeno=${noticeno}">삭제</A>│  
     </c:when> 

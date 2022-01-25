@@ -1,6 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  
+ <c:set var="title" value="${noticeVO.title }" />
+<c:set var="content" value="${noticeVO.content }" />
+<c:set var="rname" value="${noticeVO.rname }" />
+<c:set var="noticeno" value="${noticeVO.noticeno }" />
+
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
@@ -15,11 +20,19 @@
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
     
 <script type="text/javascript">
-  $(function(){
- 
-  });
+// window.onload=function(){
+//  CKEDITOR.replace('content');  // <TEXTAREA>태그 id 값
+// };
+
+$(function() {
+  CKEDITOR.replace('content');  // <TEXTAREA>태그 id 값
+  
+});
+
 </script>
  
 </head> 
@@ -28,7 +41,7 @@
 <jsp:include page="../menu/top.jsp" flush='false' />
  
 <DIV class='title_line'>
-  <A href="../moviegrp/list.do" class='title_link'>공지 등록</A>
+  <A href="../notice/create.do" class='title_link'>공지 등록</A>
   
 </DIV>
 
@@ -59,7 +72,7 @@
     <div class="form-group">
        <label class="control-label col-md-2">공지 내용</label>
        <div class="col-md-10">
-         <textarea name='content' required="required" class="form-control" rows="12" style='width: 100%;'>공지사항 내용</textarea>
+         <textarea name='content' required="required" class="form-control" rows="20" style='width: 100%;'>공지사항 내용</textarea>
        </div>
     </div>
     <div class="form-group">

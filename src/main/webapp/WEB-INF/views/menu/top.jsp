@@ -7,12 +7,15 @@
 
   <script type="text/javascript">
   function chatting(){
-      var url = 'http://127.0.0.1:8000/chatbot/chatting/';
+      var url = 'http://127.0.0.1:8080/chatbot/chatting/';
       var win = window.open(url, '챗봇', 'width=700px, height=630px');
 
-      var x = (screen.width - 700) / 2;
-      var y = (screen.height - 630) / 2;
+/*       var x = (screen.width - 700) / 2;
+      var y = (screen.height - 630) / 2; */
 
+      var x = screen.width - 700;
+      var y = screen.height - 630;
+      
       win.moveTo(x, y); // 화면 중앙으로 이동
     }
 </script>

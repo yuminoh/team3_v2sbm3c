@@ -16,12 +16,12 @@ public class Notice {
     public static synchronized String getUploadDir() {
         String path = "";
         if (File.separator.equals("\\")) {
-            path = "C:/kd1/deploy/team3_v2sbm3c/notice/storage/";
+            path = "C:/kd1/deploy/movie_project/notice/storage/";
             // System.out.println("Windows 10: " + path);
             
         } else {
             // System.out.println("Linux");
-            path = "/home/ubuntu/deploy/team3_v2sbm3c/notice/storage/";
+            path = "/home/ubuntu/deploy/movie_project/notice/storage/";
         }
         
         return path;

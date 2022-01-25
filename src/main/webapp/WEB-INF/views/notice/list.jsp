@@ -67,12 +67,12 @@
         <c:set var="noticeno" value="${noticeVO.noticeno }" />
         <c:set var="title" value="${noticeVO.title }" />
         <c:set var="content" value="${noticeVO.content }" />
+        <c:set var="recom" value="${noticeVO.recom }" />
         <c:set var="rname" value="${noticeVO.rname }" />
         <c:set var="rdate" value="${noticeVO.rdate.substring(0, 10) }" />
         
-        
-        
-        
+        <c:set var="file1" value="${noticeVO.file1 }" />
+        <c:set var="thumb1" value="${noticeVO.thumb1 }" />
         <tr> 
           <td style='vertical-align: middle; text-align: center;'>
             <c:choose>

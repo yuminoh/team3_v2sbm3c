@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 public interface NoticeDAOInter {
   /**
    * 등록
@@ -14,10 +15,10 @@ public interface NoticeDAOInter {
   public int create(NoticeVO noticeVO);
   
   /**
-   * 등록 순서별 목록
+   * 모든 목록
    * @return
    */
-  public List<NoticeVO> list_noticeno_asc();
+  public List<NoticeVO> list_all();
   
   
   /**

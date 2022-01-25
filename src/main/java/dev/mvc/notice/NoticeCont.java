@@ -105,7 +105,16 @@ public class NoticeCont {
       String file1 = ""; // 원본 파일명 image
       String file1saved = ""; // 저장된 파일명, image
       String thumb1 = ""; // preview image
-      String uploadDir = this.uploadDir; // 파일 업로드 경로
+      
+      // 기준 경로 확인
+      String user_dir = System.getProperty("user.dir"); // 시스템 제공
+      // System.out.println("-> User dir: " + user_dir);
+      //  --> User dir: C:\kd1\ws_java\resort_v1sbm3c
+      
+      // 파일 접근임으로 절대 경로 지정, static 폴더 지정
+      // 완성된 경로 C:/kd1/ws_java/team3_v2sbm3c/src/main/resources/static/notice/storage
+      String upDir =  user_dir + "/src/main/resources/static/notice/storage/"; // 절대 경로
+      // System.out.println("-> upDir: " + upDir);
       
       // 전송 파일이 없어도 file1MF 객체가 생성됨.
       // <input type='file' class="form-control" name='file1MF' id='file1MF'
@@ -119,11 +128,11 @@ public class NoticeCont {
 
       if (size1 > 0) { // 파일 크기 체크
           // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
-          file1saved = Upload.saveFileSpring(mf, uploadDir);
+          file1saved = Upload.saveFileSpring(mf, upDir);
 
           if (Tool.isImage(file1saved)) { // 이미지인지 검사
               // thumb 이미지 생성후 파일명 리턴됨, width: 200, height: 150
-              thumb1 = Tool.preview(uploadDir, file1saved, 200, 150);
+              thumb1 = Tool.preview(upDir, file1saved, 200, 150);
           }
 
       }
@@ -171,15 +180,33 @@ public class NoticeCont {
   @RequestMapping(value="/notice/list.do", method=RequestMethod.GET )
   public ModelAndView list(HttpSession session) {
     ModelAndView mav = new ModelAndView();
-    List<NoticeVO> list = this.noticeProc.list_noticeno_asc();
+    List<NoticeVO> list = this.noticeProc.list_all();
     
     mav.addObject("list", list); // request.setAttribute("list", list);
         
-        mav.setViewName("/notice/list");      
+    mav.setViewName("/notice/list");      
 
       
       return mav;
     }  
+  
+//  /**
+//   * 영화 전체 목록
+//   * @param genreno
+//   * @return
+//   */
+//  @RequestMapping(value = "/notice/list.do", method = RequestMethod.GET)
+//  public ModelAndView list_all() {
+//    ModelAndView mav = new ModelAndView();
+//
+//    List<NoticeVO> list = this.noticeProc.list_all();
+//    mav.addObject("list", list);
+//
+//    // 테이블 이미지 기반, /webapp/notice/list_by_genreno_grid.jsp
+//    mav.setViewName("/notice/list");
+//
+//    return mav; // forward
+//  }
   
   /**
    * 조회
@@ -330,7 +357,6 @@ public class NoticeCont {
   @RequestMapping(value = "/notice/delete.do", method = RequestMethod.POST)
   public ModelAndView delete(HttpServletRequest request, NoticeVO noticeVO) {
     ModelAndView mav = new ModelAndView();
-    String uploadDir = this.uploadDir; // 파일 업로드 경로
     
     int noticeno = noticeVO.getNoticeno();
     
@@ -354,8 +380,10 @@ public class NoticeCont {
         long size1 = 0;
         boolean sw = false;
         
-        sw = Tool.deleteFile(uploadDir, file1saved);  // Folder에서 1건의 파일 삭제
-        sw = Tool.deleteFile(uploadDir, thumb1);     // Folder에서 1건의 파일 삭제
+        String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/notice/storage/"; // 절대 경로
+        
+        sw = Tool.deleteFile(upDir, file1saved);  // Folder에서 1건의 파일 삭제
+        sw = Tool.deleteFile(upDir, thumb1);     // Folder에서 1건의 파일 삭제
         // System.out.println("sw: " + sw);
         // -------------------------------------------------------------------
         // 파일 삭제 종료 시작
@@ -364,7 +392,12 @@ public class NoticeCont {
         cnt = this.noticeProc.delete(noticeno); // DBMS 삭제
         
         // -------------------------------------------------------------------------------------
+        
         mav.addObject("cnt", cnt);
+        mav.addObject("code", "delete_success");
+        mav.setViewName("redirect:/notice/msg.do");
+    } else {
+        
         mav.addObject("code", "passwd_fail");
         mav.setViewName("redirect:/notice/msg.do");
     }

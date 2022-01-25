@@ -10,7 +10,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>편의점 온라인 쇼핑몰</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -32,20 +32,18 @@
 <jsp:include page="../menu/top.jsp" flush='false' />
  
 <DIV class='title_line'>
-  <A href="../categrp/list.do" class='title_link'>공지사항</A> > 
-  <A href="../cate/list_by_categrpno.do?categrpno=${noticeVO.noticeno }" class='title_link'>${noticeVO.title }</A> >
+  <A href="../notice/list.do" class='title_link'>공지사항</A> > 
+  <A href="../notice/read.do?noticeno=${noticeVO.noticeno }" class='title_link'>${noticeVO.title }</A> >
   삭제
 </DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-    <A href="./create.do?cateno=${cateVO.cateno }">등록</A>
+    <A href="./create.do?noticeno=${noticeVO.noticeno }">등록</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
     <A href="./update_text.do?noticeno=${noticeno}">수정</A>
-    <span class='menu_divide' >│</span>
-    <A href="./update_text.do?noticeno=${noticeno}">파일 수정</A>  
   </ASIDE> 
   
 

@@ -22,8 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   레코드 갯수 만큼 NoticeVO" 객체를 만들어 ArrayList에 저장하여 리턴,
   List<NoticeVO"> list = new ArrayList<NoticeVO">(); 
   -->
- <select id="list_noticeno_asc" resultType="dev.mvc.notice.NoticeVO">
-    SELECT noticeno, title, rname, content, word, rdate
+ <select id="list_all" resultType="dev.mvc.notice.NoticeVO">
+    SELECT noticeno, title, rname, content, word, rdate, file1, file1saved, thumb1, size1
     FROM notice
     ORDER BY noticeno DESC
   </select>
