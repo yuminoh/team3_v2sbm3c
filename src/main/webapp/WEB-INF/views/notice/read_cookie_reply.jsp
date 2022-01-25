@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="noticeno" value="${noticeVO.noticeno }" />
-<c:set var="memberno" value="${noticeVO.memberno }" />
 <c:set var="title" value="${noticeVO.title }" />        
 <c:set var="rname" value="${noticeVO.rname }" />
 <c:set var="file1" value="${noticeVO.file1 }" />
@@ -33,8 +32,7 @@
 <script type="text/javascript">
 $(function(){
     $('#btn_recom').on("click", function() { update_recom_ajax(${noticeno}); });
-    $('#btn_login').on('click', login_ajax);
-    $('#btn_loadDefault').on('click', loadDefault);
+
 
 // ---------------------------------------- 댓글 관련 시작 ----------------------------------------
 var frm_reply = $('#frm_reply');
@@ -142,7 +140,7 @@ function reply_create() {
           // global_rdata = new Array(); // 댓글을 새로 등록했음으로 배열 초기화
           // global_rdata_cnt = 0; // 목록 출력 글수
           
-          // list_by_contentsno_join(); // 페이징 댓글
+           list_by_noticeno_join(); // 페이징 댓글
         } else {
           $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
           msg = "댓글 등록에 실패했습니다.";
@@ -254,6 +252,7 @@ function reply_delete_proc(replyno) {
     }
   });
 }
+// -------------------- 댓글 관련 종료 --------------------
 </script>
  
 </head> 

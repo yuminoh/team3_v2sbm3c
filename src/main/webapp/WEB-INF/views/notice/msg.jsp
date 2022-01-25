@@ -50,9 +50,9 @@
             <span class="span_success">새로운 컨텐츠를 등록했습니다.</span>
           </LI>  
           <LI class='li_none'>
-            <button type='button' 
+<%--             <button type='button' 
                          onclick="location.href='./product_update.do?cateno=${param.cateno}&categrpno=${param.categrpno }&contentsno=${param.contentsno }'"
-                         class="btn btn-default">관련 상품 정보 등록</button>
+                         class="btn btn-default">관련 상품 정보 등록</button> --%>
             <button type='button' 
                          onclick="location.href='./create.do?noticeno=${param.noticeno}'"
                          class="btn btn-default">새로운 컨텐츠 등록</button>

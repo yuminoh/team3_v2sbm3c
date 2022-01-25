@@ -212,21 +212,50 @@ public class NoticeCont {
    * 조회
    * @return
    */
+//  @RequestMapping(value="/notice/read.do", method=RequestMethod.GET )
+//  public ModelAndView read_ajax(HttpServletRequest request, int noticeno) {
+//    
+//    ModelAndView mav = new ModelAndView();
+//
+//    NoticeVO noticeVO = this.noticeProc.read(noticeno);
+//    mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
+//    
+//    // 단순 read
+//    mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
+//    
+//
+//    return mav;
+//  }
+  
+  // http://localhost:9091/notice/read.do
+  /**
+   * 조회
+   * @return
+   */
   @RequestMapping(value="/notice/read.do", method=RequestMethod.GET )
   public ModelAndView read_ajax(HttpServletRequest request, int noticeno) {
+    // public ModelAndView read(int noticeno, int now_page) {
+    // System.out.println("-> now_page: " + now_page);
     
     ModelAndView mav = new ModelAndView();
 
     NoticeVO noticeVO = this.noticeProc.read(noticeno);
     mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
-    
-    // 단순 read
-    mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
-    
 
+    // 단순 read
+    // mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
+    
+    // 쇼핑 기능 추가
+    // mav.setViewName("/notice/read_cookie"); // /WEB-INF/views/notice/read_cookie.jsp
+    
+    // 댓글 기능 추가 
+    mav.setViewName("/notice/read_cookie_reply"); // /WEB-INF/views/notice/read_cookie_reply.jsp
+    
+    // 댓글 + 더보기 버튼 기능 추가 
+    mav.setViewName("/notice/read_cookie_reply_add"); // /WEB-INF/views/notice/read_cookie_reply_add.jsp
+    
     return mav;
   }
-  
   /**
    * 상품 정보 수정 폼 사전 준비된 레코드: 관리자 1번, cateno 1번, categrpno 1번을 사용하는 경우 테스트 URL
    * http://localhost:9091/notice/create.do?cateno=1
@@ -277,6 +306,7 @@ public class NoticeCont {
 
       return mav; // forward
   }
+  
   
   /**
    * 수정 폼
@@ -416,7 +446,7 @@ public class NoticeCont {
   @ResponseBody
   public String update_recom_ajax(int noticeno) {
     try {
-      Thread.sleep(1000);
+      Thread.sleep(100);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="noticeno" value="${noticeVO.noticeno }" />
-<c:set var="memberno" value="${noticeVO.memberno }" />
 <c:set var="title" value="${noticeVO.title }" />        
 <c:set var="rname" value="${noticeVO.rname }" />
 <c:set var="file1" value="${noticeVO.file1 }" />
@@ -31,10 +30,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
    
 <script type="text/javascript">
+let reply_list; // 댓글 목록
+
 $(function(){
     $('#btn_recom').on("click", function() { update_recom_ajax(${noticeno}); });
-    $('#btn_login').on('click', login_ajax);
-    $('#btn_loadDefault').on('click', loadDefault);
+
 
 // ---------------------------------------- 댓글 관련 시작 ----------------------------------------
 var frm_reply = $('#frm_reply');
@@ -42,6 +42,8 @@ $('#content', frm_reply).on('click', check_login);  // 댓글 작성시 로그�
 $('#btn_create', frm_reply).on('click', reply_create);  // 댓글 작성시 로그인 여부 확인
 
 list_by_noticeno_join(); // 댓글 목록
+
+$('#btn_add').on('click', list_by_noticeno_join_add);  // [더보기] 버튼
 // ---------------------------------------- 댓글 관련 종료 ----------------------------------------
 });
 
@@ -142,7 +144,7 @@ function reply_create() {
           // global_rdata = new Array(); // 댓글을 새로 등록했음으로 배열 초기화
           // global_rdata_cnt = 0; // 목록 출력 글수
           
-          // list_by_contentsno_join(); // 페이징 댓글
+           list_by_noticeno_join(); // 페이징 댓글
         } else {
           $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
           msg = "댓글 등록에 실패했습니다.";
@@ -160,7 +162,7 @@ function reply_create() {
   }
 }
 
-// noticeno 별 소속된 댓글 목록
+// noticeno 별 소속된 댓글 목록, 2건만 출력
 function list_by_noticeno_join() {
   var params = 'noticeno=' + ${noticeVO.noticeno };
 
@@ -176,8 +178,20 @@ function list_by_noticeno_join() {
       var msg = '';
       
       $('#reply_list').html(''); // 패널 초기화, val(''): 안됨
+
+      // -------------------- 전역 변수에 댓글 목록 추가 --------------------
+      reply_list = rdata.list;
+      // -------------------- 전역 변수에 댓글 목록 추가 --------------------
+      // alert('rdata.list.length: ' + rdata.list.length);
       
-      for (i=0; i < rdata.list.length; i++) {
+      var last_index=1; 
+      if (rdata.list.length >= 2 ) { // 글이 2건 이상이라면 2건만 출력
+        last_index = 2
+      }
+
+      for (i=0; i < last_index; i++) {
+        // alert('i: ' + i); 
+        
         var row = rdata.list[i];
         
         msg += "<DIV id='"+row.replyno+"' style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px;'>";
@@ -254,6 +268,39 @@ function reply_delete_proc(replyno) {
     }
   });
 }
+
+// // [더보기] 버튼 처리
+function list_by_noticeno_join_add() {
+  // alert('list_by_noticeno_join_add called');
+  
+  let cnt_per_page = 2; // 2건씩 추가
+  let replyPage=parseInt($("#reply_list").attr("data-replyPage"))+cnt_per_page; // 2
+  $("#reply_list").attr("data-replyPage", replyPage); // 2
+  
+  var last_index=replyPage + 2; // 4
+  // alert('replyPage: ' + replyPage);
+  
+  var msg = '';
+  for (i=replyPage; i < last_index; i++) {
+    var row = reply_list[i];
+    
+    msg = "<DIV id='"+row.replyno+"' style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px;'>";
+    msg += "<span style='font-weight: bold;'>" + row.id + "</span>";
+    msg += "  " + row.rdate;
+    
+    if ('${sessionScope.memberno}' == row.memberno) { // 글쓴이 일치여부 확인, 본인의 글만 삭제 가능함 ★
+      msg += " <A href='javascript:reply_delete("+row.replyno+")'><IMG src='/reply/images/delete3.png'></A>";
+    }
+    msg += "  " + "<br>";
+    msg += row.content;
+    msg += "</DIV>";
+
+    // alert('msg: ' + msg);
+    $('#reply_list').append(msg);
+  }    
+}
+
+// -------------------- 댓글 관련 종료 --------------------
 </script>
  
 </head> 
@@ -320,6 +367,7 @@ function reply_delete_proc(replyno) {
   <c:choose>
     <c:when test="${sessionScope.grade <10}"><!--  로그인한 사람이 관리자일 경우 -->
     <A href="./create.do?noticeno=${noticeVO.noticeno }">등록</A>
+    <span class='menu_divide' >│</span>
     <A href="./update_text.do?noticeno=${noticeno}">수정</A>
     <span class='menu_divide' >│</span>
     <A href="./delete.do?noticeno=${noticeno}">삭제</A>│  

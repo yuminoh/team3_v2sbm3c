@@ -11,7 +11,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>편의점 온라인 쇼핑몰</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -53,7 +53,7 @@
   
   <DIV class='menu_line'></DIV>
   
-  <FORM name='frm' method='POST' action='./update_text.do' class="form-horizontal">
+  <FORM style="padding: 1.5rem;" name='frm' method='POST' action='./update_text.do' class="form-horizontal">
     <input type='hidden' name='noticeno' value='${noticeno }'>
     <input type='hidden' name='memberno' id='memberno' value="${memberno }">
     <div class="form-group">

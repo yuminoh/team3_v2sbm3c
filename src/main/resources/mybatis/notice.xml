@@ -61,4 +61,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SET recom = recom + 1
     WHERE noticeno = #{noticeno}
   </update> 
+  
+     <!-- 댓글 수 증가 -->
+   <update id="increaseReplycnt" parameterType="int">
+     UPDATE notice
+     SET replycnt = replycnt + 1
+     WHERE noticeno = #{noticeno}
+   </update>
+
+   <!-- 댓글 수 감소 -->
+   <update id="decreaseReplycnt" parameterType="int">
+     UPDATE notice
+     SET replycnt = replycnt - 1
+     WHERE noticeno = #{noticeno}
+   </update>
  </mapper>

@@ -54,7 +54,8 @@
                 <c:when test="${sessionScope.grade <10}"><!--  로그인한 사람이 관리자일 경우 -->
                     <A class='menu_link'  href='/subcategory/list'>서브 카테고리 전체 목록</A><span class='top_menu_sep'> </span>                         
                     <A class='menu_link'  href='/member/list.do'>회원목록</A><span class='top_menu_sep'> </span>
-                    <A class='menu_link'  href='/stock/list.do'>재고</A><span class='top_menu_sep'> </span>
+                    <A class='menu_link'  href='/stock/list.do'>재고</A><span class='top_menu_sep'> </span>          
+                    <A class='menu_link'  href='/reply/list_join.do'>공지사항 댓글 목록</A><span class='top_menu_sep'> </span>
                 </c:when> 
             </c:choose>
         </c:when>                             

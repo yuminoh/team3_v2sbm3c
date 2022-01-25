@@ -91,4 +91,16 @@ import dev.mvc.uploadtool.Tool;
       int cnt = this.noticeDAO.update_recom(noticeno);
       return cnt;
     }
+    
+    @Override
+    public int increaseReplycnt(int noticeno) {
+      int count = noticeDAO.increaseReplycnt(noticeno);
+      return count;
+    }
+
+    @Override
+    public int decreaseReplycnt(int noticeno) {
+      int count = noticeDAO.decreaseReplycnt(noticeno);
+      return count;
+    }
 }
