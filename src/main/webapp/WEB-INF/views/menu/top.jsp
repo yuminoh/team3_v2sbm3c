@@ -59,14 +59,7 @@
                 <A class='menu_link'  href='/member/login.do' >로그인</A><span class='top_menu_sep'> </span>
                 <A class='menu_link'  href='/member/create.do'>회원가입</A><span class='top_menu_sep'> </span>                    
             </c:otherwise>      
-       </c:choose>          
-      <c:choose>
-            <c:when test="${sessionScope.grade <10}"><!--  로그인한 사람이 관리자일 경우 -->
-            <li><A class='menu_link'  href='/subcategory/list'>서브 카테고리 전체 목록</A><span class='top_menu_sep'></span></li>                         
-            <li><A class='menu_link'  href='/member/list.do'>회원목록</A><span class='top_menu_sep'></span></li>
-            <li><A class='menu_link'  href='/stock/list.do'>재고</A><span class='top_menu_sep'> </span></li>
-            </c:when> 
-      </c:choose>         
+       </c:choose>                   
       </ul>    
                        
   </DIV> 

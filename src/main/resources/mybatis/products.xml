@@ -40,6 +40,10 @@ SELECT productno, productname, categoryno, sub_categoryno, product_price, produc
     FROM products WHERE productno=#{productno}
 </select>
 
+<select id="list_read_ajax"  resultType = "dev.mvc.products.ProductsVO">
+    SELECT productno, productname FROM products
+</select>
+
 <update id="product_update"  parameterType = "dev.mvc.products.ProductsVO"  >
     UPDATE products SET  productname=#{productname}, 
                                     categoryno=#{categoryno}, 

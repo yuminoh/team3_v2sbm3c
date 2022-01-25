@@ -32,16 +32,43 @@ function create_ajax(){
     $('#panel_update').css("display","none");
     $('#panel_delete').css("display","none");
     $('#title').html("재고 > 등록"); 
-      }   
- 
+    
+    $.ajax(
+            {
+                url:'/products/list_read_ajax',
+                type: 'get',
+                cache: false, // 응답 결과 임시 저장 취소
+                async: true,  // true: 비동기 통신
+                dataType: 'json', // 응답 형식: json, html, xml...
+                data:false,
+                success: function(rdata){
+                    var html= products(rdata.product_list_data);
+                    $('#product_select').html(html);
+                },error: function(request, status, error) { // callback 함수
+                    console.log(error);
+              }
+          }
+     );
+}   
+      
+function products(product_list_data) {
+    var html = "";
+    html += "<select name=productno id='productno'>";
+    for (var i = 0; i < product_list_data.length; i++) {
+        html += "<option value='"+product_list_data[i].productno+"'>";
+        html += product_list_data[i].productname + "</option>";
+    }
+    html += "</select>";
+    return html;
+}
 
-function update_read_ajax(stocknum){
+function update_read_ajax(productno){
     $('#panel_create').css("display","none");
     $('#panel_update').css("display","");
     $('#panel_delete').css("display","none");
     $('#title').html("재고 > 수정");
-    var params = "stocknum =";
-    params = 'stocknum='+stocknum; 
+    var params = "productno =";
+    params = 'productno='+productno; 
     $.ajax(
         {
             url:'/stock/read_ajax',
@@ -51,20 +78,20 @@ function update_read_ajax(stocknum){
             dataType: 'json', // 응답 형식: json, html, xml...
             data: params,
             success: function(rdata){
-                var stocknum = rdata.stocknum;
-                var stockno = rdata.stockno;
-                var productclass = rdata.productclass;
-                var productwa = rdata.productwa;
-                var productst = rdata.productst;
                 var productno = rdata.productno;
+                var productname = rdata.productname;
+                var stocknum = rdata.stocknum;      
+                var stockno = rdata.stockno;   
+                var productwa = rdata.productwa; 
+                var productst = rdata.productst; 
                 
                 var frm_update = $('#frm_update');
+                $('#productno',frm_update).val(productno);
+                $('#productname',frm_update).text(productname);
                 $('#stocknum',frm_update).val(stocknum);
                 $('#stockno',frm_update).val(stockno);
-                $('#productclass',frm_update).val(productclass);
                 $('#productwa',frm_update).val(productwa);
                 $('#productst',frm_update).val(productst);
-                $('#productno',frm_update).val(productno);
                 
             },error: function(request, status, error) { // callback 함수
                 console.log(error);
@@ -124,12 +151,12 @@ function update_read_ajax(stocknum){
 
 <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
         <FORM name='frm_create' id='frm_create' method='POST' action='./create' enctype="multipart/form-data">      
+             <label>상품명</label>
+            <select id = 'product_select' name = 'productno'>              
+                    <!--ajax요청을 통해 상품 목록을 입력  -->                          
+            </select>
             <label>재고 수량</label>
-            <input type='number' id='stockno' name='stockno' required="required" value='1' required="required" min='0' max='1000' step='1' style='width: 10%;'>     
-            
-            <label>상품 종류</label>
-            <input type='text' id='productclass' name='productclass' required="required" style='width: 10%;'>     
-            
+            <input type='number' id='stockno' name='stockno' required="required" value='1' required="required" min='0' max='1000' step='1' style='width: 10%;'>                                             
             <label>폐기 예정 수량</label>
             <input type='number' id='productwa' name='productwa' required="required" min='0' max='1000' step='1' style='width: 10%;'>     
             
@@ -142,13 +169,14 @@ function update_read_ajax(stocknum){
   </DIV> 
   
   <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center; display: none;'>
-        <FORM name='frm_update' id='frm_update' method='POST' action='./update' enctype="multipart/form-data">      
+        <FORM name='frm_update' id='frm_update' method='POST' action='./update' enctype="multipart/form-data">  
+            <label>상품명</label> 
+            <label id='productname'></label>  
             <label>재고 수량</label>
+            <input type='hidden' id='stocknum' name='stocknum' value='${stocknum }'>
+            <input type='hidden' id='productno' name='productno' value='${productno }'>
             <input type='number' id='stockno' name='stockno' required="required" value='1' required="required" min='0' max='1000' step='1' style='width: 10%;'>     
-            
-            <label>상품 종류</label>
-            <input type='text' id='productclass' name='productclass' required="required" style='width: 10%;'>     
-            
+                        
             <label>폐기 예정 수량</label>
             <input type='number' id='productwa' name='productwa' required="required" min='0' max='1000' step='1' style='width: 10%;'>     
             
@@ -166,7 +194,7 @@ function update_read_ajax(stocknum){
       <input type='hidden' name='stocknum' id='stocknum' >
       
        <label>재고 수량</label>:<span id='stockno_output'></span> 
-       <label>상품 종류</label>:<span id='productclass_output'></span>
+       <label>상품명</label>:<span id='productclass_output'></span>
        <label>폐기 예정 수량</label>:<span id='productwa_output'></span>
        <label>입고 예정 수량</label>:<span id='productst_output'></span> 
       
@@ -187,34 +215,36 @@ function update_read_ajax(stocknum){
     </colgroup>
    
     <thead>  
-    <TR>
+    <TR>         
       <TH class="th_bs">재고 번호</TH>
+      <TH class="th_bs">상품명</TH>
+      <TH class="th_bs">상품번호</TH>
       <TH class="th_bs">재고 수량</TH>
-      <TH class="th_bs">상품 종류</TH>
       <TH class="th_bs">폐기 예정 수량</TH>
       <TH class="th_bs">입고 예정 수량</TH>
-      <TH class="th_bs">상품번호</TH>
+
       <TH class="th_bs"> <A href="javascript:create_ajax()" title="등록"><span class="glyphicon glyphicon-plus-sign"></span></A></TH>
     </TR>
     </thead>   
     <tbody>
     <c:forEach var="stockVO" items="${list}">      
       <c:set var="stocknum" value="${stockVO.stocknum }" />  
-      <c:set var="stockno" value="${stockVO.stockno }" />      
-      <c:set var="productclass" value="${stockVO.productclass }" />      
+      <c:set var="stockno" value="${stockVO.stockno }" />          
       <c:set var="productwa" value="${stockVO.productwa }" />      
       <c:set var="productst" value="${stockVO.productst }" />      
       <c:set var="productno" value="${stockVO.productno }" />
+      <c:set var="productname" value="${stockVO.productname }" />
       <TR>
-        <TD class="td_bs">${stocknum }</TD>           
-        <TD class="td_bs"><a href="../stock?stocknum=${stocknum }">${stockno }</a></TD>   
-        <TD class="td_bs">${productclass }</TD>
+        <TD class="td_bs">${stocknum }</TD> 
+        <TD class="td_bs">${productname }</TD>   
+        <TD class="td_bs">${productno }</TD>                  
+        <TD class="td_bs">${stockno }</TD>   
         <TD class="td_bs">${productwa }</TD>
         <TD class="td_bs">${productst }</TD>
-        <TD class="td_bs">${productno }</TD>
+        
         <TD class="td_bs"> 
-          <A href="javascript:update_read_ajax(${stocknum })"  title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
-          <A href="javascript:delete_read_ajax(${stocknum })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         
+          <A href="javascript:update_read_ajax(${productno })"  title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
+          <A href="javascript:delete_read_ajax(${productno })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>         
         </TD>   
       </TR>   
     </c:forEach> 

@@ -41,13 +41,14 @@ public class StockCont {
     // 재고 정보
     @RequestMapping(value = "/stock/read_ajax", method = RequestMethod.GET)
     @ResponseBody
-    public String stock_read(int stocknum) {
-        StockVO stockVO = this.StockProc.stock_read(stocknum);
+    public String stock_read(int productno) {
+    	ProductsVO productVO = this.ProductsProc.product_read(productno);
+    	StockVO stockVO = this.StockProc.stock_read(productno);
         JSONObject stockjson = new JSONObject();
         stockjson.put("stocknum", stockVO.getStocknum());
+        stockjson.put("productname", productVO.getProductname());
         stockjson.put("stockno", stockVO.getStockno());
         stockjson.put("productno", stockVO.getProductno());
-        stockjson.put("productclass", stockVO.getProductclass());
         stockjson.put("productwa", stockVO.getProductwa());
         stockjson.put("productst", stockVO.getProductst());
         return stockjson.toString();
@@ -57,8 +58,9 @@ public class StockCont {
     @RequestMapping(value = "/stock/update", method = RequestMethod.POST)
     public ModelAndView stock_update(StockVO stockVO) {
         ModelAndView mav = new ModelAndView();
+        System.out.println(stockVO);
         int cnt = this.StockProc.stock_update(stockVO);
-        mav.setViewName("redirect:/stock/list");
+        mav.setViewName("redirect:/stock/list.do");
         return mav; // forward
     }
 

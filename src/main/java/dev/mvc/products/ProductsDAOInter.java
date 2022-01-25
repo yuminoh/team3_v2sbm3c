@@ -29,6 +29,13 @@ public interface ProductsDAOInter {
 	public ProductsVO product_read(int productno);
 	
 	/**
+	   * 상품 목록 ajax 조회
+	   * @param 
+	   * @return 상품 정보
+	   */
+	public List<ProductsVO> list_read_ajax();
+	
+	/**
 	   * 상품 정보 수정
 	   * @param 상품정보
 	   * @return 수정 성공여부

@@ -18,12 +18,12 @@ public class StockVO {
     private int stocknum;
     //재고 수량
     private int stockno;
-    //상품종류
-    private String productclass;
     //폐기예정 상품 수량
     private int productwa;
     //입고예정 상품 수량
     private int productst;
     //상품 번호
     private int productno;  
+    //상품 이름
+    private String productname;
 }

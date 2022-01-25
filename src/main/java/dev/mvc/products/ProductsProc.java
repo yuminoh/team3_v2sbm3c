@@ -166,6 +166,16 @@ public class ProductsProc implements ProductsProcInter {
 	};
 	
 	/**
+	   * 상품 목록 ajax 조회
+	   * @param 
+	   * @return 상품 정보
+	   */
+	public List<ProductsVO> list_read_ajax(){
+		List<ProductsVO> products_list = this.productsDAO.list_read_ajax();
+		return products_list;
+	};
+	
+	/**
 	   * 메인화면에 회원의 추천 상품 출력
 	   * @param 회원의 추천 서브카테고리
 	   * @return 해당 카테고리의 최신상품 3가지

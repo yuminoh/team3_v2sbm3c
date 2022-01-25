@@ -204,6 +204,15 @@ public class ProductsCont {
     	return mav; // forward
     };
     
+    @RequestMapping(value = "/products/list_read_ajax", method = RequestMethod.GET)
+    @ResponseBody
+    public String list_read_ajax(){
+    	List<ProductsVO> products_list = this.ProductsProc.list_read_ajax();
+    	JSONObject product_list_data = new JSONObject();
+    	product_list_data.put("product_list_data", products_list);
+    	return product_list_data.toString(); // forward
+    };
+    
     @RequestMapping(value = "/products/read_ajax", method = RequestMethod.GET)
     @ResponseBody
     public String products_read_ajax(HttpServletRequest request,int productno){

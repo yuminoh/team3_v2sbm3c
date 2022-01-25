@@ -6,25 +6,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="dev.mvc.stock.StockDAOInter">
 <insert id = "stock_create" parameterType ="dev.mvc.stock.StockVO">
-    INSERT INTO stock(stocknum, stockno, productclass, productwa, productst, productno )
-     VALUES (stocknum_seq.nextval, #{stockno},#{productclass},#{productwa},#{productst},#{productno})
+    INSERT INTO stock(stocknum, stockno,  productwa, productst, productno )
+     VALUES (stocknum_seq.nextval, #{stockno},#{productwa},#{productst},#{productno})
 </insert>
 
 <select id="stock_list"  resultType="dev.mvc.stock.StockVO">
-    SELECT stocknum, stockno, productclass, productwa, productst, productno
-    FROM stock 
+    SELECT a.stocknum, a.stockno, a.productwa, a.productst, a.productno, b.productname
+    FROM stock a inner JOIN products b on a.productno=b.productno
     ORDER BY stocknum ASC
 </select>
 
 <select id="stock_read"  parameterType = "int" resultType="dev.mvc.stock.StockVO">
-    SELECT stocknum, stockno, productclass, productwa, productst, productno
+    SELECT stocknum, stockno,  productwa, productst, productno
     FROM stock 
-    WHERE stocknum = #{stocknum}
+    WHERE productno = #{productno}
 </select>
 
 <update id="stock_update"  parameterType="dev.mvc.stock.StockVO">
     UPDATE stock
-    SET stockno=#{stockno}, productclass=#{productclass}, productwa=#{productwa}, productst=#{productst}, productno=#{productno}
+    SET stockno=#{stockno}, productwa=#{productwa}, productst=#{productst}, productno=#{productno}
     WHERE stocknum=#{stocknum}
 </update>
 
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </delete>
 
 <select id="product_stock_read"  parameterType = "int" resultType="dev.mvc.stock.StockVO">
-    SELECT stocknum, stockno, productclass, productwa, productst, productno
+    SELECT stocknum, stockno, productwa, productst, productno
     FROM stock 
     WHERE productno = #{productno}
 </select>
