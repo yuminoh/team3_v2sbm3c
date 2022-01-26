@@ -168,8 +168,8 @@ function recommend_ajax(interested_product, product_record){
       <c:set var="cnt" value="${pay_list.cnt }" />
       <c:set var="rank" value="${pay_list.rank }" />
       <TR>
-      <TD class="rank">${rank }</TD> 
-      <TD class="td_bs">${rdate }</TD> 
+        <TD class="td_bs">${rank }</TD> 
+        <TD class="td_bs">${rdate }</TD> 
         <TD class="td_bs">${productname }</TD>           
         <TD class="td_bs">${product_price }</TD>   
         <TD class="td_bs">${cnt }</TD> 

@@ -30,7 +30,7 @@
  
 <DIV class='title_line'>${sub_categoryname } > 상품등록</DIV>
  
-<DIV class=>
+<DIV style=''>
   <FORM name='frm' method='POST' action='./create' class="form-horizontal"
                         enctype="multipart/form-data">
     <div class="form-group">
@@ -44,22 +44,22 @@
     </div>
     <div class="form-group">
        <label class="control-label col-md-4">제품 설명</label>
-       <div class="col-md-8">
+       <div class="col-md-4">
          <textarea name='product_Explanation'  placeholder="상품설명" style='width: 30%;' >
           </textarea> 
        </div>
    </div>   
    <div class="form-group">
-       <label class="control-label col-md-2">상품가격</label>
-       <div class="col-md-10">
+       <label class="control-label col-md-4">상품가격</label>
+       <div class="col-md-2">
          <input type='number' name='product_price' value='' required="required"
                     min="0" max="10000000" step="100" 
                     class="form-control" style='width: 100%;'>
        </div>
     </div>   
     <div class="form-group">
-       <label class="control-label col-md-2">상품 이미지</label>
-       <div class="col-md-8">
+       <label class="control-label col-md-4">상품 이미지</label>
+       <div class="col-md-4">
          <input type='file' class="form-control" name='file1M1' id='file1M1' 
                     value='' placeholder="파일 선택">
        </div>

@@ -42,6 +42,7 @@
     <div class="form-group">
        <label class="control-label col-md-4">상품명</label>
        <div class="col-md-8">
+       <input type="hidden" name='return_url' value=${return_url }></input>
        <input type="hidden" name='categoryno' value=${categoryno }></input>
        <input type="hidden" name='sub_categoryno' value=${sub_categoryno }></input>     
        <input type="hidden" name='productno' value=${productno }></input> 

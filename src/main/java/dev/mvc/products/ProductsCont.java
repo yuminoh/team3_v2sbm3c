@@ -229,8 +229,7 @@ public class ProductsCont {
     															HttpSession session,
     															int productno){
     	ModelAndView mav = new ModelAndView();  	
-    	System.out.println("호출됨");
-    	StringBuffer return_url = request.getRequestURL();
+    	String return_url="/products/read?productno="+productno;
     	int grade = 0 ; //로그인이 안되었을 시 기본 권한 값
     	try {
     		grade= (int) session.getAttribute("grade");
@@ -251,13 +250,12 @@ public class ProductsCont {
     		mav.addObject("code","not_admin_privilege");
     		mav.setViewName("/products/msg");
     	}
-    	return_url.append("?productno="+productno);
 		mav.addObject("return_url",return_url);   	    	
     	return mav; // forward
     };
     
     @RequestMapping(value = "/products/update", method = RequestMethod.POST)
-    public ModelAndView products_update_post(ProductsVO productsVO){
+    public ModelAndView products_update_post(String return_url, ProductsVO productsVO){
     	ModelAndView mav = new ModelAndView();
     	int cnt = this.ProductsProc.product_update(productsVO);
     	if (cnt==1){
@@ -266,6 +264,7 @@ public class ProductsCont {
     		mav.addObject("code","update_failed");
     	}    	
     	mav.addObject("sub_categoryno",productsVO.getSub_categoryno()); //목록으로 돌아가기 위해 전달
+    	mav.addObject("return_url",return_url);
     	mav.setViewName("/products/msg");
     	return mav; // forward
     };
