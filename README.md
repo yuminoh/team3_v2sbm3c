@@ -7,3 +7,4 @@
 - <img src="https://img.shields.io/badge/Java-black?style=flat&logo=Java&logoColor=white"/>
 
 ### 업무 분할
+<img src="https://user-images.githubusercontent.com/95003319/157579911-0be87a8c-2555-4085-b99b-cd742fae6831.png" width="600" height="300"/>
