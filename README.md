@@ -27,4 +27,4 @@
 
 
 ### AI모델을 사용하는 pycharm코드
-<img src="https://user-images.githubusercontent.com/95003319/157582186-6fed9c92-8a28-4d8c-9110-ba75a2e84f85.png" width="600" height="500"/>
+<img src="https://user-images.githubusercontent.com/95003319/157582473-4fe93b1b-bc4b-4144-95b5-7a4919b9aebd.png" width="600" height="500"/>
