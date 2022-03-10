@@ -24,3 +24,7 @@
 - https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/order_detail 주문 상세
 - https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/pay_list 구매기록 
 - https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/recommend_product 추천상품 
+
+
+### AI모델을 사용하는 pycharm코드
+<img src="https://user-images.githubusercontent.com/95003319/157582186-6fed9c92-8a28-4d8c-9110-ba75a2e84f85.png" width="600" height="500"/>
