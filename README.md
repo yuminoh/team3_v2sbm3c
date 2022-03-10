@@ -8,3 +8,14 @@
 
 ### 업무 분할
 <img src="https://user-images.githubusercontent.com/95003319/157579911-0be87a8c-2555-4085-b99b-cd742fae6831.png" width="600" height="300"/>
+
+#### 소스코드 주소 
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/cart 쇼핑카트 
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/category 카테고리 
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/subcategory 서브카테고리
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/products 상품
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/interested_products 회원 관심상품 
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/order_pay 주문결재 
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/order_detail 주문 상세
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/pay_list 구매기록 
+- https://github.com/yuminoh/team3_v2sbm3c/tree/yoonho/src/main/java/dev/mvc/recommend_product 추천상품 
